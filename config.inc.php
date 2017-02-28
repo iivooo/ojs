@@ -29,7 +29,7 @@
 installed = Off
 
 ; The canonical URL to the OJS installation (excluding the trailing slash)
-base_url = "http://pkp.sfu.ca/ojs"
+base_url = "http://localhost:8080/ojs"
 
 ; Path to the registry directory (containing various settings files)
 ; Although the files in this directory generally do not contain any
@@ -110,7 +110,7 @@ show_upgrade_warning = On
 
 ; Provide a unique site ID and OAI base URL to PKP for statistics and security
 ; alert purposes only.
-enable_beacon = On
+enable_beacon = on
 
 
 ;;;;;;;;;;;;;;;;;;;;;
@@ -121,8 +121,8 @@ enable_beacon = On
 
 driver = mysql
 host = localhost
-username = ojs
-password = ojs
+username = root
+password = 1234
 name = ojs
 
 ; Enable persistent connections
@@ -204,7 +204,7 @@ charset_normalization = Off
 ; Complete path to directory to store uploaded files
 ; (This directory should not be directly web-accessible)
 ; Windows users should use forward slashes
-files_dir = files
+files_dir = /var/www/files
 
 ; Path to the directory to store public uploaded files
 ; (This directory should be web-accessible and the specified path
@@ -269,7 +269,7 @@ allowed_html = "<a href|target> <em> <strong> <cite> <code> <ul> <ol> <li> <dl> 
 ; If On or Optional, request headers are consulted for account metadata so
 ; ensure that users cannot spoof headers. If Optional, users may use either
 ; implicit authentication or local accounts to access the system.
-;implicit_auth = On
+implicit_auth = On
 
 ; Implicit Auth Header Variables
 ;implicit_auth_header_first_name = HTTP_GIVENNAME
@@ -387,7 +387,7 @@ result_cache_hours = 1
 oai = On
 
 ; OAI Repository identifier
-repository_id = ojs.pkp.sfu.ca
+repository_id = "ojs.localhost:8080"
 
 ; Maximum number of records per request to serve via OAI
 oai_max_records = 100
@@ -514,15 +514,15 @@ log_web_service_info = Off
 
 ; Domain name where deposits will be sent to.
 ; The URL of your network's staging server. Do not change this unless instructed
-; to do so by someone from your network. You do not need to create an 
-; account or login on this server. 
-; 
+; to do so by someone from your network. You do not need to create an
+; account or login on this server.
+;
 ; For more information, please see https://pkp.sfu.ca/pkp-lockss/
-; 
+;
 ; If you do change this value, a journal manager must also reset each deposit in
-; each journal so that the new network will receive and process the deposits. 
-; Deposits can be reset for each journal on the PLN Plugin's status page at 
+; each journal so that the new network will receive and process the deposits.
+; Deposits can be reset for each journal on the PLN Plugin's status page at
 ; Journal Management > System Plugins > Generic Plugins > PKP PLN Plugin
-; 
+;
 ; pln_url = http://pkp-pln.lib.sfu.ca
 ; pln_status_docs = http://pkp-pln.lib.sfu.ca/docs/status
