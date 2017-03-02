@@ -26,10 +26,10 @@
 
 ; Set this to On once the system has been installed
 ; (This is generally done automatically by the installer)
-installed = Off
+installed = On
 
 ; The canonical URL to the OJS installation (excluding the trailing slash)
-base_url = "http://localhost:8080/ojs"
+base_url = "http://localhost:8080/ojs1"
 
 ; Path to the registry directory (containing various settings files)
 ; Although the files in this directory generally do not contain any
@@ -123,7 +123,7 @@ driver = mysql
 host = localhost
 username = root
 password = 1234
-name = ojs
+name = ojs1
 
 ; Enable persistent connections
 persistent = Off
@@ -182,11 +182,11 @@ client_charset = utf-8
 ; Must be set to "Off" if not supported by the database server
 ; If enabled, must be the same character set as "client_charset"
 ; (although the actual name may differ slightly depending on the server)
-connection_charset = Off
+connection_charset = utf8
 
 ; Database storage character set
 ; Must be set to "Off" if not supported by the database server
-database_charset = Off
+database_charset = utf8
 
 ; Enable character normalization to utf-8
 ; If disabled, strings will be passed through in their native encoding
@@ -244,7 +244,7 @@ session_check_ip = On
 ; The encryption (hashing) algorithm to use for encrypting user passwords
 ; Valid values are: md5, sha1
 ; Note that sha1 requires PHP >= 4.3.0
-encryption = md5
+encryption = sha1
 
 ; The unique salt to use for generating password reset hashes
 salt = "YouMustSetASecretKeyHere!!"
@@ -269,7 +269,7 @@ allowed_html = "<a href|target> <em> <strong> <cite> <code> <ul> <ol> <li> <dl> 
 ; If On or Optional, request headers are consulted for account metadata so
 ; ensure that users cannot spoof headers. If Optional, users may use either
 ; implicit authentication or local accounts to access the system.
-implicit_auth = On
+;implicit_auth = On
 
 ; Implicit Auth Header Variables
 ;implicit_auth_header_first_name = HTTP_GIVENNAME

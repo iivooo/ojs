@@ -118,7 +118,9 @@ file="author/submit/submitHeader.tpl"}
 			{if !$submissionFile} onclick="return confirm('{translate|escape:"
 			jsparam" key="author.submit.noSubmissionConfirm"
 			}')"{/if} value="{translate key="
-			common.saveAndContinue"}" class="button defaultButton" onclick='uploadHash(hash)' /> 
+			common.saveAndContinue"}" class="button defaultButton" 
+			<!--  onclick='uploadHash(hash)' -->
+			/> 
 			<input
 			type="button" value="{translate key=" common.cancel"}" class="button"
 			onclick="confirmAction('{url page="

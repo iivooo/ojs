@@ -8,6 +8,9 @@
  * Add/edit a supplementary file.
  *
  *}
+ <script type="text/javascript" src="{$baseUrl}/js/forge-sha256.min.js"></script>
+<script type="text/javascript" src="{$baseUrl}/js/originstamper.js"></script>
+ 
 {assign var="pageTitle" value="author.submit.step4a"}
 {include file="author/submit/submitHeader.tpl"}
 
@@ -148,7 +151,7 @@
 			{fieldLabel name="uploadSuppFile" key="common.upload"}
 		{/if}
 	</td>
-	<td width="80%" class="value"><input type="file" name="uploadSuppFile" id="uploadSuppFile" class="uploadField" />&nbsp;&nbsp;{translate key="form.saveToUpload"}</td>
+	<td width="80%" class="value"><input type="file" name="uploadSuppFile" id="uploadSuppFile" class="uploadField" onchange="handleFileSelect(this.id)" />&nbsp;&nbsp;{translate key="form.saveToUpload"}</td>
 </tr>
 {if not ($suppFile && $suppFile->getFileId())}
 <tr valign="top">

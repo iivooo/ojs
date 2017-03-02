@@ -1,0 +1,17 @@
+adresse zu bitcoininfo anbieten mit
+multi_seed -> tx_hash (btc_adress)
+
+die stati für files in datenbank schreiben per cronjob
+ausser bei status 3
+
+
+Zum testen sind die js scripte in ojs/templates/common/minfiedScripts.tpl unter
+specific controllers. - ??
+
+2017-03-01
+
+- error-handling on timestamper.js?
++ stamp supplementary files, reviews.
+  + show alert to timestamp yourself or that it is done via cronjob later.
++ pass hash directly to server php DAO? write in DB?
++ show timestamp status on authorsSubmissions site. -> smarty var's -> assign on authors page ->
