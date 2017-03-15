@@ -17,10 +17,11 @@
 		<td width="5%"><span class="disabled">{translate key="submission.date.mmdd"}</span><br />{sort_search key="submissions.submit" sort="submitDate"}</td>
 		<td width="5%">{sort_search key="submissions.sec" sort="section"}</td>
 		<td width="30%">{sort_search key="article.authors" sort="authors"}</td>
-		<td width="50%">{sort_search key="article.title" sort="title"}</td>
+		<td width="40%">{sort_search key="article.title" sort="title"}</td>
+		<td width="10%" align="left">{sort_heading key="common.originstampStatus"}</td>                               <!-- ORIGINSTAMP Status -->
 	</tr>
 	<tr>
-		<td colspan="5" class="headseparator">&nbsp;</td>
+		<td colspan="6" class="headseparator">&nbsp;</td>
 	</tr>
 	
 	{iterate from=submissions item=submission}
@@ -30,9 +31,11 @@
 		<td>{$submission->getSectionAbbrev()|escape}</td>
 		<td>{$submission->getAuthorString(true)|truncate:40:"..."|escape}</td>
 		<td><a href="{url op="submission" path=$submission->getId()}" class="action">{$submission->getLocalizedTitle()|strip_tags|truncate:60:"..."}</a></td>
+		{if $submission->getOriginstampStatus() eq 3} <td style="color:green;font-weight: bold;" align=center>&#10003;</td>
+		{else} <td style="color:orange;font-weight: bold;" align=center>&#10003;</td>{/if}
 	</tr>
 	<tr>
-		<td colspan="5" class="{if $submissions->eof()}end{/if}separator">&nbsp;</td>
+		<td colspan="6" class="{if $submissions->eof()}end{/if}separator">&nbsp;</td>
 	</tr>
 {/iterate}
 {if $submissions->wasEmpty()}

@@ -18,6 +18,10 @@
  */
 
 class Submission extends DataObject {
+	
+	/** @var originstampstatus retrieved from db */
+	var $originstampStatus;
+	
 	/**
 	 * Constructor.
 	 */
@@ -942,6 +946,15 @@ class Submission extends DataObject {
 	 */
 	function setCommentsStatus($commentsStatus) {
 		return $this->setData('commentsStatus', $commentsStatus);
+	}
+	
+	function getOriginstampStatus(){
+		return $this->originstampStatus;
+	
+	}
+	
+	function setOriginstampStatus($status){
+		return $this->originstampStatus = $status;
 	}
 }
 

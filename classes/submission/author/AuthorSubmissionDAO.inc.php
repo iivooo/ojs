@@ -129,6 +129,8 @@ class AuthorSubmissionDAO extends DAO {
 			$authorSubmission->setEditorFileRevisions($this->articleFileDao->getArticleFileRevisions($row['editor_file_id'], $i), $i);
 		}
 		$authorSubmission->setGalleys($this->galleyDao->getGalleysByArticle($row['article_id']));
+		
+		$authorSubmission->setOriginstampStatus($row['originstampstatus']);
 
 		HookRegistry::call('AuthorSubmissionDAO::_returnAuthorSubmissionFromRow', array(&$authorSubmission, &$row));
 
@@ -171,6 +173,7 @@ class AuthorSubmissionDAO extends DAO {
 		$locale = AppLocale::getLocale();
 		$result =& $this->retrieveRange(
 			'SELECT	a.*,
+				originstampStatus,
 				COALESCE(atl.setting_value, atpl.setting_value) AS submission_title,
 				aa.last_name AS author_name,
 				COALESCE(stl.setting_value, stpl.setting_value) AS section_title,

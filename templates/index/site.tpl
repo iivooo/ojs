@@ -24,7 +24,9 @@
 {if $useAlphalist}
 	<p>{foreach from=$alphaList item=letter}<a href="{url searchInitial=$letter sort="title"}">{if $letter == $searchInitial}<strong>{$letter|escape}</strong>{else}{$letter|escape}{/if}</a> {/foreach}<a href="{url}">{if $searchInitial==''}<strong>{translate key="common.all"}</strong>{else}{translate key="common.all"}{/if}</a></p>
 {/if}
-
+This is a prototype for the automatized <a href="https://app.originstamp.org/">originstamp.org</a> integration 
+in Open Journal Systems 2.0. <br>
+To get a quick overview please follow the <font color="red">red</font> links.
 {iterate from=journals item=journal}
 	{if $site->getSetting('showThumbnail')}
 		{assign var="displayJournalThumbnail" value=$journal->getLocalizedSetting('journalThumbnail')}
@@ -45,7 +47,7 @@
 			</div>
 		{/if}
 	{/if}
-	<p><a href="{url journal=$journal->getPath()}" class="action">{translate key="site.journalView"}</a> | <a href="{url journal=$journal->getPath() page="issue" op="current"}" class="action">{translate key="site.journalCurrent"}</a> | <a href="{url journal=$journal->getPath() page="user" op="register"}" class="action">{translate key="site.journalRegister"}</a></p>
+	<p><a href="{url journal=$journal->getPath()}" class="action"><font color="red">{translate key="site.journalView"}</font></a> | <a href="{url journal=$journal->getPath() page="issue" op="current"}" class="action">{translate key="site.journalCurrent"}</a> | <a href="{url journal=$journal->getPath() page="user" op="register"}" class="action">{translate key="site.journalRegister"}</a></p>
 {/iterate}
 {if $journals->wasEmpty()}
 	{translate key="site.noJournals"}

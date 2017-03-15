@@ -121,7 +121,10 @@ class EditorSubmissionDAO extends DAO {
 		}
 
 		HookRegistry::call('EditorSubmissionDAO::_returnEditorSubmissionFromRow', array(&$editorSubmission, &$row));
-
+		
+		$editorSubmission->setOriginstampStatus($row['originstampstatus']);
+		
+		
 		return $editorSubmission;
 	}
 

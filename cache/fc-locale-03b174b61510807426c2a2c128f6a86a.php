@@ -143,6 +143,8 @@
   'common.originalFileName' => 'Original file name',
   'common.or' => 'or',
   'common.other' => 'Other',
+  'common.originstampStatus' => 'Originstamp.org',
+  'common.originstampZip' => 'Originstamp.org Zip',
   'common.overdue' => 'Overdue',
   'common.pageHeaderLogo.altText' => 'Page Header Logo',
   'common.plugin' => 'Plugin',

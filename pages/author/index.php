@@ -51,6 +51,7 @@ switch ($op) {
 	// Misc.
 	//
 	case 'downloadFile':
+	case 'downloadOriginstampZipFile':
 	case 'viewFile':
 	case 'download':
 	//

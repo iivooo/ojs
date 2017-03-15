@@ -36,5 +36,9 @@
 
 {include file="submission/metadata/metadata.tpl"}
 
+<div class="separator"></div>
+
+{include file="author/submission/originstampdownload.tpl"}
+
 {include file="common/footer.tpl"}
 

@@ -46,8 +46,8 @@
         		"Please try it manually at "+ "https://originstamp.org/" + " or at a service of your choice.");
       }
     });
-	  
-//	var request = new XMLHttpRequest();  
+
+//	var request = new XMLHttpRequest();
 //	request.open("POST", baseURL.concat(localStorage['hash']));
 //	request.setRequestHeader("Authorization",apiKey);
 //	request.setRequestHeader("dataType","json");
@@ -59,17 +59,24 @@
 //		   }
 //		});
 //		request.send();
-	
-	
-	
-	
+
+
+
+
     console.log(JSON.stringify(ajaxDump, null, 2));
     localStorage['hash']="";
   }
- console.log("script loaded");
+ // console.log("script loaded");
 //   $('#submitStep2').submit('click', function(e) {
 //      e. preventDefault();
 //     console.log("ajax invoked");
 //     handleFileSelect();
 //     return true; // return false to cancel form action
 // });
+
+//popup function w. SHA, BTC-Adress and Zip-Downloadability
+//@id: article/review Id
+//@type: article: 'SM', review 'RV'
+function getInfo(id, type){
+
+}

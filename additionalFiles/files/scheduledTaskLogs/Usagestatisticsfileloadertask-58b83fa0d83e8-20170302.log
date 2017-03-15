@@ -1,0 +1,5 @@
+http://localhost:8080/ojs1
+[2017-03-02 15:52:02] [Notice] Task process started.
+[2017-03-02 15:52:02] [Notice] File /vagrant/files/usageStats/processing/usage_events_20170228.log was processed and archived.
+[2017-03-02 15:52:02] [Notice] File /vagrant/files/usageStats/processing/usage_events_20170301.log was processed and archived.
+[2017-03-02 15:52:02] [Notice] Task process stopped.

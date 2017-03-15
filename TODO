@@ -15,3 +15,9 @@ specific controllers. - ??
   + show alert to timestamp yourself or that it is done via cronjob later.
 + pass hash directly to server php DAO? write in DB?
 + show timestamp status on authorsSubmissions site. -> smarty var's -> assign on authors page ->
+
+
+2017-03-08
+
++ smarty template korrektur
++ button einfügen (zB gelber und grüner haken)

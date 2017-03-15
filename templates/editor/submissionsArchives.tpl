@@ -11,18 +11,19 @@
 <div id="submissions">
 <table width="100%" class="listing">
 	<tr>
-		<td colspan="6" class="headseparator">&nbsp;</td>
+		<td colspan="7" class="headseparator">&nbsp;</td>
 	</tr>
 	<tr class="heading" valign="bottom">
 		<td width="5%">{sort_search key="common.id" sort="id"}</td>
 		<td width="15%"><span class="disabled"></span><br />{sort_search key="submissions.submitted" sort="submitDate"}</td>
 		<td width="5%">{sort_search key="submissions.sec" sort="section"}</td>
 		<td width="25%">{sort_search key="article.authors" sort="authors"}</td>
-		<td width="30%">{sort_search key="article.title" sort="title"}</td>
-		<td width="20%" align="right">{sort_search key="common.status" sort="status"}</td>
+		<td width="25%">{sort_search key="article.title" sort="title"}</td>
+		<td width="15%" align="left">{sort_search key="common.status" sort="status"}</td>
+		<td width="10%" align="left">{sort_heading key="common.originstampStatus"}</td>
 	</tr>
 	<tr>
-		<td colspan="6" class="headseparator">&nbsp;</td>
+		<td colspan="7" class="headseparator">&nbsp;</td>
 	</tr>
 	
 	{iterate from=submissions item=submission}
@@ -46,15 +47,15 @@
 		</td>
 	</tr>
 	<tr>
-		<td colspan="6" class="{if $submissions->eof()}end{/if}separator">&nbsp;</td>
+		<td colspan="7" class="{if $submissions->eof()}end{/if}separator">&nbsp;</td>
 	</tr>
 {/iterate}
 {if $submissions->wasEmpty()}
 	<tr>
-		<td colspan="6" class="nodata">{translate key="submissions.noSubmissions"}</td>
+		<td colspan="7" class="nodata">{translate key="submissions.noSubmissions"}</td>
 	</tr>
 	<tr>
-		<td colspan="6" class="endseparator">&nbsp;</td>
+		<td colspan="7" class="endseparator">&nbsp;</td>
 	</tr>
 {else}
 	<tr>

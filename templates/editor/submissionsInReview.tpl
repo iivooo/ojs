@@ -16,8 +16,8 @@
 		<td width="5%">{sort_search key="common.id" sort="id"}</td>
 		<td width="5%"><span class="disabled">{translate key="submission.date.mmdd"}</span><br />{sort_search key="submissions.submitted" sort="submitDate"}</td>
 		<td width="5%">{sort_search key="submissions.sec" sort="section"}</td>
-		<td width="15%">{sort_search key="article.authors" sort="authors"}</td>
-		<td width="30%">{sort_search key="article.title" sort="title"}</td>
+		<td width="10%">{sort_search key="article.authors" sort="authors"}</td>
+		<td width="25%">{sort_search key="article.title" sort="title"}</td>
 		<td width="30%">
 			{translate key="submission.peerReview"}
 			<table width="100%" class="nested">
@@ -30,9 +30,10 @@
 		</td>
 		<td width="5%">{translate key="submissions.ruling"}</td>
 		<td width="5%">{translate key="article.sectionEditor"}</td>
+		<td width="10%" align="left">{sort_heading key="common.originstampStatus"}</td>
 	</tr>
 	<tr>
-		<td colspan="8" class="headseparator">&nbsp;</td>
+		<td colspan="9" class="headseparator">&nbsp;</td>
 	</tr>
 	
 	{iterate from=submissions item=submission}
@@ -88,9 +89,11 @@
 			{assign var="editAssignments" value=$submission->getEditAssignments()}
 			{foreach from=$editAssignments item=editAssignment}{$editAssignment->getEditorInitials()|escape} {/foreach}
 		</td>
+		{if $submission->getOriginstampStatus() eq 3} <td style="color:green;font-weight: bold;" align=center>&#10003;</td>
+		{else} <td style="color:orange;font-weight: bold;" align=center>&#10003;</td>{/if}
 	</tr>
 	<tr>
-		<td colspan="8" class="{if $submissions->eof()}end{/if}separator">&nbsp;</td>
+		<td colspan="9" class="{if $submissions->eof()}end{/if}separator">&nbsp;</td>
 	</tr>
 {/iterate}
 {if $submissions->wasEmpty()}

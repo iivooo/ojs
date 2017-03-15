@@ -72,10 +72,14 @@ class AuthorHandler extends Handler {
 			}
 			// Convert submission array back to an ItemIterator class
 			import('lib.pkp.classes.core.ArrayItemIterator');
+			
 			$submissions =& ArrayItemIterator::fromRangeInfo($submissionsArray, $rangeInfo);
 		} else {
 			$submissions = $authorSubmissionDao->getAuthorSubmissions($user->getId(), $journal->getId(), $active, $rangeInfo, $sort, $sortDirection);
 		}
+		
+		
+		
 
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign('pageToDisplay', $page);
@@ -83,6 +87,9 @@ class AuthorHandler extends Handler {
 			// Make view counts available if enabled.
 			$templateMgr->assign('statViews', $journal->getSetting('statViews'));
 		}
+		
+		//check this function to add submission status
+		
 		$templateMgr->assign_by_ref('submissions', $submissions);
 
 		// assign payment 

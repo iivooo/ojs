@@ -12,7 +12,10 @@
 {assign var="pageTitleTranslated" value=$siteTitle}
 {include file="common/header.tpl"}
 {/strip}
-
+Please login on the right side with:<br>
+Username: author<br>
+Password: 123456<br>
+This prototype is done to show the simple frontend modifications of an existing system.
 {if $journalDescription}
 	<div id="journalDescription">{$journalDescription}</div>
 {/if}

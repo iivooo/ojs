@@ -1,10 +1,16 @@
-<?php /* Smarty version 2.6.26, created on 2017-03-01 13:10:03
+<?php /* Smarty version 2.6.26, created on 2017-03-14 15:11:19
          compiled from author/active.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_heading', 'author/active.tpl', 15, false),array('function', 'translate', 'author/active.tpl', 16, false),array('function', 'url', 'author/active.tpl', 34, false),array('function', 'page_info', 'author/active.tpl', 100, false),array('function', 'page_links', 'author/active.tpl', 101, false),array('block', 'iterate', 'author/active.tpl', 24, false),array('modifier', 'escape', 'author/active.tpl', 29, false),array('modifier', 'date_format', 'author/active.tpl', 30, false),array('modifier', 'truncate', 'author/active.tpl', 32, false),array('modifier', 'strip_tags', 'author/active.tpl', 34, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_heading', 'author/active.tpl', 21, false),array('function', 'translate', 'author/active.tpl', 22, false),array('function', 'url', 'author/active.tpl', 43, false),array('function', 'page_info', 'author/active.tpl', 112, false),array('function', 'page_links', 'author/active.tpl', 113, false),array('block', 'iterate', 'author/active.tpl', 31, false),array('modifier', 'escape', 'author/active.tpl', 36, false),array('modifier', 'date_format', 'author/active.tpl', 37, false),array('modifier', 'truncate', 'author/active.tpl', 40, false),array('modifier', 'strip_tags', 'author/active.tpl', 43, false),)), $this); ?>
+ <p>Here you can see the originstamp.org status on the right side of the active submissions. If the check font is green
+ the submission is safely timestamped. If you click on the submission you will get to the overview page of
+ the submission. Down the page there you can download a zip file with your submission and all the additional data
+ you need for manual verification for your personal archives. Also, you can go through the 5 step submission 
+ where your submission is timestamped client-side.</p>
+ <link rel="stylesheet" type="text/css" href="/styles/originstamper.css">
 <div id="submissions">
 <table class="listing" width="100%">
-	<tr><td colspan="6" class="headseparator">&nbsp;</td></tr>
+	<tr><td colspan="7" class="headseparator">&nbsp;</td></tr>
 	<tr class="heading" valign="bottom">
 		<td width="5%"><?php echo $this->_plugins['function']['sort_heading'][0][0]->smartySortHeading(array('key' => "common.id",'sort' => 'id','sortOrder' => 'ASC'), $this);?>
 </td>
@@ -17,10 +23,12 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_headin
 </td>
 		<td width="35%"><?php echo $this->_plugins['function']['sort_heading'][0][0]->smartySortHeading(array('key' => "article.title",'sort' => 'title'), $this);?>
 </td>
-		<td width="25%" align="right"><?php echo $this->_plugins['function']['sort_heading'][0][0]->smartySortHeading(array('key' => "common.status",'sort' => 'status'), $this);?>
+		<td width="15%" align="left"><?php echo $this->_plugins['function']['sort_heading'][0][0]->smartySortHeading(array('key' => "common.status",'sort' => 'status'), $this);?>
 </td>
+		<td width="10%" align="left"><?php echo $this->_plugins['function']['sort_heading'][0][0]->smartySortHeading(array('key' => "common.originstampStatus"), $this);?>
+</td>                               <!-- ORIGINSTAMP Status -->
 	</tr>
-	<tr><td colspan="6" class="headseparator">&nbsp;</td></tr>
+	<tr><td colspan="7" class="headseparator">&nbsp;</td></tr>
 
 <?php $this->_tag_stack[] = array('iterate', array('from' => 'submissions','item' => 'submission')); $_block_repeat=true;$this->_plugins['block']['iterate'][0][0]->smartyIterate($this->_tag_stack[count($this->_tag_stack)-1][1], null, $this, $_block_repeat);while ($_block_repeat) { ob_start(); ?>
 	<?php $this->assign('articleId', $this->_tpl_vars['submission']->getId()); ?>
@@ -33,14 +41,16 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_headin
 <?php else: ?>&mdash;<?php endif; ?></td>
 		<td><?php echo ((is_array($_tmp=$this->_tpl_vars['submission']->getSectionAbbrev())) ? $this->_run_mod_handler('escape', true, $_tmp) : $this->_plugins['modifier']['escape'][0][0]->smartyEscape($_tmp)); ?>
 </td>
+		
 		<td><?php echo ((is_array($_tmp=((is_array($_tmp=$this->_tpl_vars['submission']->getAuthorString(true))) ? $this->_run_mod_handler('truncate', true, $_tmp, 40, "...") : $this->_plugins['modifier']['truncate'][0][0]->smartyTruncate($_tmp, 40, "...")))) ? $this->_run_mod_handler('escape', true, $_tmp) : $this->_plugins['modifier']['escape'][0][0]->smartyEscape($_tmp)); ?>
 </td>
+		
 		<?php if ($this->_tpl_vars['progress'] == 0): ?>
 			<td><a href="<?php echo $this->_plugins['function']['url'][0][0]->smartyUrl(array('op' => 'submission','path' => $this->_tpl_vars['articleId']), $this);?>
-" class="action"><?php if ($this->_tpl_vars['submission']->getLocalizedTitle()): ?><?php echo ((is_array($_tmp=((is_array($_tmp=$this->_tpl_vars['submission']->getLocalizedTitle())) ? $this->_run_mod_handler('strip_tags', true, $_tmp) : smarty_modifier_strip_tags($_tmp)))) ? $this->_run_mod_handler('truncate', true, $_tmp, 60, "...") : $this->_plugins['modifier']['truncate'][0][0]->smartyTruncate($_tmp, 60, "...")); ?>
+" class="action"><font color="red"><?php if ($this->_tpl_vars['submission']->getLocalizedTitle()): ?><?php echo ((is_array($_tmp=((is_array($_tmp=$this->_tpl_vars['submission']->getLocalizedTitle())) ? $this->_run_mod_handler('strip_tags', true, $_tmp) : smarty_modifier_strip_tags($_tmp)))) ? $this->_run_mod_handler('truncate', true, $_tmp, 60, "...") : $this->_plugins['modifier']['truncate'][0][0]->smartyTruncate($_tmp, 60, "...")); ?>
 <?php else: ?><?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "common.untitled"), $this);?>
-<?php endif; ?></a></td>
-			<td align="right">
+<?php endif; ?></font></a></td>
+			<td align="left">
 				<?php $this->assign('status', $this->_tpl_vars['submission']->getSubmissionStatus()); ?>
 				<?php if ($this->_tpl_vars['status'] == STATUS_QUEUED_UNASSIGNED): ?><?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "submissions.queuedUnassigned"), $this);?>
 
@@ -69,6 +79,9 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_headin
 						<?php endif; ?>
 					</a>
 				<?php endif; ?>
+				<?php if ($this->_tpl_vars['submission']->getOriginstampStatus() == 3): ?> <td style="color:green;font-weight: bold;" align=center><div class="tooltip" onclick='originstampDownload.php'>&#10003;<span class="tooltiptext">
+				By clicking the &#10003; you will get a zip file with your content, it's SHA-256 and the BTC-Adress as well as instructions for manual verification. </span></div></td>
+				<?php else: ?> <td style="color:orange;font-weight: bold;" align=center>&#10003;</td><?php endif; ?>
 
 								<?php if ($this->_tpl_vars['status'] == STATUS_QUEUED_UNASSIGNED || $this->_tpl_vars['status'] == STATUS_QUEUED_REVIEW): ?>
 					<?php if ($this->_tpl_vars['submissionEnabled'] && ! $this->_tpl_vars['completedPaymentDAO']->hasPaidSubmission($this->_tpl_vars['submission']->getJournalId(),$this->_tpl_vars['submission']->getId())): ?>
@@ -116,7 +129,7 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_headin
 	</tr>
 
 	<tr>
-		<td colspan="6" class="<?php if ($this->_tpl_vars['submissions']->eof()): ?>end<?php endif; ?>separator">&nbsp;</td>
+		<td colspan="7" class="<?php if ($this->_tpl_vars['submissions']->eof()): ?>end<?php endif; ?>separator">&nbsp;</td>
 	</tr>
 <?php $_block_content = ob_get_contents(); ob_end_clean(); $_block_repeat=false;echo $this->_plugins['block']['iterate'][0][0]->smartyIterate($this->_tag_stack[count($this->_tag_stack)-1][1], $_block_content, $this, $_block_repeat); }  array_pop($this->_tag_stack); ?>
 <?php if ($this->_tpl_vars['submissions']->wasEmpty()): ?>

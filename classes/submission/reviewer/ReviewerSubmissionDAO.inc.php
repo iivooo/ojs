@@ -145,6 +145,8 @@ class ReviewerSubmissionDAO extends DAO {
 
 		HookRegistry::call('ReviewerSubmissionDAO::_returnReviewerSubmissionFromRow', array(&$reviewerSubmission, &$row));
 
+		//originstampstatus
+		$reviewerSubmission->setOriginstampStatus($row['originstampstatus']);
 		return $reviewerSubmission;
 	}
 

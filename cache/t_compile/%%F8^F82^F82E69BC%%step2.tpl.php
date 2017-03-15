@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.26, created on 2017-03-01 13:41:42
+<?php /* Smarty version 2.6.26, created on 2017-03-05 22:29:36
          compiled from author/submit/step2.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'url', 'author/submit/step2.tpl', 21, false),array('function', 'translate', 'author/submit/step2.tpl', 26, false),array('function', 'fieldLabel', 'author/submit/step2.tpl', 76, false),array('function', 'get_help_id', 'author/submit/step2.tpl', 86, false),array('modifier', 'escape', 'author/submit/step2.tpl', 23, false),array('modifier', 'to_array', 'author/submit/step2.tpl', 46, false),array('modifier', 'date_format', 'author/submit/step2.tpl', 60, false),)), $this); ?>
@@ -137,7 +137,9 @@ unset($_smarty_tpl_vars);
 			jsparam'));?>
 ')"<?php endif; ?> value="<?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "
 			common.saveAndContinue"), $this);?>
-" class="button defaultButton" onclick='uploadHash(hash)' /> 
+" class="button defaultButton" 
+			<!--  onclick='uploadHash(hash)' -->
+			/> 
 			<input
 			type="button" value="<?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => " common.cancel"), $this);?>
 " class="button"

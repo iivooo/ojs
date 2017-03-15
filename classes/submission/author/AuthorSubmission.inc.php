@@ -32,6 +32,8 @@ class AuthorSubmission extends Article {
 
 	/** @var array the revisions of the author copyedit file */
 	var $copyeditFileRevisions;
+	
+	
 
 	/**
 	 * Constructor.
@@ -370,6 +372,8 @@ class AuthorSubmission extends Article {
 	function setMostRecentProofreadComment($mostRecentProofreadComment) {
 		return $this->setData('mostRecentProofreadComment', $mostRecentProofreadComment);
 	}
+	
+	
 }
 
 ?>

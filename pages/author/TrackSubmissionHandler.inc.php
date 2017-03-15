@@ -14,6 +14,7 @@
  */
 
 import('pages.author.AuthorHandler');
+import('classes.file.ArticleFileManager');
 
 class TrackSubmissionHandler extends AuthorHandler {
 	/** submission associated with the request **/
@@ -465,6 +466,89 @@ class TrackSubmissionHandler extends AuthorHandler {
 	//
 	// Misc
 	//
+	/**
+	 * Download the originstampZip
+	 * @param $args array ($articleId, $fileId, [$revision])
+	 * @param $request PKPRequest
+	 */
+	
+	function downloadOriginstampZipFile($args, $request) {
+		$articleId = (int) array_shift($args);
+		$fileId = (int) array_shift($args);
+		$revision = (int) array_shift($args);
+		if (!$revision) $revision = null;
+	
+		$this->validate($request, $articleId);
+		$submission =& $this->submission;
+		$artFileMan = new ArticleFileManager($articleId);
+		$tempFile = $artFileMan->getFile($fileId, $revision);
+		$filePath = $tempFile->getFilePath();
+		$paths = array(
+				$filePath
+				//add hash 
+				//add btc-address
+				//add hashes list
+		);
+		$zipDestination = $this->create_zip($paths, dirname($filePath)."/".$articleId.".zip");
+		if(!($zipDestination)){
+			$request->redirect(null, null, 'submission', $articleId);
+		} else {
+			$quoted = sprintf('"%s"', addcslashes(basename(dirname($filePath)."/".$articleId.".zip"), '"\\'));
+			$size   = filesize(dirname($filePath)."/".$articleId.".zip");
+			header('Content-Description: File Transfer');
+			header('Content-Type: application/octet-stream');
+			header('Content-Disposition: attachment; filename=' . $quoted);
+			header('Content-Transfer-Encoding: binary');
+			header('Connection: Keep-Alive');
+			header('Expires: 0');
+			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+			header('Pragma: public');
+			header('Content-Length: ' . $size);
+		}
+	}
+	
+	function create_zip($files = array(),$destination = '',$overwrite = true) {
+		//if the zip file already exists and overwrite is false, return false
+		if(file_exists($destination) && !$overwrite) { 
+			print "already gone wrong";
+			return false; }
+		//vars
+		$valid_files = array();
+		//if files were passed in...
+		if(is_array($files)) {
+			//cycle through each file
+			foreach($files as $file) {
+				//make sure the file exists
+				if(file_exists($file)) {
+					$valid_files[] = $file;
+				}
+			}
+		}
+		//if we have good files...
+		if(count($valid_files)) {
+			//create the archive
+			$zip = new ZipArchive();
+			if($zip->open($destination,$overwrite ? ZIPARCHIVE::OVERWRITE : ZIPARCHIVE::CREATE) !== true) {
+				return false;
+			}
+			//add the files
+			foreach($valid_files as $file) {
+				$zip->addFile($file,$file);
+			}
+			//debug
+			//echo 'The zip archive contains ',$zip->numFiles,' files with a status of ',$zip->status;
+	
+			//close the zip -- done!
+			$zip->close();
+	
+			//check to make sure the file exists
+			return file_exists($destination);
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 	/**
 	 * Download a file.
