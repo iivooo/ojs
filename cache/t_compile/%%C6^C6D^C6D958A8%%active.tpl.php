@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.26, created on 2017-03-14 15:11:19
+<?php /* Smarty version 2.6.26, created on 2017-03-17 07:42:47
          compiled from author/active.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_heading', 'author/active.tpl', 21, false),array('function', 'translate', 'author/active.tpl', 22, false),array('function', 'url', 'author/active.tpl', 43, false),array('function', 'page_info', 'author/active.tpl', 112, false),array('function', 'page_links', 'author/active.tpl', 113, false),array('block', 'iterate', 'author/active.tpl', 31, false),array('modifier', 'escape', 'author/active.tpl', 36, false),array('modifier', 'date_format', 'author/active.tpl', 37, false),array('modifier', 'truncate', 'author/active.tpl', 40, false),array('modifier', 'strip_tags', 'author/active.tpl', 43, false),)), $this); ?>
@@ -80,7 +80,7 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_headin
 					</a>
 				<?php endif; ?>
 				<?php if ($this->_tpl_vars['submission']->getOriginstampStatus() == 3): ?> <td style="color:green;font-weight: bold;" align=center><div class="tooltip" onclick='originstampDownload.php'>&#10003;<span class="tooltiptext">
-				By clicking the &#10003; you will get a zip file with your content, it's SHA-256 and the BTC-Adress as well as instructions for manual verification. </span></div></td>
+				In the articles summary, you will find a zip-file with all information you need for manual verification. </span></div></td>
 				<?php else: ?> <td style="color:orange;font-weight: bold;" align=center>&#10003;</td><?php endif; ?>
 
 								<?php if ($this->_tpl_vars['status'] == STATUS_QUEUED_UNASSIGNED || $this->_tpl_vars['status'] == STATUS_QUEUED_REVIEW): ?>

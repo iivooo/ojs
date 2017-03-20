@@ -62,7 +62,7 @@
 					</a>
 				{/if}
 				{if $submission->getOriginstampStatus() eq 3} <td style="color:green;font-weight: bold;" align=center><div class="tooltip" onclick='originstampDownload.php'>&#10003;<span class="tooltiptext">
-				By clicking the &#10003; you will get a zip file with your content, it's SHA-256 and the BTC-Adress as well as instructions for manual verification. </span></div></td>
+				In the articles summary, you will find a zip-file with all information you need for manual verification. </span></div></td>
 				{else} <td style="color:orange;font-weight: bold;" align=center>&#10003;</td>{/if}
 
 				{** Payment related actions *}

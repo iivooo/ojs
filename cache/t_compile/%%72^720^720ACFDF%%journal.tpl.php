@@ -1,7 +1,7 @@
-<?php /* Smarty version 2.6.26, created on 2017-03-14 14:54:57
+<?php /* Smarty version 2.6.26, created on 2017-03-17 07:39:14
          compiled from index/journal.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('function', 'call_hook', 'index/journal.tpl', 22, false),array('function', 'translate', 'index/journal.tpl', 26, false),array('function', 'url', 'index/journal.tpl', 41, false),array('modifier', 'escape', 'index/journal.tpl', 26, false),array('modifier', 'strip_unsafe_html', 'index/journal.tpl', 50, false),array('modifier', 'nl2br', 'index/journal.tpl', 50, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('function', 'call_hook', 'index/journal.tpl', 23, false),array('function', 'translate', 'index/journal.tpl', 27, false),array('function', 'url', 'index/journal.tpl', 42, false),array('modifier', 'escape', 'index/journal.tpl', 27, false),array('modifier', 'strip_unsafe_html', 'index/journal.tpl', 51, false),array('modifier', 'nl2br', 'index/journal.tpl', 51, false),)), $this); ?>
 <?php echo ''; ?><?php $this->assign('pageTitleTranslated', $this->_tpl_vars['siteTitle']); ?><?php echo ''; ?><?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "common/header.tpl", 'smarty_include_vars' => array()));
 $this->_tpl_vars = $_smarty_tpl_vars;
@@ -11,6 +11,7 @@ unset($_smarty_tpl_vars);
 Please login on the right side with:<br>
 Username: author<br>
 Password: 123456<br>
+This prototype is done to show the simple frontend modifications of an existing system.
 <?php if ($this->_tpl_vars['journalDescription']): ?>
 	<div id="journalDescription"><?php echo $this->_tpl_vars['journalDescription']; ?>
 </div>
