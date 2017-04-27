@@ -27,7 +27,7 @@
     ),
     2 => 
     array (
-      'className' => 'plugins.importexport.crossref.CrossrefInfoSender',
+      'className' => 'plugins.importexport.datacite.DataciteInfoSender',
       'frequency' => 
       array (
         'hour' => 24,
@@ -38,7 +38,7 @@
     ),
     3 => 
     array (
-      'className' => 'plugins.importexport.datacite.DataciteInfoSender',
+      'className' => 'plugins.importexport.crossref.CrossrefInfoSender',
       'frequency' => 
       array (
         'hour' => 24,

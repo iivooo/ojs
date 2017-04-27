@@ -485,32 +485,38 @@ class TrackSubmissionHandler extends AuthorHandler {
 		$filePath = $tempFile->getFilePath();
 		$paths = array(
 				$filePath
-				//add hash 
+				//add hash
 				//add btc-address
 				//add hashes list
 		);
 		$zipDestination = $this->create_zip($paths, dirname($filePath)."/".$articleId.".zip");
+		
 		if(!($zipDestination)){
 			$request->redirect(null, null, 'submission', $articleId);
-		} else {
+		} else if(file_exists($zipDestination)) {
 			$quoted = sprintf('"%s"', addcslashes(basename(dirname($filePath)."/".$articleId.".zip"), '"\\'));
 			$size   = filesize(dirname($filePath)."/".$articleId.".zip");
 			header('Content-Description: File Transfer');
-			header('Content-Type: application/octet-stream');
+			header('Content-Type: application/zip'); //octet-stream
 			header('Content-Disposition: attachment; filename=' . $quoted);
 			header('Content-Transfer-Encoding: binary');
 			header('Connection: Keep-Alive');
 			header('Expires: 0');
 			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 			header('Pragma: public');
-			header('Content-Length: ' . $size);
+			header('Content-Length:' . $size);
+			ob_clean();
+			flush();
+			readfile($zipDestination);
+		} else {
+			print "file doesnt exists";
 		}
 	}
 	
 	function create_zip($files = array(),$destination = '',$overwrite = true) {
 		//if the zip file already exists and overwrite is false, return false
 		if(file_exists($destination) && !$overwrite) { 
-			print "already gone wrong";
+			
 			return false; }
 		//vars
 		$valid_files = array();
@@ -528,21 +534,22 @@ class TrackSubmissionHandler extends AuthorHandler {
 		if(count($valid_files)) {
 			//create the archive
 			$zip = new ZipArchive();
-			if($zip->open($destination,$overwrite ? ZIPARCHIVE::OVERWRITE : ZIPARCHIVE::CREATE) !== true) {
+			$err;
+			 //$overwrite ? ZIPARCHIVE::OVERWRITE :
+			if($err =$zip->open($destination, ZIPARCHIVE::CREATE) !== TRUE) {
 				return false;
 			}
-			//add the files
+			//add the filess
 			foreach($valid_files as $file) {
-				$zip->addFile($file,$file);
+				$zip->addFile($file); //,$file
 			}
 			//debug
-			//echo 'The zip archive contains ',$zip->numFiles,' files with a status of ',$zip->status;
-	
+// 			print 'The zip archive contains '.$zip->numFiles.' files with a status of '.$zip->status;	
 			//close the zip -- done!
 			$zip->close();
 	
 			//check to make sure the file exists
-			return file_exists($destination);
+			return $destination;
 		}
 		else
 		{

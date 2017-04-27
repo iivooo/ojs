@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.26, created on 2017-02-28 16:16:44
+<?php /* Smarty version 2.6.26, created on 2017-03-21 14:14:22
          compiled from install/installComplete.tpl */ ?>
 <?php echo ''; ?><?php $this->assign('pageTitle', "installer.ojsInstallation"); ?><?php echo ''; ?><?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "core:install/installComplete.tpl", 'smarty_include_vars' => array()));

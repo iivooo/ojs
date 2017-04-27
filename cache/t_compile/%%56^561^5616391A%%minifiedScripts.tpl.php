@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.26, created on 2017-02-28 16:14:09
+<?php /* Smarty version 2.6.26, created on 2017-03-20 14:36:41
          compiled from common/minifiedScripts.tpl */ ?>
 
 <script type="text/javascript" src="<?php echo $this->_tpl_vars['baseUrl']; ?>

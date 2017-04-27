@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.26, created on 2017-03-14 14:53:22
+<?php /* Smarty version 2.6.26, created on 2017-03-20 14:49:48
          compiled from index/site.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'nl2br', 'index/site.tpl', 20, false),array('modifier', 'escape', 'index/site.tpl', 25, false),array('function', 'url', 'index/site.tpl', 25, false),array('function', 'translate', 'index/site.tpl', 25, false),array('function', 'page_info', 'index/site.tpl', 56, false),array('function', 'page_links', 'index/site.tpl', 57, false),array('block', 'iterate', 'index/site.tpl', 30, false),)), $this); ?>

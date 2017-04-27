@@ -29,7 +29,7 @@
 installed = On
 
 ; The canonical URL to the OJS installation (excluding the trailing slash)
-base_url = "http://localhost:8080/ojs1"
+base_url = "https://iivooo.suhail.uberspace.de/ojs"
 
 ; Path to the registry directory (containing various settings files)
 ; Although the files in this directory generally do not contain any
@@ -121,9 +121,9 @@ enable_beacon = on
 
 driver = mysql
 host = localhost
-username = root
-password = 1234
-name = ojs1
+username = iivooo
+password = AeC4deVoop4eiRohb9a
+name = iivooo
 
 ; Enable persistent connections
 persistent = Off
@@ -182,11 +182,11 @@ client_charset = utf-8
 ; Must be set to "Off" if not supported by the database server
 ; If enabled, must be the same character set as "client_charset"
 ; (although the actual name may differ slightly depending on the server)
-connection_charset = utf8
+connection_charset = Off
 
 ; Database storage character set
 ; Must be set to "Off" if not supported by the database server
-database_charset = utf8
+database_charset = Off
 
 ; Enable character normalization to utf-8
 ; If disabled, strings will be passed through in their native encoding
@@ -204,7 +204,7 @@ charset_normalization = Off
 ; Complete path to directory to store uploaded files
 ; (This directory should not be directly web-accessible)
 ; Windows users should use forward slashes
-files_dir = /var/www/files
+files_dir = /var/www/virtual/iivooo/html/files
 
 ; Path to the directory to store public uploaded files
 ; (This directory should be web-accessible and the specified path
@@ -244,7 +244,7 @@ session_check_ip = On
 ; The encryption (hashing) algorithm to use for encrypting user passwords
 ; Valid values are: md5, sha1
 ; Note that sha1 requires PHP >= 4.3.0
-encryption = sha1
+encryption = md5
 
 ; The unique salt to use for generating password reset hashes
 salt = "YouMustSetASecretKeyHere!!"
@@ -387,7 +387,7 @@ result_cache_hours = 1
 oai = On
 
 ; OAI Repository identifier
-repository_id = "ojs.localhost:8080"
+repository_id = "ojs.iivooo.suhail.uberspace.de"
 
 ; Maximum number of records per request to serve via OAI
 oai_max_records = 100

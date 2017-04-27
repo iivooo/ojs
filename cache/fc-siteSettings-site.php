@@ -1,17 +1,17 @@
 <?php return array (
-  'contactEmail' => 
+  'showThumbnail' => true,
+  'showTitle' => true,
+  'showDescription' => true,
+  'title' => 
   array (
-    'en_US' => 'ivoschueepp@gmail.com',
+    'en_US' => 'Open Journal Systems',
   ),
   'contactName' => 
   array (
     'en_US' => 'Open Journal Systems',
   ),
-  'showDescription' => true,
-  'showThumbnail' => true,
-  'showTitle' => true,
-  'title' => 
+  'contactEmail' => 
   array (
-    'en_US' => 'Open Journal Systems',
+    'en_US' => 'ivoschueepp@gmail.com',
   ),
 ); ?>

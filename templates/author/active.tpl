@@ -63,7 +63,8 @@
 				{/if}
 				{if $submission->getOriginstampStatus() eq 3} <td style="color:green;font-weight: bold;" align=center><div class="tooltip" onclick='originstampDownload.php'>&#10003;<span class="tooltiptext">
 				In the articles summary, you will find a zip-file with all information you need for manual verification. </span></div></td>
-				{else} <td style="color:orange;font-weight: bold;" align=center>&#10003;</td>{/if}
+				{else} <td style="color:orange;font-weight: bold;" align=center><div class="tooltip" onclick='originstampDownload.php'>&#10003;<span class="tooltiptext">
+				In the articles summary, you will find a zip-file with all information you need for manual verification. </span></div></td>{/if}
 
 				{** Payment related actions *}
 				{if $status==STATUS_QUEUED_UNASSIGNED || $status==STATUS_QUEUED_REVIEW}
