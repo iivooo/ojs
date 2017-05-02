@@ -21,3 +21,11 @@ specific controllers. - ??
 
 + smarty template korrektur
 + button einfügen (zB gelber und grüner haken)
+
+2017-04-01
+
+- cronjob anpassen/ einrichten.
+- link zu originstamp einrichten neben haken.
+- UUID option hinzufügen (siehe mail).
+
+- Frage an Thomas: javascript von browser API blockchain.info

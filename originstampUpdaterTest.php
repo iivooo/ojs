@@ -5,24 +5,24 @@ function checkHash($hash){
 	$apiKey = "988e7238-995e-4db0-8277-ce8f75d4b037";
 	
 	$ch = curl_init( $url );
-	curl_setopt( $ch, CURLOPT_POST, 1);
-	curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1);
-	curl_setopt( $ch, CURLOPT_HEADER, 0);
-	curl_setopt($ch, CURLOPT_POSTFIELDS,$vars);  //Post Fields
+//	curl_setopt( $ch, CURLOPT_POST, 1);
+//	curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1);
+//	curl_setopt( $ch, CURLOPT_HEADER, 0);
+//	curl_setopt($ch, CURLOPT_POSTFIELDS,$vars);  //Post Fields
 	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 			'Content-type: application/json',
 			'charset: utf-8',
 			'Authorization: '.$apiKey
 	));
-	curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1); //option to not print and get response.
 	
 	
 	$response = curl_exec( $ch );
 	
 	curl_close ($ch);
 	
-	print  $response ;
-	var_dump($response);
+//	print  $response ;
+//	var_dump($response);
 	return $response;
 }
 
@@ -35,17 +35,20 @@ function checkHash($hash){
  */
 function fetchArticles() {
 	//get database connection
-	$db = mysqli_connect("localhost", "root", "1234", "ojs1");
+	$db = mysqli_connect("localhost", "iivooo", "AeC4deVoop4eiRohb9a", "iivooo");
 	if(!$db)
 	{
+	    var_dump('database connection failed.');
 		exit("Verbindungsfehler: ".mysqli_connect_error());
+
 	}
 	
 	//fetch all article_ids with submissionstatus < 3
 	$query = "SELECT article_id FROM articles WHERE (originstampStatus < 3) ";
 	$ids = mysqli_query($db, $query);
-	console.log("start");
+	var_dump($ids);
 	while ($id = $ids->fetch_row()) {
+	    var_dump($id);
 		//get filepath, hash file, get result from originstamp
 		if($filepath=searchFilePath($id[0])==null){
 			continue;
@@ -54,13 +57,16 @@ function fetchArticles() {
 		//fetch json from originstamp
 		$json_result = checkHash(hash_file("sha256",searchFilePath($id[0]), FALSE));
 		//get submissionstatus
-		$submissionStatus = json_decode($json_result)->multi_seed->submit_status;				
+		$submissionStatus = json_decode($json_result);
+		$res=$submissionStatus->multi_seed->submit_status;
 		//update db
-		$query = "UPDATE articles SET originstampStatus = ".$submissionStatus." WHERE article_id =".$id[0];
+		$query = "UPDATE articles SET originstampStatus = ".$res." WHERE article_id =".$id[0];
 		mysqli_query($db, $query);
+		var_dump("else: ".$id[0]." fetched.");
+
 		//maybe supply a logfile later.
 	}
-	
+	var_dump('exit');
 	//close database connection
 	mysqli_close($db);
 	
@@ -77,7 +83,7 @@ fetchArticles();
  */
 function searchFilePath($id){
 	$result=array();
-	$path = '/var/www/files/journals/';
+	$path = '/var/www/virtual/iivooo/html/files/journals/';
 	$objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
 	foreach($objects as $name => $object){	
 		if(is_file($name) && preg_match("/.*".$id.".*SM\./",$name) ){

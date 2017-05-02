@@ -483,19 +483,32 @@ class TrackSubmissionHandler extends AuthorHandler {
 		$artFileMan = new ArticleFileManager($articleId);
 		$tempFile = $artFileMan->getFile($fileId, $revision);
 		$filePath = $tempFile->getFilePath();
+		$originalName = $tempFile->getOriginalFileName();
+		$originstampVerificator = $_SERVER['DOCUMENT_ROOT']."/originstampVerificator.zip";
+		//copy zip template with originstampValidator
+//		copy($originstampVerificator, dirname($filePath));
+        $seedPath = $this->getSeedFile($filePath);
+		if($seedPath  == false){
+			print "<script>alert('hash not yet uploaded or originstamp is currently not available.')</script>";
+            $request->redirect(null, null, 'submission', $articleId);
+		}
+
 		$paths = array(
-				$filePath
-				//add hash
+				$filePath,
+				$seedPath
 				//add btc-address
 				//add hashes list
 		);
-		$zipDestination = $this->create_zip($paths, dirname($filePath)."/".$articleId.".zip");
-		
+//		var_dump(dirname($filePath));
+		$zipDestination = $this->add_to_zip($paths, dirname($filePath).'/originstampVerificator.zip', $originalName);
+//		var_dump($zipDestination);
 		if(!($zipDestination)){
-			$request->redirect(null, null, 'submission', $articleId);
+
 		} else if(file_exists($zipDestination)) {
-			$quoted = sprintf('"%s"', addcslashes(basename(dirname($filePath)."/".$articleId.".zip"), '"\\'));
-			$size   = filesize(dirname($filePath)."/".$articleId.".zip");
+			//$quoted = sprintf('"%s"', addcslashes(basename(dirname($filePath)."/".$articleId.".zip"), '"\\'));
+            $quoted = sprintf('"%s"', addcslashes(basename(dirname($filePath)."/originstampVerficator.zip"), '"\\'));
+			$size   = filesize(dirname($filePath)."/originstampVerificator.zip");
+			ob_clean();
 			header('Content-Description: File Transfer');
 			header('Content-Type: application/zip'); //octet-stream
 			header('Content-Disposition: attachment; filename=' . $quoted);
@@ -512,12 +525,50 @@ class TrackSubmissionHandler extends AuthorHandler {
 			print "file doesnt exists";
 		}
 	}
-	
-	function create_zip($files = array(),$destination = '',$overwrite = true) {
-		//if the zip file already exists and overwrite is false, return false
-		if(file_exists($destination) && !$overwrite) { 
-			
-			return false; }
+
+	function getSeedFile($filePath){
+		$fileHash=hash_file("sha256",$filePath, FALSE);
+        $url = "https://api.originstamp.org/api/download/seed/".$fileHash;
+        $apiKey = "988e7238-995e-4db0-8277-ce8f75d4b037";
+       // $apiKey="c5adf195-e5c0-44fe-97d9-6317367229ae";
+
+        $ch = curl_init( $url );
+//        curl_setopt( $ch, CURLOPT_POST, 1);
+//        curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1);
+//        curl_setopt( $ch, CURLOPT_HEADER, 0);
+//        curl_setopt($ch, CURLOPT_POSTFIELDS,$vars);  //Post Fields
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-type: application/json',
+            'charset: utf-8',
+            'Authorization: '.$apiKey
+        ));
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1);
+		//TODO: error handling
+
+        $response = curl_exec( $ch );
+        curl_close ($ch);
+		if(strpos($response, $fileHash) === FALSE){
+			return false;
+		}
+        $resultPath= dirname($filePath)."/seedfile.txt";
+        $fp = fopen($resultPath,"wb");
+        fwrite($fp,$response);
+        fclose($fp);
+
+        return $resultPath;
+    }
+
+    /**
+     * @param array $files
+     * @param string $destination
+     * @param bool $overwrite
+     * @return bool|string
+     */
+    function add_to_zip($files = array(), $destination = '', $originalName) {
+        if($destination == ""){
+
+            return false;
+        }
 		//vars
 		$valid_files = array();
 		//if files were passed in...
@@ -527,24 +578,63 @@ class TrackSubmissionHandler extends AuthorHandler {
 				//make sure the file exists
 				if(file_exists($file)) {
 					$valid_files[] = $file;
+				} else {
+					var_dump("file not existing");
 				}
 			}
 		}
 		//if we have good files...
 		if(count($valid_files)) {
 			//create the archive
-			$zip = new ZipArchive();
-			$err;
 			 //$overwrite ? ZIPARCHIVE::OVERWRITE :
-			if($err =$zip->open($destination, ZIPARCHIVE::CREATE) !== TRUE) {
+            $zip = new ZipArchive();
+			if($err =$zip->open($destination, ZIPARCHIVE::OVERWRITE) !== TRUE) {
+//                var_dump("olla");
 				return false;
 			}
-			//add the filess
-			foreach($valid_files as $file) {
-				$zip->addFile($file); //,$file
-			}
-			//debug
-// 			print 'The zip archive contains '.$zip->numFiles.' files with a status of '.$zip->status;	
+
+
+			//add manual verificator
+			$rootPath = $_SERVER['DOCUMENT_ROOT']."/originstampVerificator/";
+            $files = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($rootPath),
+                RecursiveIteratorIterator::LEAVES_ONLY
+            );
+
+            foreach ($files as $name => $file)
+            {
+                // Skip directories (they would be added automatically)
+                if (!$file->isDir())
+                {
+                    // Get real and relative path for current file
+                    $filePath = $file->getRealPath();
+//                    var_dump($filePath);
+                    $relativePath = substr($filePath, strlen($rootPath) );
+
+                    // Add current file to archive
+                    $zip->addFile($filePath, $relativePath);
+//                    for($i=0; $i < $zip->numFiles; $i++){
+//                        var_dump($zip->getNameIndex($i));
+//                    }
+                }
+            }
+            //add the filess
+            foreach($valid_files as $file) {
+            	$content = file_get_contents($file);
+//				var_dump($file);
+                $zip->addFromString(pathinfo($file, PATHINFO_BASENAME), $content); //,$file
+//				var_dump(basename($file));
+//				for($i=0; $i < $zip->numFiles; $i++){
+//                    var_dump($zip->getNameIndex($i));
+//				}
+
+            }
+
+
+
+
+            //debug
+// 			print 'The zip archive contains '.$zip->numFiles.' files with a status of '.$zip->status;
 			//close the zip -- done!
 			$zip->close();
 	
