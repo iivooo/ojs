@@ -31,6 +31,7 @@
 {iterate from=submissions item=submission}
 	{assign var="articleId" value=$submission->getId()}
 	{assign var="progress" value=$submission->getSubmissionProgress()}
+	{assign var="sha256" value=$submission->getSHA256()}
 
 	<tr valign="top">
 		<td>{$articleId|escape}</td>
@@ -61,10 +62,12 @@
 						{/if}
 					</a>
 				{/if}
-				{if $submission->getOriginstampStatus() eq 3} <td style="color:green;font-weight: bold;" align=center><div class="tooltip" onclick='originstampDownload.php'>&#10003;<span class="tooltiptext">
-				In the articles summary, you will find a zip-file with all information you need for manual verification. </span></div></td>
-				{else} <td style="color:orange;font-weight: bold;" align=center><div class="tooltip" onclick='originstampDownload.php'>&#10003;<span class="tooltiptext">
-				In the articles summary, you will find a zip-file with all information you need for manual verification. </span></div></td>{/if}
+				{if $submission->getOriginstampStatus() eq 3} <td style="color:green;font-weight: bold;" align=left><div class="tooltip" onclick='originstampDownload.php'>&#10003;<span class="tooltiptext">
+				Originstamp Status: 3. Your submission is successfully timpestamped. In the articles summary, you will find a zip-file with all information you need for manual verification. </span></div>
+				<div><a target="_blank" href="https://app.originstamp.org/s/{$sha256|escape}">LINK</a></div></td>
+				{else} <td style="color:orange;font-weight: bold;" align=left><div class="tooltip" onclick='originstampDownload.php'>&#10003;<span class="tooltiptext">
+				Originstamp status: < 3. Your submission will be successfully timestamped in less than 24 hours. In the articles summary, you will find a zip-file with all information you need for manual verification. </span></div>
+				<div><a target="_blank" href="https://app.originstamp.org/s/{$sha256|escape}">LINK</a></div></td>{/if}
 
 				{** Payment related actions *}
 				{if $status==STATUS_QUEUED_UNASSIGNED || $status==STATUS_QUEUED_REVIEW}

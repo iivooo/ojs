@@ -132,6 +132,8 @@ class AuthorSubmissionDAO extends DAO {
 		
 		$authorSubmission->setOriginstampStatus($row['originstampstatus']);
 
+		$authorSubmission->setSHA256($row['sha256']);
+
 		HookRegistry::call('AuthorSubmissionDAO::_returnAuthorSubmissionFromRow', array(&$authorSubmission, &$row));
 
 		return $authorSubmission;
@@ -174,6 +176,7 @@ class AuthorSubmissionDAO extends DAO {
 		$result =& $this->retrieveRange(
 			'SELECT	a.*,
 				originstampStatus,
+				sha256,
 				COALESCE(atl.setting_value, atpl.setting_value) AS submission_title,
 				aa.last_name AS author_name,
 				COALESCE(stl.setting_value, stpl.setting_value) AS section_title,

@@ -1,8 +1,8 @@
 // <!-- This is a test file for using timestamp.org -->
 
-  //include("https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js");
+  // include("https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js");
   var hash;
-  function handleFileSelect(fileFieldId = 'submissionFile1') {
+  function handleFileSelect(fileFieldId="submissionFile1") {
     var reader = new FileReader();
     var file = document.getElementById(fileFieldId).files[0];
     reader.onload = function(e) {
@@ -18,11 +18,20 @@
   var baseURL = "https://api.originstamp.org/api/";
 
   function uploadHash() {
+    var uuid;
+    var ops;
+    if(localStorage['uuid'] != null){
+      ops = '{"submit_ops": ["multi_seed"], "url": "'+uuid+'"}';
+      alert(JSON.stringify(ops));
+    } else {
+      // ops = {"submit_ops":["multi_seed"]+',"'+uuid+'"'};
+    }
+    alert(localStorage['uuid']);
     var ajaxDump = $.ajax({
       url: baseURL.concat(localStorage['hash']),
       type: "POST",
-
-      data: JSON.stringify({submit_ops: ["multi_seed"]}),
+//data: JSON.stringify({submit_ops: ["multi_seed"]+uuid}),
+      data: JSON.stringify(uuid), //TODO: Thomas fragen!
       contentType: "application/json; charset=UTF-8",
       async: false,
       headers: {
@@ -32,9 +41,9 @@
       beforeSend: function (request)
       {
     	  request.setRequestHeader("Authorization", apiKey)
-//          request.setRequestHeader("Access-Control-Allow-Origin", "*");
-//          request.setRequestHeader("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS");
-//          request.setRequestHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With");
+         request.setRequestHeader("Access-Control-Allow-Origin", "*");
+         request.setRequestHeader("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS");
+         request.setRequestHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With");
       },
       success: function (result){
         console.log(result);
@@ -74,9 +83,28 @@
 //     return true; // return false to cancel form action
 // });
 
-//popup function w. SHA, BTC-Adress and Zip-Downloadability
-//@id: article/review Id
-//@type: article: 'SM', review 'RV'
-function getInfo(id, type){
+//UUID generator.
+  function generateUUID() {
+    console.log('uuid loaded');
+      var uuid = "", i, random;
+      for (i = 0; i < 32; i++) {
+          random = Math.random() * 16 | 0;
 
-}
+          if (i == 8 || i == 12 || i == 16 || i == 20) {
+              uuid += "-"
+          }
+          uuid += (i == 12 ? 4 : (i == 16 ? (random & 3 | 8) : random)).toString(16);
+      }
+      localStorage['uuid']=uuid;
+      // document.getElementById("UUIDLink").innerHTML = "https://originstamp.org/u/"+uuid;
+      return uuid;
+
+  }
+$(document).ready(function () {
+  // alert("bunga bunga")
+    var res = generateUUID();
+    localStorage['uuid']=res;
+    document.getElementById('uuidLink').innerHTML="https://originstamp.org/u/"+res;
+    //$(#button).on('click, function ... geht leider nicht... TODO: Thomas fragen.
+     })
+

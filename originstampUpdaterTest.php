@@ -1,4 +1,7 @@
-<?php 
+<?php
+//require_once($_SERVER['DOCUMENT_ROOT'].'/classes/file/ArticleFileManager.inc.php');
+
+// call with: https://iivooo.suhail.uberspace.de/ojs/originstampUpdaterTest.php?=fetchArticles
 
 function checkHash($hash){
 	$url = "https://api.originstamp.org/api/".$hash;
@@ -44,7 +47,7 @@ function fetchArticles() {
 	}
 	
 	//fetch all article_ids with submissionstatus < 3
-	$query = "SELECT article_id FROM articles WHERE (originstampStatus < 3) ";
+	$query = "SELECT article_id FROM articles WHERE (originstampStatus <= 3) "; //TODO: correct later
 	$ids = mysqli_query($db, $query);
 	var_dump($ids);
 	while ($id = $ids->fetch_row()) {
@@ -53,16 +56,22 @@ function fetchArticles() {
 		if($filepath=searchFilePath($id[0])==null){
 			continue;
 		}
-		echo "<p>".$filepath."</p>";
+//		$fileMan = new ArticleFileManager($id);
+
+		var_dump(searchFilePath($id[0]));
 		//fetch json from originstamp
-		$json_result = checkHash(hash_file("sha256",searchFilePath($id[0]), FALSE));
+        $hash=hash_file("sha256",searchFilePath($id[0]));
+		$json_result = checkHash($hash, FALSE);
 		//get submissionstatus
 		$submissionStatus = json_decode($json_result);
 		$res=$submissionStatus->multi_seed->submit_status;
+		if($res == null){$res = 1;}
 		//update db
-		$query = "UPDATE articles SET originstampStatus = ".$res." WHERE article_id =".$id[0];
+		$query = "UPDATE articles SET originstampStatus = ".$res.", sha256 ='".$hash."' WHERE article_id =".$id[0];
+		var_dump($query);
 		mysqli_query($db, $query);
-		var_dump("else: ".$id[0]." fetched.");
+		var_dump("id: ".$id[0]." hash: ".$hash);
+		var_dump(mysqli_error($db));
 
 		//maybe supply a logfile later.
 	}
@@ -86,7 +95,7 @@ function searchFilePath($id){
 	$path = '/var/www/virtual/iivooo/html/files/journals/';
 	$objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
 	foreach($objects as $name => $object){	
-		if(is_file($name) && preg_match("/.*".$id.".*SM\./",$name) ){
+		if(is_file($name) && preg_match("/^".$id.".*SM\./",basename($name)) ){
 			return $name;
 		}
 	}

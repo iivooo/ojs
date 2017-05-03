@@ -1,7 +1,7 @@
-<?php /* Smarty version 2.6.26, created on 2017-03-21 15:30:33
+<?php /* Smarty version 2.6.26, created on 2017-05-02 22:19:06
          compiled from author/active.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_heading', 'author/active.tpl', 21, false),array('function', 'translate', 'author/active.tpl', 22, false),array('function', 'url', 'author/active.tpl', 43, false),array('function', 'page_info', 'author/active.tpl', 113, false),array('function', 'page_links', 'author/active.tpl', 114, false),array('block', 'iterate', 'author/active.tpl', 31, false),array('modifier', 'escape', 'author/active.tpl', 36, false),array('modifier', 'date_format', 'author/active.tpl', 37, false),array('modifier', 'truncate', 'author/active.tpl', 40, false),array('modifier', 'strip_tags', 'author/active.tpl', 43, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_heading', 'author/active.tpl', 21, false),array('function', 'translate', 'author/active.tpl', 22, false),array('function', 'url', 'author/active.tpl', 44, false),array('function', 'page_info', 'author/active.tpl', 116, false),array('function', 'page_links', 'author/active.tpl', 117, false),array('block', 'iterate', 'author/active.tpl', 31, false),array('modifier', 'escape', 'author/active.tpl', 37, false),array('modifier', 'date_format', 'author/active.tpl', 38, false),array('modifier', 'truncate', 'author/active.tpl', 41, false),array('modifier', 'strip_tags', 'author/active.tpl', 44, false),)), $this); ?>
  <p>Here you can see the originstamp.org status on the right side of the active submissions. If the check font is green
  the submission is safely timestamped. If you click on the submission you will get to the overview page of
  the submission. Down the page there you can download a zip file with your submission and all the additional data
@@ -33,6 +33,7 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_headin
 <?php $this->_tag_stack[] = array('iterate', array('from' => 'submissions','item' => 'submission')); $_block_repeat=true;$this->_plugins['block']['iterate'][0][0]->smartyIterate($this->_tag_stack[count($this->_tag_stack)-1][1], null, $this, $_block_repeat);while ($_block_repeat) { ob_start(); ?>
 	<?php $this->assign('articleId', $this->_tpl_vars['submission']->getId()); ?>
 	<?php $this->assign('progress', $this->_tpl_vars['submission']->getSubmissionProgress()); ?>
+	<?php $this->assign('sha256', $this->_tpl_vars['submission']->getSHA256()); ?>
 
 	<tr valign="top">
 		<td><?php echo ((is_array($_tmp=$this->_tpl_vars['articleId'])) ? $this->_run_mod_handler('escape', true, $_tmp) : $this->_plugins['modifier']['escape'][0][0]->smartyEscape($_tmp)); ?>
@@ -79,10 +80,14 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_headin
 						<?php endif; ?>
 					</a>
 				<?php endif; ?>
-				<?php if ($this->_tpl_vars['submission']->getOriginstampStatus() == 3): ?> <td style="color:green;font-weight: bold;" align=center><div class="tooltip" onclick='originstampDownload.php'>&#10003;<span class="tooltiptext">
-				In the articles summary, you will find a zip-file with all information you need for manual verification. </span></div></td>
-				<?php else: ?> <td style="color:orange;font-weight: bold;" align=center><div class="tooltip" onclick='originstampDownload.php'>&#10003;<span class="tooltiptext">
-				In the articles summary, you will find a zip-file with all information you need for manual verification. </span></div></td><?php endif; ?>
+				<?php if ($this->_tpl_vars['submission']->getOriginstampStatus() == 3): ?> <td style="color:green;font-weight: bold;" align=left><div class="tooltip" onclick='originstampDownload.php'>&#10003;<span class="tooltiptext">
+				Originstamp Status: 3. Your submission is successfully timpestamped. In the articles summary, you will find a zip-file with all information you need for manual verification. </span></div>
+				<div><a target="_blank" href="https://app.originstamp.org/s/<?php echo ((is_array($_tmp=$this->_tpl_vars['sha256'])) ? $this->_run_mod_handler('escape', true, $_tmp) : $this->_plugins['modifier']['escape'][0][0]->smartyEscape($_tmp)); ?>
+">LINK</a></div></td>
+				<?php else: ?> <td style="color:orange;font-weight: bold;" align=left><div class="tooltip" onclick='originstampDownload.php'>&#10003;<span class="tooltiptext">
+				Originstamp status: < 3. Your submission will be successfully timestamped in less than 24 hours. In the articles summary, you will find a zip-file with all information you need for manual verification. </span></div>
+				<div><a target="_blank" href="https://app.originstamp.org/s/<?php echo ((is_array($_tmp=$this->_tpl_vars['sha256'])) ? $this->_run_mod_handler('escape', true, $_tmp) : $this->_plugins['modifier']['escape'][0][0]->smartyEscape($_tmp)); ?>
+">LINK</a></div></td><?php endif; ?>
 
 								<?php if ($this->_tpl_vars['status'] == STATUS_QUEUED_UNASSIGNED || $this->_tpl_vars['status'] == STATUS_QUEUED_REVIEW): ?>
 					<?php if ($this->_tpl_vars['submissionEnabled'] && ! $this->_tpl_vars['completedPaymentDAO']->hasPaidSubmission($this->_tpl_vars['submission']->getJournalId(),$this->_tpl_vars['submission']->getId())): ?>

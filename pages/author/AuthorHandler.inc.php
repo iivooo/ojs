@@ -62,7 +62,8 @@ class AuthorHandler extends Handler {
 		if ($sort == 'status') {
 			// FIXME Does not pass $rangeInfo else we only get partial results
 			$unsortedSubmissions = $authorSubmissionDao->getAuthorSubmissions($user->getId(), $journal->getId(), $active, null, $sort, $sortDirection);
-
+			//originstamp dirtyhack to assign direct link to originstamp.org.
+//			var_dump($unsortedSubmissions);
 			// Sort all submissions by status, which is too complex to do in the DB
 			$submissionsArray = $unsortedSubmissions->toArray();
 			$compare = create_function('$s1, $s2', 'return strcmp($s1->getSubmissionStatus(), $s2->getSubmissionStatus());');
@@ -76,6 +77,8 @@ class AuthorHandler extends Handler {
 			$submissions =& ArrayItemIterator::fromRangeInfo($submissionsArray, $rangeInfo);
 		} else {
 			$submissions = $authorSubmissionDao->getAuthorSubmissions($user->getId(), $journal->getId(), $active, $rangeInfo, $sort, $sortDirection);
+//			var_dump($submissions);
+
 		}
 		
 		

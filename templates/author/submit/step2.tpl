@@ -43,8 +43,7 @@ file="author/submit/submitHeader.tpl"}
 			{if $submissionFile}
 			<tr valign="top">
 				<td width="20%" class="label">{translate key="common.fileName"}</td>
-				<td width="80%" class="value"><a href="{url op="
-					download" path=$articleId|to_array:$submissionFile->getFileId()}">{$submissionFile->getFileName()|escape}</a></td>
+				<td width="80%" class="value"><a href="{url op="download" path=$articleId|to_array:$submissionFile->getFileId()}">{$submissionFile->getFileName()|escape}</a></td>
 			</tr>
 			<tr valign="top">
 				<td width="20%" class="label">{translate
@@ -83,8 +82,7 @@ file="author/submit/submitHeader.tpl"}
 					name="uploadSubmissionFile" type="submit" class="button" onclick="handleFileSelect()"
 					value="{translate key=" common.upload"}" /> {if
 					$currentJournal->getSetting('showEnsuringLink')}<a class="action"
-					href="javascript:openHelp('{get_help_id key="
-					editorial.sectionEditorsRole.review.blindPeerReview" url="true"}')">{translate
+					href="javascript:openHelp('{get_help_id key="editorial.sectionEditorsRole.review.blindPeerReview" url="true"}')">{translate
 						key="reviewer.article.ensuringBlindReview"}</a>{/if}</td>
 			</tr>
 		</table>
@@ -100,7 +98,13 @@ file="author/submit/submitHeader.tpl"}
 			href="https://www.originstamp.org">originstamp.org</a>. The service will 
 		insert a unique fingerprint of your submission in the BitCoin Blockchain. 
 		Afterwards you can verify a document, that it existed exactly in this form (not altered)
-		at the upload time.			
+		at the upload time.
+		<h2 style="color:red">IMPORTANT BEFORE SAVE AND CONTINUE</h2>
+		If you want to, you can copy a symbolic link into your document before uploading. With that, anybody can directly access the
+		<a href="https://www.originstamp.org">originstamp.org</a> site and see your timestamp. <br>
+		Click here to get a link to copy in your document before uploading:<br>
+		<br>
+		<span style="font-weight: bold" id="uuidLink"></span>
 <!-- 		If you want to, we can trusted timestamp your submission. You will get -->
 <!-- 		a SHA-256 hash from your submission which is submitted to <a -->
 <!-- 			href="https://www.originstamp.org">originstamp.org</a>, which -->
@@ -115,16 +119,13 @@ file="author/submit/submitHeader.tpl"}
 
 	<p>
 		<input type="submit"
-			{if !$submissionFile} onclick="return confirm('{translate|escape:"
-			jsparam" key="author.submit.noSubmissionConfirm"
-			}')"{/if} value="{translate key="
-			common.saveAndContinue"}" class="button defaultButton" 
+			{if !$submissionFile} onclick="return confirm('{translate|escape:"jsparam" key="author.submit.noSubmissionConfirm"
+			}')"{/if} value="{translate key="common.saveAndContinue"}" class="button defaultButton"
 			<!--  onclick='uploadHash(hash)' -->
 			/> 
 			<input
 			type="button" value="{translate key=" common.cancel"}" class="button"
-			onclick="confirmAction('{url page="
-			author"}', '{translate|escape:"jsparam" key="author.submit.cancelSubmission" }')" />
+			onclick="confirmAction('{url page="author"}', '{translate|escape:"jsparam" key="author.submit.cancelSubmission" }')" />
 	</p>
 
 </form>

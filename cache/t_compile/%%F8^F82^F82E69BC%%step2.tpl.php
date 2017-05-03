@@ -1,7 +1,7 @@
-<?php /* Smarty version 2.6.26, created on 2017-03-20 15:39:20
+<?php /* Smarty version 2.6.26, created on 2017-05-03 01:59:14
          compiled from author/submit/step2.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('function', 'url', 'author/submit/step2.tpl', 21, false),array('function', 'translate', 'author/submit/step2.tpl', 26, false),array('function', 'fieldLabel', 'author/submit/step2.tpl', 76, false),array('function', 'get_help_id', 'author/submit/step2.tpl', 86, false),array('modifier', 'escape', 'author/submit/step2.tpl', 23, false),array('modifier', 'to_array', 'author/submit/step2.tpl', 46, false),array('modifier', 'date_format', 'author/submit/step2.tpl', 60, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('function', 'url', 'author/submit/step2.tpl', 21, false),array('function', 'translate', 'author/submit/step2.tpl', 26, false),array('function', 'fieldLabel', 'author/submit/step2.tpl', 75, false),array('function', 'get_help_id', 'author/submit/step2.tpl', 85, false),array('modifier', 'escape', 'author/submit/step2.tpl', 23, false),array('modifier', 'to_array', 'author/submit/step2.tpl', 46, false),array('modifier', 'date_format', 'author/submit/step2.tpl', 59, false),)), $this); ?>
  <?php $this->assign('pageTitle', "author.submit.step2"); ?> <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "author/submit/submitHeader.tpl", 'smarty_include_vars' => array()));
 $this->_tpl_vars = $_smarty_tpl_vars;
@@ -52,8 +52,7 @@ unset($_smarty_tpl_vars);
 			<tr valign="top">
 				<td width="20%" class="label"><?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "common.fileName"), $this);?>
 </td>
-				<td width="80%" class="value"><a href="<?php echo $this->_plugins['function']['url'][0][0]->smartyUrl(array('op' => '
-					download','path' => ((is_array($_tmp=$this->_tpl_vars['articleId'])) ? $this->_run_mod_handler('to_array', true, $_tmp, $this->_tpl_vars['submissionFile']->getFileId()) : $this->_plugins['modifier']['to_array'][0][0]->smartyToArray($_tmp, $this->_tpl_vars['submissionFile']->getFileId()))), $this);?>
+				<td width="80%" class="value"><a href="<?php echo $this->_plugins['function']['url'][0][0]->smartyUrl(array('op' => 'download','path' => ((is_array($_tmp=$this->_tpl_vars['articleId'])) ? $this->_run_mod_handler('to_array', true, $_tmp, $this->_tpl_vars['submissionFile']->getFileId()) : $this->_plugins['modifier']['to_array'][0][0]->smartyToArray($_tmp, $this->_tpl_vars['submissionFile']->getFileId()))), $this);?>
 "><?php echo ((is_array($_tmp=$this->_tpl_vars['submissionFile']->getFileName())) ? $this->_run_mod_handler('escape', true, $_tmp) : $this->_plugins['modifier']['escape'][0][0]->smartyEscape($_tmp)); ?>
 </a></td>
 			</tr>
@@ -99,8 +98,7 @@ unset($_smarty_tpl_vars);
 					name="uploadSubmissionFile" type="submit" class="button" onclick="handleFileSelect()"
 					value="<?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => " common.upload"), $this);?>
 " /> <?php if ($this->_tpl_vars['currentJournal']->getSetting('showEnsuringLink')): ?><a class="action"
-					href="javascript:openHelp('<?php echo $this->_plugins['function']['get_help_id'][0][0]->smartyGetHelpId(array('key' => "
-					editorial.sectionEditorsRole.review.blindPeerReview",'url' => 'true'), $this);?>
+					href="javascript:openHelp('<?php echo $this->_plugins['function']['get_help_id'][0][0]->smartyGetHelpId(array('key' => "editorial.sectionEditorsRole.review.blindPeerReview",'url' => 'true'), $this);?>
 ')"><?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "reviewer.article.ensuringBlindReview"), $this);?>
 </a><?php endif; ?></td>
 			</tr>
@@ -117,7 +115,13 @@ unset($_smarty_tpl_vars);
 			href="https://www.originstamp.org">originstamp.org</a>. The service will 
 		insert a unique fingerprint of your submission in the BitCoin Blockchain. 
 		Afterwards you can verify a document, that it existed exactly in this form (not altered)
-		at the upload time.			
+		at the upload time.
+		<h2 style="color:red">IMPORTANT BEFORE SAVE AND CONTINUE</h2>
+		If you want to, you can copy a symbolic link into your document before uploading. With that, anybody can directly access the
+		<a href="https://www.originstamp.org">originstamp.org</a> site and see your timestamp. <br>
+		Click here to get a link to copy in your document before uploading:<br>
+		<br>
+		<span style="font-weight: bold" id="uuidLink"></span>
 <!-- 		If you want to, we can trusted timestamp your submission. You will get -->
 <!-- 		a SHA-256 hash from your submission which is submitted to <a -->
 <!-- 			href="https://www.originstamp.org">originstamp.org</a>, which -->
@@ -132,19 +136,15 @@ unset($_smarty_tpl_vars);
 
 	<p>
 		<input type="submit"
-			<?php if (! $this->_tpl_vars['submissionFile']): ?> onclick="return confirm('<?php echo ((is_array($_tmp=$this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "author.submit.noSubmissionConfirm"), $this))) ? $this->_run_mod_handler('escape', true, $_tmp, '
-			jsparam') : $this->_plugins['modifier']['escape'][0][0]->smartyEscape($_tmp, '
-			jsparam'));?>
-')"<?php endif; ?> value="<?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "
-			common.saveAndContinue"), $this);?>
-" class="button defaultButton" 
+			<?php if (! $this->_tpl_vars['submissionFile']): ?> onclick="return confirm('<?php echo ((is_array($_tmp=$this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "author.submit.noSubmissionConfirm"), $this))) ? $this->_run_mod_handler('escape', true, $_tmp, 'jsparam') : $this->_plugins['modifier']['escape'][0][0]->smartyEscape($_tmp, 'jsparam'));?>
+')"<?php endif; ?> value="<?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "common.saveAndContinue"), $this);?>
+" class="button defaultButton"
 			<!--  onclick='uploadHash(hash)' -->
 			/> 
 			<input
 			type="button" value="<?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => " common.cancel"), $this);?>
 " class="button"
-			onclick="confirmAction('<?php echo $this->_plugins['function']['url'][0][0]->smartyUrl(array('page' => '
-			author'), $this);?>
+			onclick="confirmAction('<?php echo $this->_plugins['function']['url'][0][0]->smartyUrl(array('page' => 'author'), $this);?>
 ', '<?php echo ((is_array($_tmp=$this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "author.submit.cancelSubmission"), $this))) ? $this->_run_mod_handler('escape', true, $_tmp, 'jsparam') : $this->_plugins['modifier']['escape'][0][0]->smartyEscape($_tmp, 'jsparam'));?>
 ')" />
 	</p>

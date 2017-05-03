@@ -18,6 +18,7 @@
  */
 
 class Submission extends DataObject {
+	var $sha256;
 	
 	/** @var originstampstatus retrieved from db */
 	var $originstampStatus;
@@ -955,6 +956,14 @@ class Submission extends DataObject {
 	
 	function setOriginstampStatus($status){
 		return $this->originstampStatus = $status;
+	}
+
+	function getSHA256(){
+		return $this->sha256;
+	}
+
+	function setSHA256($sha256){
+		return $this->sha256=$sha256;
 	}
 }
 
