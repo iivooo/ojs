@@ -47,7 +47,7 @@ function fetchArticles() {
 	}
 	
 	//fetch all article_ids with submissionstatus < 3
-	$query = "SELECT article_id FROM articles WHERE (originstampStatus <= 3) "; //TODO: correct later
+	$query = "SELECT article_id FROM articles";//WHERE (originstampStatus <= 3) "; //TODO: correct later
 	$ids = mysqli_query($db, $query);
 	var_dump($ids);
 	while ($id = $ids->fetch_row()) {
@@ -95,7 +95,7 @@ function searchFilePath($id){
 	$path = '/var/www/virtual/iivooo/html/files/journals/';
 	$objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
 	foreach($objects as $name => $object){	
-		if(is_file($name) && preg_match("/^".$id.".*SM\./",basename($name)) ){
+		if(is_file($name) && preg_match("/^".$id."-.*SM\./",basename($name)) ){
 			return $name;
 		}
 	}

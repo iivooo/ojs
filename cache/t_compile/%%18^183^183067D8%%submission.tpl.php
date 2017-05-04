@@ -1,7 +1,7 @@
-<?php /* Smarty version 2.6.26, created on 2017-03-20 15:32:46
+<?php /* Smarty version 2.6.26, created on 2017-05-04 20:19:17
          compiled from author/submission.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('function', 'translate', 'author/submission.tpl', 12, false),array('function', 'url', 'author/submission.tpl', 18, false),array('modifier', 'assign', 'author/submission.tpl', 12, false),array('modifier', 'to_array', 'author/submission.tpl', 55, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('function', 'translate', 'author/submission.tpl', 12, false),array('function', 'url', 'author/submission.tpl', 18, false),array('modifier', 'assign', 'author/submission.tpl', 12, false),array('modifier', 'to_array', 'author/submission.tpl', 56, false),)), $this); ?>
 <?php echo ''; ?><?php echo ((is_array($_tmp=$this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "submission.page.summary",'id' => $this->_tpl_vars['submission']->getId()), $this))) ? $this->_run_mod_handler('assign', true, $_tmp, 'pageTitleTranslated') : $this->_plugins['modifier']['assign'][0][0]->smartyAssign($_tmp, 'pageTitleTranslated'));?><?php echo ''; ?><?php $this->assign('pageCrumbTitle', "submission.summary"); ?><?php echo ''; ?><?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "common/header.tpl", 'smarty_include_vars' => array()));
 $this->_tpl_vars = $_smarty_tpl_vars;
@@ -62,6 +62,7 @@ unset($_smarty_tpl_vars);
 	<!-- 	<td width="20%" class="label"><?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "common.originstampZip"), $this);?>
 </td> -->
 		<td width="80%" colspan="2" class="data">
+		<?php if ($this->_tpl_vars['submission']->getOriginstampStatus() == 3): ?>
 		In case of unavailability or for your archives, download a Zip-archive with all information needed to 
 		manually verify your file within the Bitcoin-Blockchain.
 			<?php if ($this->_tpl_vars['submissionFile']): ?>
@@ -71,17 +72,14 @@ unset($_smarty_tpl_vars);
 				<?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "common.none"), $this);?>
 
 			<?php endif; ?>
+        <?php else: ?>
+			You can download an offline verficator with your submission and anything you need to manually verify your submission in about 24 hours, when the timestamping process is completed.
+		<?php endif; ?>
 		</td>
 	</tr>
 </table>
 </div>
 
-
-<?php $_smarty_tpl_vars = $this->_tpl_vars;
-$this->_smarty_include(array('smarty_include_tpl_file' => "author/originstampdownload.tpl", 'smarty_include_vars' => array()));
-$this->_tpl_vars = $_smarty_tpl_vars;
-unset($_smarty_tpl_vars);
- ?>
 
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "common/footer.tpl", 'smarty_include_vars' => array()));

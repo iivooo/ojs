@@ -26,7 +26,7 @@ specific controllers. - ??
 
 - cronjob anpassen/ einrichten.
 + link zu originstamp einrichten neben haken.
-- UUID option hinzufügen (siehe mail).
++ UUID option hinzufügen (siehe mail). TODO: Thomas fragen an was man sieht, dass es geklappt hat.
  - php funktion aufrufen welche uuid in datenbank schreibt für den verzögerten timestamp
 
 - Frage an Thomas: javascript von browser API blockchain.info
@@ -35,3 +35,11 @@ specific controllers. - ??
 :Offline-verifikator:
     blockchainexplorer, api mit allow-access-control
 
++downloadZip
+ +if no seedfile/ there is no zip
+ +only testpapersubmission works: names?
+ -supplementary files?
+
++hash direkt in datenbank schreiben originstampUpdaterTest in authorHandler..
+
+- TODO: ein paar artikel löschen -> unübersichtlich

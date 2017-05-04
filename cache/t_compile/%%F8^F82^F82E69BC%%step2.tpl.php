@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.26, created on 2017-05-03 01:59:14
+<?php /* Smarty version 2.6.26, created on 2017-05-03 11:09:29
          compiled from author/submit/step2.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'url', 'author/submit/step2.tpl', 21, false),array('function', 'translate', 'author/submit/step2.tpl', 26, false),array('function', 'fieldLabel', 'author/submit/step2.tpl', 75, false),array('function', 'get_help_id', 'author/submit/step2.tpl', 85, false),array('modifier', 'escape', 'author/submit/step2.tpl', 23, false),array('modifier', 'to_array', 'author/submit/step2.tpl', 46, false),array('modifier', 'date_format', 'author/submit/step2.tpl', 59, false),)), $this); ?>
@@ -116,7 +116,7 @@ unset($_smarty_tpl_vars);
 		insert a unique fingerprint of your submission in the BitCoin Blockchain. 
 		Afterwards you can verify a document, that it existed exactly in this form (not altered)
 		at the upload time.
-		<h2 style="color:red">IMPORTANT BEFORE SAVE AND CONTINUE</h2>
+		<h2 style="color:red">IMPORTANT BEFORE UPLOADING:</h2>
 		If you want to, you can copy a symbolic link into your document before uploading. With that, anybody can directly access the
 		<a href="https://www.originstamp.org">originstamp.org</a> site and see your timestamp. <br>
 		Click here to get a link to copy in your document before uploading:<br>
@@ -139,8 +139,7 @@ unset($_smarty_tpl_vars);
 			<?php if (! $this->_tpl_vars['submissionFile']): ?> onclick="return confirm('<?php echo ((is_array($_tmp=$this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "author.submit.noSubmissionConfirm"), $this))) ? $this->_run_mod_handler('escape', true, $_tmp, 'jsparam') : $this->_plugins['modifier']['escape'][0][0]->smartyEscape($_tmp, 'jsparam'));?>
 ')"<?php endif; ?> value="<?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "common.saveAndContinue"), $this);?>
 " class="button defaultButton"
-			<!--  onclick='uploadHash(hash)' -->
-			/> 
+			onclick="uploadHash(hash)" />
 			<input
 			type="button" value="<?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => " common.cancel"), $this);?>
 " class="button"

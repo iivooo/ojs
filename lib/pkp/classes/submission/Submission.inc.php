@@ -959,7 +959,13 @@ class Submission extends DataObject {
 	}
 
 	function getSHA256(){
-		return $this->sha256;
+		if($this->sha256 != null){
+            return $this->sha256;
+		}
+        import('classes.file.ArticleFileManager');
+        $articleFileManager = new ArticleFileManager($this->getId());
+        return hash('sha256', $articleFileManager->readFile());
+
 	}
 
 	function setSHA256($sha256){

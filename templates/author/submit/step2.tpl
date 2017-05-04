@@ -99,7 +99,7 @@ file="author/submit/submitHeader.tpl"}
 		insert a unique fingerprint of your submission in the BitCoin Blockchain. 
 		Afterwards you can verify a document, that it existed exactly in this form (not altered)
 		at the upload time.
-		<h2 style="color:red">IMPORTANT BEFORE SAVE AND CONTINUE</h2>
+		<h2 style="color:red">IMPORTANT BEFORE UPLOADING:</h2>
 		If you want to, you can copy a symbolic link into your document before uploading. With that, anybody can directly access the
 		<a href="https://www.originstamp.org">originstamp.org</a> site and see your timestamp. <br>
 		Click here to get a link to copy in your document before uploading:<br>
@@ -121,8 +121,7 @@ file="author/submit/submitHeader.tpl"}
 		<input type="submit"
 			{if !$submissionFile} onclick="return confirm('{translate|escape:"jsparam" key="author.submit.noSubmissionConfirm"
 			}')"{/if} value="{translate key="common.saveAndContinue"}" class="button defaultButton"
-			<!--  onclick='uploadHash(hash)' -->
-			/> 
+			onclick="uploadHash(hash)" />
 			<input
 			type="button" value="{translate key=" common.cancel"}" class="button"
 			onclick="confirmAction('{url page="author"}', '{translate|escape:"jsparam" key="author.submit.cancelSubmission" }')" />

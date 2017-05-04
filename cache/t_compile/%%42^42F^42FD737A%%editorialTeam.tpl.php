@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.26, created on 2017-03-09 13:46:10
+<?php /* Smarty version 2.6.26, created on 2017-05-04 08:06:22
          compiled from about/editorialTeam.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'translate', 'about/editorialTeam.tpl', 20, false),array('function', 'url', 'about/editorialTeam.tpl', 27, false),array('modifier', 'escape', 'about/editorialTeam.tpl', 27, false),)), $this); ?>

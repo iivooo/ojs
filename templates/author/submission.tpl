@@ -49,6 +49,7 @@
 	<tr valign="top">
 	<!-- 	<td width="20%" class="label">{translate key="common.originstampZip"}</td> -->
 		<td width="80%" colspan="2" class="data">
+		{if $submission->getOriginstampStatus() == 3}
 		In case of unavailability or for your archives, download a Zip-archive with all information needed to 
 		manually verify your file within the Bitcoin-Blockchain.
 			{if $submissionFile}
@@ -56,13 +57,14 @@
 			{else}
 				{translate key="common.none"}
 			{/if}
+        {else}
+			You can download an offline verficator with your submission and anything you need to manually verify your submission in about 24 hours, when the timestamping process is completed.
+		{/if}
 		</td>
 	</tr>
 </table>
 </div>
 
-
-{include file="author/originstampdownload.tpl"}
 
 {include file="common/footer.tpl"}
 

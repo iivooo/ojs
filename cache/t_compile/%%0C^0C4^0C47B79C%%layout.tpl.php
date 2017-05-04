@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.26, created on 2017-03-11 12:57:27
+<?php /* Smarty version 2.6.26, created on 2017-05-04 21:52:46
          compiled from author/submission/layout.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'translate', 'author/submission/layout.tpl', 16, false),array('function', 'url', 'author/submission/layout.tpl', 41, false),array('function', 'icon', 'author/submission/layout.tpl', 104, false),array('modifier', 'escape', 'author/submission/layout.tpl', 23, false),array('modifier', 'to_array', 'author/submission/layout.tpl', 41, false),array('modifier', 'date_format', 'author/submission/layout.tpl', 41, false),array('modifier', 'default', 'author/submission/layout.tpl', 47, false),)), $this); ?>

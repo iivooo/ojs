@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.26, created on 2017-03-11 12:57:27
+<?php /* Smarty version 2.6.26, created on 2017-05-04 21:52:46
          compiled from author/submission/proofread.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'translate', 'author/submission/proofread.tpl', 15, false),array('function', 'url', 'author/submission/proofread.tpl', 26, false),array('function', 'icon', 'author/submission/proofread.tpl', 43, false),array('modifier', 'escape', 'author/submission/proofread.tpl', 21, false),array('modifier', 'date_format', 'author/submission/proofread.tpl', 39, false),array('modifier', 'default', 'author/submission/proofread.tpl', 39, false),array('modifier', 'assign', 'author/submission/proofread.tpl', 45, false),)), $this); ?>

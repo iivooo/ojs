@@ -477,19 +477,21 @@ class TrackSubmissionHandler extends AuthorHandler {
 		$fileId = (int) array_shift($args);
 		$revision = (int) array_shift($args);
 		if (!$revision) $revision = null;
-	
+//		var_dump("ID: ".$articleId." fileId: ".$fileId." revision: ".$revision);
 		$this->validate($request, $articleId);
 		$submission =& $this->submission;
 		$artFileMan = new ArticleFileManager($articleId);
 		$tempFile = $artFileMan->getFile($fileId, $revision);
 		$filePath = $tempFile->getFilePath();
+//		var_dump("filepath: ".$filePath);
 		$originalName = $tempFile->getOriginalFileName();
-		$originstampVerificator = $_SERVER['DOCUMENT_ROOT']."/originstampVerificator.zip";
+//		$originstampVerificator = $_SERVER['DOCUMENT_ROOT']."/originstampVerificator.zip";
 		//copy zip template with originstampValidator
 //		copy($originstampVerificator, dirname($filePath));
         $seedPath = $this->getSeedFile($filePath);
+//        var_dump("seedpath: ".$seedPath);
 		if($seedPath  == false){
-			print "<script>alert('hash not yet uploaded or originstamp is currently not available.')</script>";
+			print "<script>alert('seedfile not available yet, or originstamp.com is currently not available.')</script>";
             $request->redirect(null, null, 'submission', $articleId);
 		}
 
@@ -499,15 +501,15 @@ class TrackSubmissionHandler extends AuthorHandler {
 				//add btc-address
 				//add hashes list
 		);
-//		var_dump(dirname($filePath));
-		$zipDestination = $this->add_to_zip($paths, dirname($filePath).'/originstampVerificator.zip', $originalName);
+//		var_dump(dirname($filePath)."/originstampVerficator.zip");
+		$zipDestination = $this->add_to_zip($paths, dirname($filePath).'/'.pathinfo($originalName,PATHINFO_FILENAME).'_originstampVerificator.zip', $originalName);
 //		var_dump($zipDestination);
 		if(!($zipDestination)){
-
+            $request->redirect(null, null, 'submission', $articleId);
 		} else if(file_exists($zipDestination)) {
 			//$quoted = sprintf('"%s"', addcslashes(basename(dirname($filePath)."/".$articleId.".zip"), '"\\'));
-            $quoted = sprintf('"%s"', addcslashes(basename(dirname($filePath)."/originstampVerficator.zip"), '"\\'));
-			$size   = filesize(dirname($filePath)."/originstampVerificator.zip");
+            $quoted = sprintf('"%s"', addcslashes(basename($zipDestination), '"\\'));//TODO:dirname($filePath)."/originstampVerficator.zip"
+			$size   = filesize($zipDestination);//TODO:dirname($filePath)."/originstampVerificator.zip"
 			ob_clean();
 			header('Content-Description: File Transfer');
 			header('Content-Type: application/zip'); //octet-stream
@@ -523,6 +525,7 @@ class TrackSubmissionHandler extends AuthorHandler {
 			readfile($zipDestination);
 		} else {
 			print "file doesnt exists";
+			var_dump("file does not exist");
 		}
 	}
 
@@ -587,9 +590,13 @@ class TrackSubmissionHandler extends AuthorHandler {
 		if(count($valid_files)) {
 			//create the archive
 			 //$overwrite ? ZIPARCHIVE::OVERWRITE :
+			//workaround because ZipArchive OVERWRITE isnt working proerply
+			if(file_exists($destination)){
+				unlink($destination);
+			}
             $zip = new ZipArchive();
-			if($err =$zip->open($destination, ZIPARCHIVE::OVERWRITE) !== TRUE) {
-//                var_dump("olla");
+			if($err = $zip->open($destination, ZIPARCHIVE::CREATE) !== TRUE) {
+              var_dump("err: ".$err);
 				return false;
 			}
 
@@ -622,7 +629,7 @@ class TrackSubmissionHandler extends AuthorHandler {
             foreach($valid_files as $file) {
             	$content = file_get_contents($file);
 //				var_dump($file);
-                $zip->addFromString(pathinfo($file, PATHINFO_BASENAME), $content); //,$file
+                $zip->addFromString(pathinfo($file, PATHINFO_BASENAME), $content); //
 //				var_dump(basename($file));
 //				for($i=0; $i < $zip->numFiles; $i++){
 //                    var_dump($zip->getNameIndex($i));

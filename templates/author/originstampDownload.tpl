@@ -10,6 +10,7 @@
 	<tr valign="top">
 	<!-- 	<td width="20%" class="label">{translate key="common.originstampZip"}</td> -->
 		<td width="80%" colspan="2" class="data">
+
 		In case of unavailability or for your archives, download a Zip-archive with all information needed to 
 		manually verify your file within the Bitcoin-Blockchain.
 			{if $submissionFile}

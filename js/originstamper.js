@@ -11,27 +11,27 @@
       // uploadHash(hash);
     }
     reader.readAsBinaryString(file);
-    uploadHash();
+    // uploadHash(); //TODO: always directly at upload button. should be at save and continue.
   }
 
   var apiKey = "988e7238-995e-4db0-8277-ce8f75d4b037";
   var baseURL = "https://api.originstamp.org/api/";
 
   function uploadHash() {
-    var uuid;
+    var uuid=localStorage['uuid'];
     var ops;
-    if(localStorage['uuid'] != null){
-      ops = '{"submit_ops": ["multi_seed"], "url": "'+uuid+'"}';
-      alert(JSON.stringify(ops));
+    if(uuid != null){
+      ops = {"submit_ops": ["multi_seed"], "url": uuid};
+      // alert(JSON.stringify(ops));
     } else {
-      // ops = {"submit_ops":["multi_seed"]+',"'+uuid+'"'};
+      ops = {"submit_ops":["multi_seed"]};
     }
-    alert(localStorage['uuid']);
+    // alert(localStorage['uuid']);
     var ajaxDump = $.ajax({
       url: baseURL.concat(localStorage['hash']),
       type: "POST",
 //data: JSON.stringify({submit_ops: ["multi_seed"]+uuid}),
-      data: JSON.stringify(uuid), //TODO: Thomas fragen!
+      data: JSON.stringify(ops), //TODO: Thomas fragen!
       contentType: "application/json; charset=UTF-8",
       async: false,
       headers: {
@@ -85,7 +85,7 @@
 
 //UUID generator.
   function generateUUID() {
-    console.log('uuid loaded');
+    // console.log('uuid loaded');
       var uuid = "", i, random;
       for (i = 0; i < 32; i++) {
           random = Math.random() * 16 | 0;
