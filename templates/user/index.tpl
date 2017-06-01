@@ -127,7 +127,7 @@
 		{if $isValid.Author.$journalId}
 			{assign var="authorSubmissionsCount" value=$submissionsCount.Author.$journalId}
 			<tr>
-				<td><a href="{url journal=$journalPath page="author"}">{translate key="user.role.author"}</a></td>
+				<td><a style="color:red" href="{url journal=$journalPath page="author"}">{translate key="user.role.author"} (click here)	</a></td>
 				<td></td>
 				<td>{if $authorSubmissionsCount[0]}
 						<a href="{url journal=$journalPath page="author"}">{$authorSubmissionsCount[0]} {translate key="common.queue.short.active"}</a>

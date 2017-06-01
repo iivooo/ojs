@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.26, created on 2017-03-20 14:49:48
+<?php /* Smarty version 2.6.26, created on 2017-05-22 12:17:58
          compiled from index/site.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'nl2br', 'index/site.tpl', 20, false),array('modifier', 'escape', 'index/site.tpl', 25, false),array('function', 'url', 'index/site.tpl', 25, false),array('function', 'translate', 'index/site.tpl', 25, false),array('function', 'page_info', 'index/site.tpl', 56, false),array('function', 'page_links', 'index/site.tpl', 57, false),array('block', 'iterate', 'index/site.tpl', 30, false),)), $this); ?>
@@ -28,7 +28,7 @@ unset($_smarty_tpl_vars);
 <?php endif; ?></a></p>
 <?php endif; ?>
 This is a prototype for the automatized <a href="https://app.originstamp.org/">originstamp.org</a> integration 
-in Open Journal Systems 2.0. <br>
+in Open Journal Systems 2.0 like it is proposed in <a href="https://www.gipp.com/wp-content/papercite-data/pdf/gipp2017b.pdf">CryptSubmit</a>. <br>
 To get a quick overview please follow the <font color="red">red</font> links.
 <?php $this->_tag_stack[] = array('iterate', array('from' => 'journals','item' => 'journal')); $_block_repeat=true;$this->_plugins['block']['iterate'][0][0]->smartyIterate($this->_tag_stack[count($this->_tag_stack)-1][1], null, $this, $_block_repeat);while ($_block_repeat) { ob_start(); ?>
 	<?php if ($this->_tpl_vars['site']->getSetting('showThumbnail')): ?>

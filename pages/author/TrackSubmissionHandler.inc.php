@@ -489,6 +489,8 @@ class TrackSubmissionHandler extends AuthorHandler {
 		//copy zip template with originstampValidator
 //		copy($originstampVerificator, dirname($filePath));
         $seedPath = $this->getSeedFile($filePath);
+        //fetch timestamp from db and get the path for the zip.
+        $timestampPath=$this->getTimeStampPath($articleId,$filePath);
 //        var_dump("seedpath: ".$seedPath);
 		if($seedPath  == false){
 			print "<script>alert('seedfile not available yet, or originstamp.com is currently not available.')</script>";
@@ -497,10 +499,12 @@ class TrackSubmissionHandler extends AuthorHandler {
 
 		$paths = array(
 				$filePath,
-				$seedPath
-				//add btc-address
+				$seedPath,
 				//add hashes list
 		);
+		if($timestampPath!=0){
+			array_push($paths, $timestampPath);
+		}
 //		var_dump(dirname($filePath)."/originstampVerficator.zip");
 		$zipDestination = $this->add_to_zip($paths, dirname($filePath).'/'.pathinfo($originalName,PATHINFO_FILENAME).'_originstampVerificator.zip', $originalName);
 //		var_dump($zipDestination);
@@ -527,6 +531,38 @@ class TrackSubmissionHandler extends AuthorHandler {
 			print "file doesnt exists";
 			var_dump("file does not exist");
 		}
+	}
+
+	function getTimeStampPath($id, $filePath){
+        $db = mysqli_connect("localhost", "iivooo", "AeC4deVoop4eiRohb9a", "iivooo");
+        if(!$db)
+        {
+            var_dump('database connection failed.');
+            exit("Verbindungsfehler: ".mysqli_connect_error());
+
+        }
+
+        //fetch all article_ids with submissionstatus < 3
+        $query = "SELECT originTimestamp FROM articles WHERE article_id =".$id;
+        $timestamp =mysqli_query($db, $query);
+
+        if($timestamp){
+            $res = $timestamp->fetch_row();
+            $resultPath= dirname($filePath)."/timestamp.js";
+            $fp = fopen($resultPath,"wb");
+            fwrite($fp,"var timestamp = ".$res[0]);
+            fclose($fp);
+            if(!file_exists($resultPath)){
+            	var_dump(var_dump(mysqli_error($db)));
+            	return false;
+			} else {
+            	return $resultPath;
+			}
+
+        }
+
+        mysqli_close($db);
+
 	}
 
 	function getSeedFile($filePath){
@@ -582,7 +618,7 @@ class TrackSubmissionHandler extends AuthorHandler {
 				if(file_exists($file)) {
 					$valid_files[] = $file;
 				} else {
-					var_dump("file not existing");
+					var_dump("file not existing: "+$file);
 				}
 			}
 		}

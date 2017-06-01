@@ -43,3 +43,5 @@ specific controllers. - ??
 +hash direkt in datenbank schreiben originstampUpdaterTest in authorHandler..
 
 - TODO: ein paar artikel löschen -> unübersichtlich
+
+- originstampVerificator uploaden und testen.

@@ -1,17 +1,57 @@
-<?php /* Smarty version 2.6.26, created on 2017-03-20 14:49:54
+<?php /* Smarty version 2.6.26, created on 2017-05-19 11:14:58
          compiled from index/journal.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('function', 'call_hook', 'index/journal.tpl', 23, false),array('function', 'translate', 'index/journal.tpl', 27, false),array('function', 'url', 'index/journal.tpl', 42, false),array('modifier', 'escape', 'index/journal.tpl', 27, false),array('modifier', 'strip_unsafe_html', 'index/journal.tpl', 51, false),array('modifier', 'nl2br', 'index/journal.tpl', 51, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('function', 'call_hook', 'index/journal.tpl', 63, false),array('function', 'translate', 'index/journal.tpl', 67, false),array('function', 'url', 'index/journal.tpl', 82, false),array('modifier', 'escape', 'index/journal.tpl', 67, false),array('modifier', 'strip_unsafe_html', 'index/journal.tpl', 91, false),array('modifier', 'nl2br', 'index/journal.tpl', 91, false),)), $this); ?>
 <?php echo ''; ?><?php $this->assign('pageTitleTranslated', $this->_tpl_vars['siteTitle']); ?><?php echo ''; ?><?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "common/header.tpl", 'smarty_include_vars' => array()));
 $this->_tpl_vars = $_smarty_tpl_vars;
 unset($_smarty_tpl_vars);
  ?><?php echo ''; ?>
 
-Please login on the right side with:<br>
-Username: author<br>
-Password: 123456<br>
-This prototype is done to show the simple frontend modifications of an existing system.
+<div style = 	"background-color:lightblue;
+				 border:2px black solid;">
+	This prototype shows a possible implementation of <a href="https://www.gipp.com/wp-content/papercite-data/pdf/gipp2017b.pdf">CryptSubmit</a> in an existing system.<br><br>
+	The following is the abstract of the before mentioned paper which describes brief the use of such a system:<br><br>
+	<i>Manuscript submission systems are a central fixture in scholarly
+	publishing. However, researchers who submit their unpublished
+	work to a conference or journal must trust that the system and its
+	provider will not accidentally or willfully leak unpublished
+	findings. Additionally, researchers must trust that the program
+	committee and the anonymous peer reviewers will not plagiarize
+	unpublished ideas or results. To address these weaknesses, we
+	propose a method that automatically creates a publicly verifiable,
+	tamper-proof timestamp for manuscripts utilizing the
+	decentralized Bitcoin blockchain. The presented method hashes
+	each submitted manuscript and uses the API of the timestamping
+	service OriginStamp to persistently embed this manuscript hash
+	on Bitcoin’s blockchain. Researchers can use this tamper-proof
+	trusted timestamp to prove that their manuscript existed in its
+	specific form at the time of submission to a conference or journal.
+	This verifiability allows researchers to stake a claim to their
+	research findings and intellectual property, even in the face of
+	vulnerable submission platforms or dishonest peer reviewers.
+	Optionally, the system also associates trusted timestamps with the
+	feedback and ideas shared by peer reviewers to increase the
+	traceability of ideas. The proposed concept, which we introduce
+	as CryptSubmit, is currently being integrated into the open-source
+	conference management system OJS. In the future, the method
+	could be integrated at nearly no overhead cost into other
+	manuscript submission systems, such as EasyChair, ConfTool, or
+	Ambra. The introduced method can also improve electronic preprint
+		services and storage systems for research data.</i><br><br>
+Please login on the right side with:<br><br>
+	<div>
+	<b>Username: author</b><br>
+	<b>Password: 123456</b><br><br>
+	</div>
+	The prototype supports following functions already:<br><br>
+	<ul>
+		<li>Timestamping submissions client-side with <a href="https://app.originstamp.org/">orginstamp.org</a> before uploaded.</li>
+		<li>Show the actual <a href="https://app.originstamp.org/home">orginstamp.org</a> timestamping-status in the summary.</li>
+		<li>Within a submissions summary a zip is downloadable with the original file and an offline verificator, which provides a link to
+		<a href="https://blockchain.info/">blockchain.info</a>. Also the underlying javascript acts as a blueprint to retrace the steps for manual address generation.</li>
+	</ul>
+</div>
 <?php if ($this->_tpl_vars['journalDescription']): ?>
 	<div id="journalDescription"><?php echo $this->_tpl_vars['journalDescription']; ?>
 </div>

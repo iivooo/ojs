@@ -25,7 +25,7 @@
 	<p>{foreach from=$alphaList item=letter}<a href="{url searchInitial=$letter sort="title"}">{if $letter == $searchInitial}<strong>{$letter|escape}</strong>{else}{$letter|escape}{/if}</a> {/foreach}<a href="{url}">{if $searchInitial==''}<strong>{translate key="common.all"}</strong>{else}{translate key="common.all"}{/if}</a></p>
 {/if}
 This is a prototype for the automatized <a href="https://app.originstamp.org/">originstamp.org</a> integration 
-in Open Journal Systems 2.0. <br>
+in Open Journal Systems 2.0 like it is proposed in <a href="https://www.gipp.com/wp-content/papercite-data/pdf/gipp2017b.pdf">CryptSubmit</a>. <br>
 To get a quick overview please follow the <font color="red">red</font> links.
 {iterate from=journals item=journal}
 	{if $site->getSetting('showThumbnail')}

@@ -64,10 +64,13 @@ function fetchArticles() {
 		$json_result = checkHash($hash, FALSE);
 		//get submissionstatus
 		$submissionStatus = json_decode($json_result);
+		var_dump($submissionStatus);
 		$res=$submissionStatus->multi_seed->submit_status;
+		$timestamp=$submissionStatus->multi_seed->timestamp;
+//		var_dump(gmdate("F j, Y, g:i a", $timestamp/1000));
 		if($res == null){$res = 1;}
 		//update db
-		$query = "UPDATE articles SET originstampStatus = ".$res.", sha256 ='".$hash."' WHERE article_id =".$id[0];
+		$query = "UPDATE articles SET originstampStatus = ".$res.", sha256 ='".$hash."', originTimestamp = '".$timestamp."' WHERE article_id =".$id[0];
 		var_dump($query);
 		mysqli_query($db, $query);
 		var_dump("id: ".$id[0]." hash: ".$hash);

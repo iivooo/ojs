@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.26, created on 2017-03-09 14:01:39
+<?php /* Smarty version 2.6.26, created on 2017-05-29 21:25:54
          compiled from editor/submissionsUnassigned.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_search', 'editor/submissionsUnassigned.tpl', 16, false),array('function', 'translate', 'editor/submissionsUnassigned.tpl', 17, false),array('function', 'sort_heading', 'editor/submissionsUnassigned.tpl', 21, false),array('function', 'url', 'editor/submissionsUnassigned.tpl', 33, false),array('function', 'page_info', 'editor/submissionsUnassigned.tpl', 50, false),array('function', 'page_links', 'editor/submissionsUnassigned.tpl', 51, false),array('block', 'iterate', 'editor/submissionsUnassigned.tpl', 27, false),array('modifier', 'date_format', 'editor/submissionsUnassigned.tpl', 30, false),array('modifier', 'escape', 'editor/submissionsUnassigned.tpl', 31, false),array('modifier', 'truncate', 'editor/submissionsUnassigned.tpl', 32, false),array('modifier', 'strip_tags', 'editor/submissionsUnassigned.tpl', 33, false),)), $this); ?>
@@ -19,7 +19,7 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_search
 </td>
 		<td width="40%"><?php echo $this->_plugins['function']['sort_search'][0][0]->smartySortSearch(array('key' => "article.title",'sort' => 'title'), $this);?>
 </td>
-		<td width="10%" align="left"><?php echo $this->_plugins['function']['sort_heading'][0][0]->smartySortHeading(array('key' => "common.originstampStatus",'sort' => 'originstampStatus'), $this);?>
+		<td width="10%" align="left"><?php echo $this->_plugins['function']['sort_heading'][0][0]->smartySortHeading(array('key' => "common.originstampStatus"), $this);?>
 </td>                               <!-- ORIGINSTAMP Status -->
 	</tr>
 	<tr>

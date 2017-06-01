@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.26, created on 2017-03-20 14:36:41
+<?php /* Smarty version 2.6.26, created on 2017-05-22 13:19:20
          compiled from user/index.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'url', 'user/index.tpl', 18, false),array('function', 'translate', 'user/index.tpl', 18, false),array('function', 'call_hook', 'user/index.tpl', 19, false),array('modifier', 'escape', 'user/index.tpl', 26, false),array('modifier', 'assign', 'user/index.tpl', 178, false),array('modifier', 'date_format', 'user/index.tpl', 233, false),)), $this); ?>
@@ -185,9 +185,9 @@ unset($_smarty_tpl_vars);
 		<?php if ($this->_tpl_vars['isValid']['Author'][$this->_tpl_vars['journalId']]): ?>
 			<?php $this->assign('authorSubmissionsCount', $this->_tpl_vars['submissionsCount']['Author'][$this->_tpl_vars['journalId']]); ?>
 			<tr>
-				<td><a href="<?php echo $this->_plugins['function']['url'][0][0]->smartyUrl(array('journal' => $this->_tpl_vars['journalPath'],'page' => 'author'), $this);?>
+				<td><a style="color:red" href="<?php echo $this->_plugins['function']['url'][0][0]->smartyUrl(array('journal' => $this->_tpl_vars['journalPath'],'page' => 'author'), $this);?>
 "><?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "user.role.author"), $this);?>
-</a></td>
+ (click here)	</a></td>
 				<td></td>
 				<td><?php if ($this->_tpl_vars['authorSubmissionsCount'][0]): ?>
 						<a href="<?php echo $this->_plugins['function']['url'][0][0]->smartyUrl(array('journal' => $this->_tpl_vars['journalPath'],'page' => 'author'), $this);?>
