@@ -15,6 +15,8 @@
 
 import('classes.security.Role');
 import('classes.security.Hashing');
+import('lib.crypt_submit.cryptSubmitLibrary');
+
 
 define('IMPLICIT_AUTH_OPTIONAL', 'optional');
 
@@ -30,7 +32,7 @@ class Validation {
 	 */
 	function &login($username, $password, &$reason, $remember = false) {
 		$implicitAuth = strtolower(Config::getVar('security', 'implicit_auth'));
-
+//		print '<script>alert("validation login")</script>';
 		$reason = null;
 		$valid = false;
 		$userDao =& DAORegistry::getDAO('UserDAO');
@@ -106,6 +108,8 @@ class Validation {
 			$session->setUserId($user->getId());
 			$session->setSessionVar('username', $user->getUsername());
 			$session->setRemember($remember);
+			//log userlogin @cryptsubmit
+            Validation::logUserLogIn($session);
 
 			if ($remember && Config::getVar('general', 'session_lifetime') > 0) {
 				// Update session expiration time
@@ -118,6 +122,87 @@ class Validation {
 			return $user;
 		}
 	}
+
+    /**
+     * log the userlogin with session data such as ip, role and trusted timestamp it with originstamp.org
+	 * TODO: originstampUpdaterTest erweitern
+     */
+    function logUserLogIn($session){
+    	//provide databaseconnection
+        $db = mysqli_connect("localhost", "iivooo", "AeC4deVoop4eiRohb9a", "iivooo");
+        if(!$db)
+        {
+            var_dump('database connection failed.');
+            exit("Verbindungsfehler: ".mysqli_connect_error());
+
+        }
+
+        $userId = $session->getUserId();
+        $ipAddress = $session->getIpAddress();
+        $timestamp = time();
+
+        //fetch additional user info to create logInInfoHash for originstamp.org
+        $userQuery = 'SELECT username, first_name, middle_name, last_name, phone, billing_address, country
+						FROM users WHERE user_id = '.$userId.';';
+        $userQueryResult = null;
+        if(!($userQueryResult = mysqli_query($db, $userQuery))){
+            var_dump(mysqli_error($db));
+        }
+        $userQueryArray = mysqli_fetch_assoc($userQueryResult);
+
+        //timestampstring : userid,ipaddress,timestamp,username,first_name,middle_name,last_name,phone,billing_address,country
+        $timestampString = "{$userId},{$ipAddress},{$timestamp},{$userQueryArray[0]->username},{$userQueryArray[0]->first_name},
+		{$userQueryArray[0]->middle_name},{$userQueryArray[0]->last_name},{$userQueryArray[0]->phone},
+		{$userQueryArray[0]->billing_address},{$userQueryArray[0]->country}";
+
+        //timestamp the string
+		$hashTimestampString = hash(sha256,$timestampString);
+
+        $query = 	"INSERT INTO LogInLog (user_id, ip, timestamp, username, first_name, middle_name, last_name, phone,
+ 					billing_address, country, originstampStatus,sha256)
+					VALUES ({$userId},'{$ipAddress}',{$timestamp},'{$userQueryArray['username']}','{$userQueryArray['first_name']}',
+		'{$userQueryArray['middle_name']}','{$userQueryArray['last_name']}','{$userQueryArray['phone']}',
+		'{$userQueryArray['billing_address']}','{$userQueryArray['country']}', 0, '{$hashTimestampString}')";
+        if(!mysqli_query($db, $query)){
+     	   var_dump(mysqli_error($db));
+    	}
+	}
+
+	function createLogInStampInfoFromDB($userID, $ipAddress, $timestamp){
+
+
+	}
+
+    /**Function to submit hash to originstamp.org TODO: outsource to single file accessible for all classes
+     * @param $hash
+     * @return mixed
+     */
+
+    function checkHash($hash){
+        $url = "https://api.originstamp.org/api/".$hash;
+        $apiKey = "988e7238-995e-4db0-8277-ce8f75d4b037";
+
+        $ch = curl_init( $url );
+//	curl_setopt( $ch, CURLOPT_POST, 1);
+//	curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1);
+//	curl_setopt( $ch, CURLOPT_HEADER, 0);
+//	curl_setopt($ch, CURLOPT_POSTFIELDS,$vars);  //Post Fields
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-type: application/json',
+            'charset: utf-8',
+            'Authorization: '.$apiKey
+        ));
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1); //option to not print and get response.
+
+
+        $response = curl_exec( $ch );
+
+        curl_close ($ch);
+
+//	print  $response ;
+//	var_dump($response);
+        return $response;
+    }
 
 	/**
 	 * verify if the input password is correct

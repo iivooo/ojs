@@ -44,4 +44,14 @@ specific controllers. - ??
 
 - TODO: ein paar artikel löschen -> unübersichtlich
 
-- originstampVerificator uploaden und testen.
++ originstampVerificator uploaden und testen.
+
+2017-06-06
+
+- datenbankschemen in setup einpflegen für wiederverwendbarkeit (articles, neue?)
+
+2017-06-08
+- originstamp updater anpassen
+- übersichtsseite für logins (secEditor, admin) (role nicht vergessen)
+    - roles -> getrole(ROLE_ID_REVIEWER) -> um auszusortieren
+

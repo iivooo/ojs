@@ -56,7 +56,11 @@ class LoginHandler extends PKPLoginHandler {
 				$session->setSessionVar('username', $newUser->getUsername());
 				$request->redirect(null, 'user');
 			}
+
+
 		}
+        //try to timestamp here
+        var_dump('<script>console.log("are we here after login?");</script>');
 		$request->redirect(null, $request->getRequestedPage());
 	}
 

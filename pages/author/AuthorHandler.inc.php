@@ -116,6 +116,7 @@ class AuthorHandler extends Handler {
 		$templateMgr->assign('sort', $sort);
 		$templateMgr->assign('sortDirection', $sortDirection);
 		$templateMgr->display('author/index.tpl');
+
 	}
 
 	/**

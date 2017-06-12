@@ -3,6 +3,29 @@
 
 // call with: https://iivooo.suhail.uberspace.de/ojs/originstampUpdaterTest.php?=fetchArticles
 
+
+function getDatabaseConnection(){
+    $db = mysqli_connect("localhost", "iivooo", "AeC4deVoop4eiRohb9a", "iivooo");
+    if(!$db)
+    {
+        var_dump('database connection failed.');
+        exit("Verbindungsfehler: ".mysqli_connect_error());
+
+    } else {
+        return $db;
+    }
+}
+
+function retrieveFromDatabase($db,$query){
+    $queryResult = null;
+    if(!($userQueryResult = mysqli_query($db, $query))){
+        var_dump(mysqli_error($db));
+    } else {
+        return $queryResult;
+    }
+
+}
+
 function checkHash($hash){
 	$url = "https://api.originstamp.org/api/".$hash;
 	$apiKey = "988e7238-995e-4db0-8277-ce8f75d4b037";
@@ -38,13 +61,7 @@ function checkHash($hash){
  */
 function fetchArticles() {
 	//get database connection
-	$db = mysqli_connect("localhost", "iivooo", "AeC4deVoop4eiRohb9a", "iivooo");
-	if(!$db)
-	{
-	    var_dump('database connection failed.');
-		exit("Verbindungsfehler: ".mysqli_connect_error());
-
-	}
+	$db = $this->getDatabaseConnection();
 	
 	//fetch all article_ids with submissionstatus < 3
 	$query = "SELECT article_id FROM articles";//WHERE (originstampStatus <= 3) "; //TODO: correct later
@@ -104,6 +121,18 @@ function searchFilePath($id){
 	}
 	return null;
 }
+
+/**
+ * update the Logintimestamps with originstamp.org
+ */
+function updateLoginTimestamps(){
+    $db = $this->getDatabaseConnection();
+    //fetch loginTimestamps with timestamp status < 0
+//    $query = "SELECT 'sha256' FROM UserLog"
+
+
+}
+
 
 
 

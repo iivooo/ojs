@@ -502,12 +502,12 @@ class TrackSubmissionHandler extends AuthorHandler {
 				$seedPath,
 				//add hashes list
 		);
-		if($timestampPath!=0){
+		if($timestampPath!=false){
 			array_push($paths, $timestampPath);
+		} else {
+			echo '<script>alert("something gone wrong with the timestamp")</script>';
 		}
-//		var_dump(dirname($filePath)."/originstampVerficator.zip");
 		$zipDestination = $this->add_to_zip($paths, dirname($filePath).'/'.pathinfo($originalName,PATHINFO_FILENAME).'_originstampVerificator.zip', $originalName);
-//		var_dump($zipDestination);
 		if(!($zipDestination)){
             $request->redirect(null, null, 'submission', $articleId);
 		} else if(file_exists($zipDestination)) {
