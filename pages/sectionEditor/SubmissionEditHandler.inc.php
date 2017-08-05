@@ -268,6 +268,9 @@ class SubmissionEditHandler extends SectionEditorHandler {
 		$templateMgr->assign('editorDecisionOptions',SectionEditorSubmission::getEditorDecisionOptions());
 		$templateMgr->assign_by_ref('lastDecision', $lastDecision);
 
+		//route sessionId for restoring session afterwords for download timestamping afterwords. cryptsubmit
+		$templateMgr->assign('sessionId', $request->getSession()->getId());
+
 		import('classes.submission.reviewAssignment.ReviewAssignment');
 		$templateMgr->assign_by_ref('reviewerRecommendationOptions', ReviewAssignment::getReviewerRecommendationOptions());
 		$templateMgr->assign_by_ref('reviewerRatingOptions', ReviewAssignment::getReviewerRatingOptions());
@@ -2222,6 +2225,7 @@ class SubmissionEditHandler extends SectionEditorHandler {
 
 	/**
 	 * Download a file.
+	 * @cryptsubmit: accustomed to timestamp downloads for section editor.
 	 * @param $args array ($articleId, $fileId, [$revision])
 	 * @param $request PKPRequest
 	 */
@@ -2229,6 +2233,17 @@ class SubmissionEditHandler extends SectionEditorHandler {
 		$articleId = (int) array_shift($args);
 		$fileId = (int) array_shift($args);
 		$revision = array_shift($args); // May be null
+
+		$artFileMgr = new ArticleFileManager($articleId);
+		$cryptArgs = array(
+			articleContent => $artFileMgr->readFile($fileId,$revision),
+			userData => $request->getUser()->getAllData(),
+			userIp => $request->getSession()->getIpAddress()
+
+		);
+		$crypt = new cryptSubmitLibrary();
+
+        $crypt->timestampDownload($cryptArgs, $articleId, $fileId, $revision);
 
 		$this->validate($articleId);
 		if (!SectionEditorAction::downloadFile($articleId, $fileId, $revision)) {

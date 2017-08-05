@@ -1,4 +1,4 @@
-{**
+ {**
  * templates/author/active.tpl
  *
  * Copyright (c) 2013-2016 Simon Fraser University Library
@@ -75,14 +75,14 @@
 						{/if}
 					</a>
 				{/if}
-				{if $submission->getOriginstampStatus() eq 3} <td style="color:green;font-weight: bold;" align=left><div class="tooltip" onclick='originstampDownload.php'>&#10003;<span class="tooltiptext">
+				{if $submission->getOriginstampStatus() eq 3} <td style="color:green;font-weight: bold;" align=left><div class="tooltip"'>&#10003;<span class="tooltiptext">
 				Originstamp Status: 3. Your submission is successfully timpestamped. In the articles summary, you will find a zip-file with all information you need for manual verification. </span></div>
 				<div><a target="_blank" href="https://app.originstamp.org/s/{$sha256|escape}">LINK</a></div></td>
 				{elseif $submission->getOriginstampStatus() eq 0}
-				 <td style="color:red;font-weight: bold;" align=left><div class="tooltip" onclick='originstampDownload.php'>&#10003;<span class="tooltiptext">
+				 <td style="color:red;font-weight: bold;" align=left><div class="tooltip" '>&#10003;<span class="tooltiptext">
 				No primary file uploaded. </span></div><div>NO LINK</div></td>
 
-				{else} <td style="color:orange;font-weight: bold;" align=left><div class="tooltip" onclick='originstampDownload.php'>&#10003;<span class="tooltiptext">
+				{else} <td style="color:orange;font-weight: bold;" align=left><div class="tooltip" '>&#10003;<span class="tooltiptext">
 				Originstamp status: < 3. Your submission will be successfully timestamped in less than 24 hours. In the articles summary, you will find a zip-file with all information you need for manual verification. </span></div>
 				<div><a target="_blank" style='color:orange' href="https://app.originstamp.org/s/{$sha256|escape}">LINK</a></div></td>{/if}
 

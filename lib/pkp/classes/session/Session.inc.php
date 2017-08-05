@@ -74,7 +74,7 @@ class Session extends DataObject {
 
 	/**
 	 * Set user ID.
-	 * @param $userId int
+* @param $userId int
 	 */
 	function setUserId($userId) {
 		if (!isset($userId) || empty($userId)) {

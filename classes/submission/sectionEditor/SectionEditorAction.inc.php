@@ -14,6 +14,8 @@
  */
 
 import('classes.submission.common.Action');
+import('lib.pkp.classes.session.Session');
+import('lib.crypt_submit.cryptSubmitLibrary');
 
 class SectionEditorAction extends Action {
 
@@ -2448,6 +2450,11 @@ class SectionEditorAction extends Action {
 			$breadcrumb[] = $parent;
 		}
 		return $breadcrumb;
+	}
+
+	function downloadOriginZipLogin($loginId){
+		var_dump('login');
+
 	}
 }
 

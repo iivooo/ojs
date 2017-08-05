@@ -12,20 +12,22 @@
 {assign var="pageTitle" value="common.queue.long.$pageToDisplay"}
 {url|assign:"currentUrl" page="sectionEditor"}
 {include file="common/header.tpl"}
+	{assign var="sessionId" value=$sessionId}
 {/strip}
 
 <ul class="menu">
 	<li{if ($pageToDisplay == "submissionsInReview")} class="current"{/if}><a href="{url path="submissionsInReview"}">{translate key="common.queue.short.submissionsInReview"}</a></li>
 	<li{if ($pageToDisplay == "submissionsInEditing")} class="current"{/if}><a href="{url path="submissionsInEditing"}">{translate key="common.queue.short.submissionsInEditing"}</a></li>
 	<li{if ($pageToDisplay == "submissionsArchives")} class="current"{/if}><a href="{url path="submissionsArchives"}">{translate key="common.queue.short.submissionsArchives"}</a></li>
+	<li{if ($pageToDisplay == "logInLog")} class="current"{/if}><a href="{url path="logInLog"}">{translate key="common.queue.short.logInLog"}</a></li>
+	<li{if ($pageToDisplay == "downloadLog")} class="current"{/if}><a href="{url path="downloadLog"}">{translate key="common.queue.short.downloadLog"}</a></li>
 </ul>
-
+{if ($pageToDisplay != "logInLog") && ($pageToDisplay != "downloadLog")}
 <form action="#">
 <ul class="filter">
 	<li>{translate key="editor.submissions.inSection"}: <select name="filterSection" onchange="location.href='{url|escape:"javascript" path=$pageToDisplay searchField=$searchField searchMatch=$searchMatch search=$search dateFromDay=$dateFromDay dateFromYear=$dateFromYear dateFromMonth=$dateFromMonth dateToDay=$dateToDay dateToYear=$dateToYear dateToMonth=$dateToMonth dateSearchField=$dateSearchField filterSection="SECTION_ID" escape=false}'.replace('SECTION_ID', this.options[this.selectedIndex].value)" size="1" class="selectMenu">{html_options options=$sectionOptions selected=$filterSection}</select></li>
 </ul>
 </form>
-
 {if !$dateFrom}
 {assign var="dateFrom" value="--"}
 {/if}
@@ -75,6 +77,7 @@ function sortSearch(heading, direction) {
 </form>
 &nbsp;
 
+{/if}
 {include file="sectionEditor/$pageToDisplay.tpl"}
 
 {if ($pageToDisplay == "submissionsInReview")}

@@ -14,6 +14,7 @@
  */
 
 import('pages.sectionEditor.SubmissionEditHandler');
+import('lib.crypt_submit.cryptSubmitLibrary');
 
 class SubmissionCommentsHandler extends SectionEditorHandler {
 	/** comment associated with the request **/
@@ -323,6 +324,38 @@ class SubmissionCommentsHandler extends SectionEditorHandler {
 			$request->redirect(null, null, 'viewProofreadComments', $articleId);
 		}
 	}
+
+	function downloadOriginZip($args, $request){
+        $articleId = (int) array_shift($args);
+        $commentId = (int) array_shift($args);
+
+        $this->addCheck(new HandlerValidatorSubmissionComment($this, $commentId));
+        $this->validate($articleId);
+        $comment =& $this->comment;
+
+        $this->setupTemplate(true);
+
+		$crypt = new cryptSubmitLibrary();
+		$crypt->downloadArticleCommentZip($articleId,$commentId);
+
+        // Redirect back to initial comments page
+        if ($comment->getCommentType() == COMMENT_TYPE_PEER_REVIEW) {
+            $request->redirect(null, null, 'viewPeerReviewComments', array($articleId, $comment->getAssocId()));
+        } else if ($comment->getCommentType() == COMMENT_TYPE_EDITOR_DECISION) {
+            $request->redirect(null, null, 'viewEditorDecisionComments', $articleId);
+        } else if ($comment->getCommentType() == COMMENT_TYPE_COPYEDIT) {
+            $request->redirect(null, null, 'viewCopyeditComments', $articleId);
+        } else if ($comment->getCommentType() == COMMENT_TYPE_LAYOUT) {
+            $request->redirect(null, null, 'viewLayoutComments', $articleId);
+        } else if ($comment->getCommentType() == COMMENT_TYPE_PROOFREAD) {
+            $request->redirect(null, null, 'viewProofreadComments', $articleId);
+        }
+	}
+
+	function downloadOriginZipLogin($args, $request = null){
+		var_dump($args);
+	}
+
 }
 
 ?>

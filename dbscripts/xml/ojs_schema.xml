@@ -561,8 +561,6 @@
 			<NOTNULL/>
 			<DEFAULT VALUE="0"/>
 		</field>
-		<field name="originstampStatus" type="I1">
-		</field>
 		<descr>Journal articles.</descr>
 		<index name="articles_user_id">
 			<col>user_id</col>

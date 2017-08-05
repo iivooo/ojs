@@ -184,6 +184,8 @@ class CommentDAO extends DAO {
 	 * @return int ID of new comment
 	 */
 	function insertComment(&$comment) {
+		var_dump($comment);
+		print '<script>alert("commentDAO")</script>';
 		$comment->setDatePosted(Core::getCurrentDate());
 		$comment->setDateModified($comment->getDatePosted());
 		$user = $comment->getUser();

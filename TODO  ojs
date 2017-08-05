@@ -51,7 +51,46 @@ specific controllers. - ??
 - datenbankschemen in setup einpflegen für wiederverwendbarkeit (articles, neue?)
 
 2017-06-08
-- originstamp updater anpassen
-- übersichtsseite für logins (secEditor, admin) (role nicht vergessen)
-    - roles -> getrole(ROLE_ID_REVIEWER) -> um auszusortieren
+- originstamp updater anpassen (LogInLog)
+- übersichtsseite für logins (secEditor, admin) (role nicht vergessen -> egal da rollen redundant sind)
+    - roles -> getrole(ROLE_ID_REVIEWER) -> um auszusortieren (vergessen was damit gemeint war)
 
+2017-06-13
+- loginlog und query anpassen (join mit user-db) (redundant) validation nicht vergessen.
+- downloads timestampen
+- cryptSubmitLibrary überall einpflegen (Übersichtlich)
+- projektbericht schreiben
+
+Notizen:
+table für download timestamp
+index, user_id (foreign), ip, download_timestamp, [username, first_name, middle_name, last_name, phone, billing_address, country], originStampStatus,
+articleID, (review id?), originTimestamp
+
+CREATE TABLE download_log (
+  ID int NOT NULL AUTO_INCREMENT, --auto_increment must be primary key
+  PRIMARY KEY (ID),
+  user_id bigint(20),
+  FOREIGN KEY (user_id) REFERENCES users(user_id), --first create column, then add constraint
+  ip varchar(50),
+  filename VARCHAR( 30 ) NULL,
+  username varchar(20),
+  first_name varchar(20),
+  middle_name varchar(20),
+  last_name varchar(20),
+  phone varchar(30),
+  billing_address varchar(100),
+  country varchar(20),
+  article_id bigint(20),
+  file_id bigint(20),
+  revision bigint(20),
+  FOREIGN KEY (article_id) REFERENCES articles(article_id),
+  articleHash varchar(30),
+  download_timestamp int(10),
+  originstampStatus int(2),
+  originTimestamp int(10)
+);
+
+
+
+index, user_id (foreign), ip, download_timestamp, [username, first_name, middle_name, last_name, phone, billing_address, country](braucht es falls user geändert wird), originStampStatus,
+articleID, articleHash, (review id?), originTimestamp,

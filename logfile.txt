@@ -1,0 +1,17 @@
+testtestO:14:"ArticleComment":6:{s:5:"_data";a:8:{s:11:"commentType";i:2;s:6:"roleId";i:512;s:9:"articleId";s:2:"21";s:7:"assocId";s:2:"21";s:8:"authorId";s:1:"4";s:12:"commentTitle";s:29:"another test with direct hash";s:8:"comments";s:23:"<p>logfile</p><p> </p>";s:10:"datePosted";s:19:"2017-07-17 18:10:58";}s:20:"_hasLoadableAdapters";b:0;s:27:"_metadataExtractionAdapters";a:0:{}s:25:"_extractionAdaptersLoaded";b:0;s:26:"_metadataInjectionAdapters";a:0:{}s:24:"_injectionAdaptersLoaded";b:0;}{
+    "_data": {
+        "commentType": 2,
+        "roleId": 512,
+        "articleId": "21",
+        "assocId": "21",
+        "authorId": "4",
+        "commentTitle": "another test with direct hash",
+        "comments": "<p>logfile<\/p><p>\u00a0<\/p>",
+        "datePosted": "2017-07-17 18:12:49"
+    },
+    "_hasLoadableAdapters": false,
+    "_metadataExtractionAdapters": [],
+    "_extractionAdaptersLoaded": false,
+    "_metadataInjectionAdapters": [],
+    "_injectionAdaptersLoaded": false
+}

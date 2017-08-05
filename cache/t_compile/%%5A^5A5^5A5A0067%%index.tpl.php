@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.26, created on 2017-03-21 14:15:15
+<?php /* Smarty version 2.6.26, created on 2017-08-01 22:24:40
          compiled from admin/index.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'translate', 'admin/index.tpl', 17, false),array('function', 'url', 'admin/index.tpl', 24, false),array('function', 'call_hook', 'admin/index.tpl', 29, false),array('modifier', 'escape', 'admin/index.tpl', 37, false),)), $this); ?>

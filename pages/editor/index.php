@@ -164,6 +164,11 @@ switch ($op) {
 		define('HANDLER_CLASS', 'SubmissionCommentsHandler');
 		import('pages.sectionEditor.SubmissionCommentsHandler');
 		break;
+
+	case 'downloadOriginZip':
+        define('HANDLER_CLASS', 'SubmissionCommentsHandler');
+        import('pages.sectionEditor.SubmissionCommentsHandler');
+        break;
 	//
 	// Issue
 	//

@@ -21,6 +21,8 @@ window.opener.location.reload();
 // -->
 {/literal}
 </script>
+ <link rel="stylesheet" type="text/css" href="/ojs/styles/originstamper.css">
+
 <div id="existingComments">
 <table class="data" width="100%">
 {foreach from=$articleComments item=comment}
@@ -39,8 +41,21 @@ window.opener.location.reload();
 			<div class="commentTitle">{translate key="submission.comments.subject"}: {$comment->getCommentTitle()|escape}</div>
 		{/if}
 		</div>
-		<div class="comments">{$comment->getComments()|strip_unsafe_html|nl2br}</div>
+		<div width="75%" style="float: left" class="comments">{$comment->getComments()|strip_unsafe_html|nl2br}</div>
+			<div width="25%" style="float: right">
+				<td align="right" width="15%" valign="center">
+			{if $comment->getOriginstampStatus() eq 3} <td style="color:green;font-weight: bold;" align=left><div class="tooltip"><a style="color:green" href="{url op="downloadOriginZip" path=$articleId|to_array:$comment->getId()}">&#10003;</a><span class="tooltiptext">
+					Originstamp Status: 3. Your submission is successfully timpestamped. By clicking, you will get a zip-file with the original timestamped sting ahead with a manual verificator.</span></div>
+			<div><a target="_blank" href="https://app.originstamp.org/s/{$comment->getSHA256()|escape}">LINK</a></div></td>
+
+		{else} <td style="color:orange;font-weight: bold;" align=left><div class="tooltip">&#10003;<span class="tooltiptext">
+					Originstamp status: < 3. Your submission will be successfully timestamped in less than 24 hours. If this is done you can download a zip-file with the original timestamped sting ahead with a manual verificator. </span></div>
+			<div><a target="_blank" style='color:orange' href="https://app.originstamp.org/s/{$comment->getSHA256()|escape}">LINK</a></div></td>{/if}
+		</td>
+		</div>
+
 	</td>
+
 </tr>
 </div>
 {foreachelse}
@@ -54,7 +69,6 @@ window.opener.location.reload();
 <br />
 
 {if not $isLocked and $isEditor}
-
 <form method="post" action="{url op=$commentAction}">
 {if $hiddenFormParams}
 	{foreach from=$hiddenFormParams item=hiddenFormParam key=key}

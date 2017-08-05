@@ -109,6 +109,7 @@ switch ($op) {
 	// Misc.
 	//
 	case 'downloadFile':
+	case 'cryptDownloadFile':
 	case 'viewFile':
 	// Submission Review Form
 	case 'clearReviewForm':
@@ -164,6 +165,12 @@ switch ($op) {
 		define('HANDLER_CLASS', 'SubmissionCommentsHandler');
 		import('pages.sectionEditor.SubmissionCommentsHandler');
 		break;
+    case 'downloadOriginZip':
+        define('HANDLER_CLASS', 'SubmissionCommentsHandler');
+        import('pages.sectionEditor.SubmissionCommentsHandler');
+        break;
+	case 'downloadOriginZipLogin':
+	case 'downloadDownloadLogZip':
 	case 'index':
 	case 'instructions':
 		define('HANDLER_CLASS', 'SectionEditorHandler');

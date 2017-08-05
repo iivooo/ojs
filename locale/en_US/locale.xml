@@ -117,6 +117,12 @@
 	<message key="common.queue.long.completed">Archive</message>
 	<message key="common.queue.short.completed">Archive</message>
 
+	<!-- originstamp.org locale -->
+
+	<message key="common.queue.short.logInLog">Login Log</message>
+	<message key="common.queue.long.logInLog">Login Log</message>
+	<message key="common.queue.short.downloadLog">Download Log</message>
+	<message key="common.queue.long.downloadLog">Download Log</message>
 	<!--
 	 *
 	 * ENTITIES - This section contains terms pertaining to the system's

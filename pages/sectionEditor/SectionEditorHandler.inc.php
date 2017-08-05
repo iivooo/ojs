@@ -18,6 +18,7 @@ define('FILTER_SECTION_ALL', 0);
 
 import('classes.submission.sectionEditor.SectionEditorAction');
 import('classes.handler.Handler');
+import('lib.crypt_submit.cryptSubmitLibrary');
 
 class SectionEditorHandler extends Handler {
 	/** submission associated with the request **/
@@ -79,6 +80,7 @@ class SectionEditorHandler extends Handler {
 			FILTER_SECTION_ALL => AppLocale::Translate('editor.allSections')
 		) + $sections;
 
+
 		switch($page) {
 			case 'submissionsInEditing':
 				$functionName = 'getSectionEditorSubmissionsInEditing';
@@ -88,6 +90,15 @@ class SectionEditorHandler extends Handler {
 				$functionName = 'getSectionEditorSubmissionsArchives';
 				$helpTopicId = 'editorial.sectionEditorsRole.submissions.archives';
 				break;
+				//@cryptSubmit
+			case 'logInLog':
+                $functionName = 'getSectionEditorSubmissionsArchives';
+                $helpTopicId = 'editorial.sectionEditorsRole.submissions.archives';
+				break;
+			case 'downloadLog':
+                $functionName = 'getSectionEditorSubmissionsArchives';
+                $helpTopicId = 'editorial.sectionEditorsRole.submissions.archives';
+                break;
 			default:
 				$page = 'submissionsInReview';
 				$functionName = 'getSectionEditorSubmissionsInReview';
@@ -104,22 +115,21 @@ class SectionEditorHandler extends Handler {
 				$user->updateSetting('filterSection', $filterSection, 'int', $journalId);
 			}
 		}
-
-		$submissions =& $sectionEditorSubmissionDao->$functionName(
-			$user->getId(),
-			$journal->getId(),
-			$filterSection,
-			$searchField,
-			$searchMatch,
-			$search,
-			$dateSearchField,
-			$fromDate,
-			$toDate,
-			$rangeInfo,
-			$sort,
-			$sortDirection
-		);
-
+            $submissions =& $sectionEditorSubmissionDao->$functionName(
+                $user->getId(),
+                $journal->getId(),
+                $filterSection,
+                $searchField,
+                $searchMatch,
+                $search,
+                $dateSearchField,
+                $fromDate,
+                $toDate,
+                $rangeInfo,
+                $sort,
+                $sortDirection
+            );
+//			var_dump($submissions);
 		// If only result is returned from a search, fast-forward to it
 		if ($search && $submissions && $submissions->getCount() == 1) {
 			$submission =& $submissions->next();
@@ -158,12 +168,19 @@ class SectionEditorHandler extends Handler {
 			SUBMISSION_FIELD_DATE_LAYOUT_COMPLETE => 'submissions.layoutComplete',
 			SUBMISSION_FIELD_DATE_PROOFREADING_COMPLETE => 'submissions.proofreadingComplete'
 		));
+		//@cryptSubmit
+		$crypt = new cryptSubmitLibrary();
+		$templateMgr->assign('logs', $crypt->fetchLogInLog());
+		$templateMgr->assign('downloadLog', $crypt->fetchDownloadLog());
 
 		import('classes.issue.IssueAction');
 		$issueAction = new IssueAction();
 		$templateMgr->register_function('print_issue_id', array($issueAction, 'smartyPrintIssueId'));
 		$templateMgr->assign('sort', $sort);
 		$templateMgr->assign('sortDirection', $sortDirection);
+
+		//route sessionId to classes for usage with cryptsubmit
+		$templateMgr->assign_by_ref('request', $request);
 
 		$templateMgr->display('sectionEditor/index.tpl');
 	}
@@ -301,6 +318,29 @@ class SectionEditorHandler extends Handler {
 			$this->submission =& $sectionEditorSubmission;
 			return true;
 		}
+	}
+
+    /**@cryptSubmit
+	 * Hook for downloading the login log zip
+     * @param $args
+     * @param null $request
+     */
+    function downloadOriginZipLogin($args, $request = null){
+		$loginId = (int) array_shift($args);
+        $crypt = new cryptSubmitLibrary();
+        $crypt->downloadLoginZip($loginId);
+
+    }
+
+    /**@cryptSubmit
+	 * Hook for downloading the download log zip
+     * @param $args
+     * @param null $request
+     */
+    function downloadDownloadLogZip($args, $request = null){
+    	$downloadId = (int) array_shift($args);
+    	$crypt = new cryptSubmitLibrary();
+    	$crypt->downloadDownloadLogZip($downloadId);
 	}
 }
 

@@ -33,8 +33,7 @@
 		<td><a href="{url op="submission" path=$reviewId}" class="action">{$submission->getLocalizedTitle()|strip_tags|truncate:60:"..."}</a></td>
 		<td class="nowrap">{$submission->getDateDue()|date_format:$dateFormatTrunc}</td>
 		<td>{$submission->getRound()}</td>
-		{if $submission->getOriginstampStatus() eq 3} <td style="color:green;font-weight: bold;" align=center>&#10003;</td>
-		{else} <td style="color:orange;font-weight: bold;" align=center>&#10003;</td>{/if}
+
 	</tr>
 	<tr>
 		<td colspan="7" class="{if $submissions->eof()}end{/if}separator">&nbsp;</td>

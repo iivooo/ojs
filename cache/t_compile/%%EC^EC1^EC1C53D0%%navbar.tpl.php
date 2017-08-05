@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.26, created on 2017-03-20 14:36:41
+<?php /* Smarty version 2.6.26, created on 2017-08-01 22:24:40
          compiled from common/navbar.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'url', 'common/navbar.tpl', 13, false),array('function', 'translate', 'common/navbar.tpl', 13, false),array('function', 'call_hook', 'common/navbar.tpl', 42, false),array('modifier', 'escape', 'common/navbar.tpl', 46, false),)), $this); ?>

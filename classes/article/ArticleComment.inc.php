@@ -126,7 +126,7 @@ class ArticleComment extends DataObject {
 	 * get author id
 	 * @return int
 	 */
-	function getAuthorId() {
+	function 	getAuthorId() {
 		return $this->getData('authorId');
 	}
 
@@ -246,6 +246,31 @@ class ArticleComment extends DataObject {
 	 */
 	function setViewable($viewable) {
 		return $this->setData('viewable', $viewable);
+	}
+
+    //@cryptSubmit: getter settermethods for displaying comments
+    function setSHA256($sha256){
+        $this->setData('sha256', $sha256);
+    }
+
+    function getSHA256(){
+        return $this->getData('sha256');
+    }
+
+    function setOriginstampStatus($originstampStatus){
+        $this->setData('originstampStatus', $originstampStatus);
+    }
+
+    function getOriginstampStatus(){
+        return $this->getData('originstampStatus');
+    }
+
+    function setOriginTimestamp($originTimestamp){
+        $this->setData('originTimestamp', $originTimestamp);
+    }
+
+    function getOriginTimestamp(){
+    	return $this->getData('originTimestamp');
 	}
  }
 

@@ -254,7 +254,6 @@ class ReviewerSubmissionDAO extends DAO {
 			),
 			$rangeInfo
 		);
-
 		$returner = new DAOResultFactory($result, $this, '_returnReviewerSubmissionFromRow');
 		return $returner;
 	}

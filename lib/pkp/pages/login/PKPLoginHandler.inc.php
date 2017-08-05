@@ -150,9 +150,6 @@ class PKPLoginHandler extends Handler {
 			$templateMgr->assign('reason', $reason);
 			$templateMgr->display('user/login.tpl');
 		}
-		print '<script>alert("where is this called")</script>';
-		print '<script>console.log("anything?");';
-		var_dump('anything?');
 	}
 
 	/**

@@ -130,9 +130,9 @@ class AuthorSubmissionDAO extends DAO {
 		}
 		$authorSubmission->setGalleys($this->galleyDao->getGalleysByArticle($row['article_id']));
 		
-		$authorSubmission->setOriginstampStatus($row['originstampstatus']);
+		$authorSubmission->setOriginstampStatus($row['originstamp_status']);
 
-		$authorSubmission->setSHA256($row['sha256']);
+		$authorSubmission->setSHA256($row['origin_sha256']);
 
 		HookRegistry::call('AuthorSubmissionDAO::_returnAuthorSubmissionFromRow', array(&$authorSubmission, &$row));
 
@@ -175,8 +175,8 @@ class AuthorSubmissionDAO extends DAO {
 		$locale = AppLocale::getLocale();
 		$result =& $this->retrieveRange(
 			'SELECT	a.*,
-				originstampStatus,
-				sha256,
+				originstamp_status,
+				origin_sha256,
 				COALESCE(atl.setting_value, atpl.setting_value) AS submission_title,
 				aa.last_name AS author_name,
 				COALESCE(stl.setting_value, stpl.setting_value) AS section_title,

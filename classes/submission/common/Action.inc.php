@@ -258,6 +258,7 @@ class Action extends PKPAction {
 	 * @param $commentId int
 	 */
 	function saveComment($article, &$comment, $emailComment, $request) {
+
 		if (!HookRegistry::call('Action::saveComment', array(&$article, &$comment, &$emailComment))) {
 			import('classes.submission.form.comment.EditCommentForm');
 

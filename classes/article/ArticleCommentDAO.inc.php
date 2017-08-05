@@ -51,6 +51,9 @@ class ArticleCommentDAO extends DAO {
 		$result->Close();
 		unset($result);
 
+        $crypt = new cryptSubmitLibrary();
+        $articleComments = $crypt->addArticleCommentData($articleComments);
+
 		return $articleComments;
 	}
 
@@ -184,6 +187,10 @@ class ArticleCommentDAO extends DAO {
 		);
 
 		$articleComment->setId($this->getInsertArticleCommentId());
+
+        $crypt = new cryptSubmitLibrary();
+        $crypt->timestampComment($articleComment);
+
 		return $articleComment->getId();
 	}
 
