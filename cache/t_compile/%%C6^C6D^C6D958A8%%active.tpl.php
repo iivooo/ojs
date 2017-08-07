@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.26, created on 2017-08-01 22:28:12
+<?php /* Smarty version 2.6.26, created on 2017-08-06 13:55:56
          compiled from author/active.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_heading', 'author/active.tpl', 34, false),array('function', 'translate', 'author/active.tpl', 35, false),array('function', 'url', 'author/active.tpl', 57, false),array('function', 'page_info', 'author/active.tpl', 133, false),array('function', 'page_links', 'author/active.tpl', 134, false),array('block', 'iterate', 'author/active.tpl', 44, false),array('modifier', 'escape', 'author/active.tpl', 50, false),array('modifier', 'date_format', 'author/active.tpl', 51, false),array('modifier', 'truncate', 'author/active.tpl', 54, false),array('modifier', 'strip_tags', 'author/active.tpl', 57, false),)), $this); ?>
@@ -8,7 +8,7 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_headin
 	<ul>
 		<li>.. see your uploaded submissions with the corresponding <a href="https://app.originstamp.org/">originstamp.org</a> status on the right. </li>
 		<li>.. upload a submission with the "five-step submission process"</li>
-		<li>.. click the submission to get to the submissions summary, where you find a zip at the bottom of the page with the original file and an offline verificator, which provides a link to
+		<li>.. click the submission to get to the submissions summary, where you find a zip at the bottom of the page with the original file and an offline verifier, which provides a link to
 		<a href="https://blockchain.info/">blockchain.info</a>. Also the underlying javascript acts as a blueprint to retrace the steps for manual address generation.</li>
 	</ul>
 	<p>Note on the <a href="https://app.originstamp.org/">originstamp.org</a> status:

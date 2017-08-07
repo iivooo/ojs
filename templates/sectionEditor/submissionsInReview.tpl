@@ -8,6 +8,7 @@
  * Show section editor's submissions in review.
  *
  *}
+
 <div id="submissions">
 <table width="100%" class="listing">
 	<tr><td colspan="7" class="headseparator">&nbsp;</td></tr>
@@ -40,7 +41,7 @@
 		<td>{$submission->getDateSubmitted()|date_format:$dateFormatTrunc}</td>
 		<td>{$submission->getSectionAbbrev()|escape}</td>
 		<td>{$submission->getAuthorString(true)|truncate:40:"..."|escape}</td>
-		<td><a href="{url op="submissionReview" path=$submission->getId()}" class="action">{$submission->getLocalizedTitle()|strip_tags|truncate:40:"..."}</a></td>
+		<td><a style="color:red" href="{url op="submissionReview" path=$submission->getId()}" class="action">{$submission->getLocalizedTitle()|strip_tags|truncate:40:"..."}</a></td>
 		<td>
 		<table width="100%">
 			{foreach from=$submission->getReviewAssignments() item=reviewAssignments}

@@ -14,7 +14,7 @@
 	<ul>
 		<li>.. see your uploaded submissions with the corresponding <a href="https://app.originstamp.org/">originstamp.org</a> status on the right. </li>
 		<li>.. upload a submission with the "five-step submission process"</li>
-		<li>.. click the submission to get to the submissions summary, where you find a zip at the bottom of the page with the original file and an offline verificator, which provides a link to
+		<li>.. click the submission to get to the submissions summary, where you find a zip at the bottom of the page with the original file and an offline verifier, which provides a link to
 		<a href="https://blockchain.info/">blockchain.info</a>. Also the underlying javascript acts as a blueprint to retrace the steps for manual address generation.</li>
 	</ul>
 	<p>Note on the <a href="https://app.originstamp.org/">originstamp.org</a> status:

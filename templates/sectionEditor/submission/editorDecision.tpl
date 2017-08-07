@@ -54,9 +54,9 @@
 		{translate key="submission.editorAuthorRecord"}
 		{if $submission->getMostRecentEditorDecisionComment()}
 			{assign var="comment" value=$submission->getMostRecentEditorDecisionComment()}
-			<a href="javascript:openComments('{url op="viewEditorDecisionComments" path=$submission->getId() anchor=$comment->getId()}');" class="icon">{icon name="comment"}</a>&nbsp;&nbsp;{$comment->getDatePosted()|date_format:$dateFormatShort}
+			<a href="javascript:openComments('{url op="viewEditorDecisionComments" path=$submission->getId() anchor=$comment->getId()}');" class="icon">{icon name="comment"}<font color="red">COMMENTS</font></a> {$comment->getDatePosted()|date_format:$dateFormatShort}
 		{else}
-			<a href="javascript:openComments('{url op="viewEditorDecisionComments" path=$submission->getId()}');" class="icon">{icon name="comment"}</a>{translate key="common.noComments"}
+			<a href="javascript:openComments('{url op="viewEditorDecisionComments" path=$submission->getId()}');" class="icon">{icon name="comment"}<font color="red">COMMENTS</font></a>{translate key="common.noComments"}
 		{/if}
 	</td>
 </tr>

@@ -90,6 +90,9 @@ CREATE TABLE download_log (
   originTimestamp int(10)
 );
 
+2017-08-06
+Download/Login-Log status.... not working!!!!
+
 
 
 index, user_id (foreign), ip, download_timestamp, [username, first_name, middle_name, last_name, phone, billing_address, country](braucht es falls user geändert wird), originStampStatus,

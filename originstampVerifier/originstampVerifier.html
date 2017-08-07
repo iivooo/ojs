@@ -1,0 +1,289 @@
+<!-- This is a test index file for using timestamp.org -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/originstamper.css" rel="stylesheet" />
+    <title>Originstamp.org Verifier</title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-filestyle.min.js"> </script>
+
+    <script>
+    //activate filestyle
+    $(":file").filestyle();
+    // Check for the various File API support.
+    function checkFileAPI(){
+      if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
+            alert('The File APIs are not fully supported in this browser. Please use a newer Browser.');
+        }
+    }
+
+    </script>
+    <style>
+      #verify {
+        margin-left: auto;
+    margin-right: auto;
+    width: 6em
+      }
+
+    </style>
+</head>
+
+<body onload="checkFileAPI();">
+<div class='jumbotron text-center'>
+  <img src="logo.png" alt="logo" />
+</div>
+<div class="container" id="mainCont">
+
+
+  <div class="form-group">
+    <label for="files" >Choose your file here to verify. E.g. your submission.</label>
+    <input type="file" id="files" class="filestyle" name="files"/>
+
+  </div>
+  <div class="form-group">
+    <label for="seedfile">Please choose the seedfile. It's in the same folder as your submission.</label>
+    <input type="file" id="seedfile" class="filestyle" name="seedfile" />
+  </div>
+  <div>
+    <button type="button" class="btn btn-secondary btn-lg btn-block white-background" onclick="validatePDF()">Verify</button>
+  </div>
+
+
+  <!--browserify module-creation: see bitcoinjs-lib on github. good manual.-->
+  <script src="./js/bitVer.js" type="text/javascript"></script><!--useable as bv.something-->
+  <script src="./js/forge-sha256.min.js" type="text/javascript"></script><!--useable as forge_sha256(file);-->
+  <!--load the timestamp-->
+  <script src="./timestamp.js"></script>
+  <script>
+
+
+    var seedFileTxt;
+    var fileHash;
+
+  function validatePDF(){
+
+    var fileReader = new FileReader();
+    var seedFileReader = new FileReader();
+    var file = document.getElementById('files').files[0];
+    var seedfile = document.getElementById('seedfile').files[0];
+    var seedFileHash;
+    var fileName = document.getElementById('files').files[0].name;
+
+
+    fileReader.onload = function(e) {
+      fileHash = forge_sha256(fileReader.result);
+      console.log(fileName);
+      console.log('FileHashForge: '+fileHash)
+      //trigger after file is loaded because function is async
+      seedFileReader.readAsText(seedfile);
+    }
+    seedFileReader.onload = function(e){
+      console.log('seedfileReaderResult: '+seedFileReader.result.toString());
+      seedFileTxt = seedFileReader.result.toString();
+      //check if fileHash is in seedFileHash
+      if(!seedFileTxt.search("/"+fileHash+"/")){
+        alert('File-Hash not in seedfile-hash. Either you choosed the wrong seedfile or your submission has been altered.');
+        return;
+      }
+      var summaryArgs=createBTCAddress(seedFileTxt);
+      getSummary(summaryArgs, fileName, fileHash);
+      // getBlockchainInfo(summaryArgs[2]); //not available in browsers without extension
+
+    }
+    //check if files are selected
+    if(!file){
+      alert('Please select a file.');
+      return;
+    }
+    if(!seedfile){
+      alert('Please select a seedfile');
+      return;
+    }
+    fileReader.readAsBinaryString(file);
+  }
+
+  function createBTCAddress(seedFileTxt){
+    //http://cryptocoinjs.com/modules/crypto/ecurve/
+    // -> Computing Bitcoin Address from Private Key
+    //see https://en.bitcoin.it/wiki/Technical_background_of_version_1_Bitcoin_addresses
+    //for explaination
+    //the javascript bv module is generated with browserify.
+    //see the respective file in the respective folder if you need it.
+    //privatekey: sha256(seedfile);
+    var sumArgs = [];
+    seedFileHash = forge_sha256(seedFileTxt);//bv.crypto.createHash('sha256').update(seedFileTxt).digest();//;
+
+    sumArgs.push(seedFileHash);
+
+    var buff = new bv.buffer.Buffer(seedFileHash,'hex');
+
+    var ecparams = bv.ecurve.getCurveByName("secp256k1");
+    var curvePt = ecparams.G.multiply(bv.BigInteger.fromBuffer(buff));
+    var x = curvePt.affineX.toBuffer(32);
+    console.log('x: '+bv.BigInteger.fromBuffer(x.toString('hex')));
+    var y = curvePt.affineY.toBuffer(32);
+    console.log('y: '+bv.BigInteger.fromBuffer(y.toString('hex')));
+
+    sumArgs.push("("+bv.BigInteger.fromBuffer(x.toString('hex'))+
+      ", "+bv.BigInteger.fromBuffer(y.toString('hex'))+")"); //secp256k1 points on curve
+
+    //
+    var pubKey = bv.buffer.Buffer.concat([new bv.buffer.Buffer([0x04]),x,y]);
+
+    sumArgs.push(pubKey.toString('hex'));
+
+    //false forces uncompressed public key.
+    //this is important. other than most other address generators we use uncompressed.
+    pubKey = curvePt.getEncoded(false);
+    console.log('EcurvePublicKey: '+pubKey.toString('hex'));
+    var sha = bv.crypto.createHash('sha256').update(pubKey).digest();
+
+    sumArgs.push(sha.toString('hex'));
+
+    var pubrmd160 = bv.crypto.createHash('rmd160').update(sha).digest();
+
+    sumArgs.push(pubrmd160.toString('hex'));
+
+    var address = bv.cs.encode(pubrmd160, 0x0);
+    console.log('manualAddrWObs58 '+address); //worked!
+    sumArgs.push(address);
+    return sumArgs;
+
+  }
+
+  function getTimestamp(){
+      if(typeof timestamp != 'undefined'){
+          if(timestamp != 0){
+            var d = new Date(timestamp);
+            return d.toUTCString();
+          } else {
+              return 'Timestamp is not available. Please use the above links.'
+          }
+      }else{
+          return 'Currently no timestamp available. Please use the above links.';
+      }
+//          console.log(n);
+//          document.getElementById("timestamp").innerHTML = d.toString();
+  }
+
+  function getSummary(summaryArgs,fileNa, fileHa) {
+
+    //name , hashCOntained, seedfileHash, secp256k1 points, address, blockchaininfo
+
+    var content1 = '<div class="panel-group">\
+    <div class="panel panel-default">\
+    <!--timestamp-->\
+    <div class="panel-heading">Timestamp (submitted to BitCoin network):</div>\
+    <div class="panel-body" id="timestamp">'+getTimestamp()+'</div>\
+    \<!-- Originstamp.org -->\
+      <div class="panel-heading">Originstamp.org link:</div>\
+      <div class="panel-body"><a target="_blank" href="https://app.originstamp.org/s/'+fileHa+'">https://app.originstamp.org/s/'+fileHa+'</a>\
+      </div>\
+    \<!-- Blockchain info -->\
+      <div class="panel-heading">Blockchain.info \
+      (the first Transaction DateTime is the Trusted Timestamp value):\
+      </div>\
+      <div class="panel-body"><a target="_blank" href="https://blockchain.info/address/'+summaryArgs[5]+
+      '">https://blockchain.info/address/'+summaryArgs[5]+'</a></div>\
+      </div>\
+        \
+        <button type="button" class="btn btn-secondary btn-lg btn-block white-background" data-toggle="collapse" data-target="#demo">Show details on how the address is generated.</button>\
+        <div id="demo" class="collapse">\
+        \
+        <div class="panel panel-default">\
+        <div class="panel-body">This html-document contains a javascript-function called \
+        createBTCAddress() which shows how to create the BTC-address from the seedfile. \
+        You can either use this directly or as a blueprint. Alternatively, \
+        you can use any library for creating BTC-adresses, which supports uncompressed \
+        public key generation (most libraries are set to compressed public keys \
+        by default.) <br /> <br />\
+        Good manuals to do this can be found here: <br />\
+        <ul class="list-unstyled">\
+          <li><a href="https://en.bitcoin.it/wiki/Technical_background_of_version_1_Bitcoin_addresses">\
+          How an address is created in theory.</a></li>\
+          <li><a href="http://cryptocoinjs.com/modules/crypto/ecurve/">Blueprint of our script.</a>\
+        </ul>   \
+      Below is a step by step description with intermediate results for the manual address generation.<br><br>\
+      The main concept of proof wheter the content is successfully timestamped in the blockchain is that we take\
+        a SHA256 (fingerprint) of the content, aggregate it with many other fingerprints in the seedfile from which we create \
+        the address in the blockchain, to which the smallest possible Bitcoin unit is transferred. The date-time when the amount \
+        is transferred is the trusted timestamp. Since we can manually reconstruct the address from the seedfile the we have \
+         the evident.\
+      <!--<div class="panel-heading">-->\
+        <h4><b>Step 1: </b>Check if file-hash is in the seedfile. <b>Hash included:</b> <b style="color:green;font-weight: bold;" align=left>&#10003;</b>\<br></h4> \
+      <!--</div>-->\
+      ';
+    //  sumArgs= [seedFileHash, secp1, pubKey, sha,  pubrmd160, address].
+    var content2 = '\
+      First we have to make sure that the SHA-256 (fingerprint) of the file is in the seedfile. This is important since \
+      we need to check if it is the right seedfile from which we create the address. Otherwise the generated address \
+      would give us a timestamp which not belongs to our file). \
+        <button type="button" class="btn btn-secondary btn-lg btn-block white-background" data-toggle="collapse" data-target="#seedfilediv">\
+        Click here to show where the contents hash is in the seedfile.</button>\
+        <div id="seedfilediv" class="collapse">\
+          <div class="panel-body" id="hashscroll" style="max-height: 200px; overflow-y: scroll; overflow-x: scroll;">\
+          '+seedFileTxt.replace(fileHash, "<b id='scrolltarget' style='color:red'>"+fileHash+"</b>")+'\
+          </div>\
+       </div>\
+       <br>\
+       <!--<div class="panel-heading">-->\
+        <h4><b>Step 2:</b> Create the private key from the hash file.</h4>\
+       <!--</div>-->\
+       This is simply done by hash the seedfile again with SHA-256 (hash just the string). This hash is our private key \
+        from which we will compute the address.<br>\
+       <div class="panel-body">\
+        '+seedFileHash+'<br>\
+       </div>\
+       <h4><b>Step 3:</b> Compute a key-pair using the secp256k1 curve.</h4>\
+       For the x value we use our in step 2 computed private key (seen here converted to a BigInteger).\
+       <div class="panel-body">\
+       '+summaryArgs[1]+'\
+       </div>\
+       <h4><b>Step 4:</b> Concatenate the x and y value (in hexadecimal) and put 0x04 in front of it.</h4>\
+       This is actually our public-key. The key needs now futher conversions to get an address from it.\
+       Make sure that you set public-key-compression off in your framework.\
+        <div class="panel-body" style="overflow-y: scroll">\
+       '+summaryArgs[2]+'<!--TODO: uncompressedkey-->\
+       </div>\
+       <h4><b>Step 5:</b> Append RIPEMD-160(SHA256(publickey))</h4>\
+       SHA256:\
+       <div class="panel-body">\
+       '+summaryArgs[3]+'\
+       </div>\
+       RIPEMD-160:\
+       <div class="panel-body">\
+       '+summaryArgs[4]+'\
+       </div>\
+       <h4><b>Step 6:</b> Address: Append 0x00 in front and 4 byte checksum behind and append Base58 encoding</h4>\
+       In our used framework this is altogether done by the last function. Here is the address:\
+       <div class="panel-body">\
+       '+summaryArgs[5]+'\
+       </div>\
+      </div>\
+      </div>\
+          \
+      <!--<div class="panel panel-default">\
+        <div class="panel-heading">Stamped at (moved into the blockchain):</div>\
+        <div class="panel-body" id="blockchainInfo"></div>\
+      </div>-->\
+      \
+  </div>'
+      var content = content1+content2;
+    document.getElementById('mainCont').innerHTML = content;
+    document.getElementById('timestamp').innerHTML = getTimestamp(timestamp);
+  }
+  </script>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>

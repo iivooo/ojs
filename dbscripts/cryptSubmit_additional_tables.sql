@@ -22,7 +22,7 @@
   FOREIGN KEY (comment_id) REFERENCES article_comments(comment_id) ON UPDATE CASCADE,
   comment_timestamp int(10),
   originstamp_status int(2),
-  origin_timestamp int(10),
+  origin_timestamp bigint(20) DEFAULT 0,
   origin_sha256 varchar(100)
 );
 
@@ -47,7 +47,7 @@
   article_hash varchar(100),
   download_timestamp int(10),
   originstamp_status int(2),
-  origin_timestamp int(10)
+  origin_timestamp bigint(20) DEFAULT 0
 );
 
  CREATE TABLE login_log (
@@ -67,7 +67,12 @@
   country varchar(20),
   origin_sha256 varchar(80),
   originstamp_status int(2),
-  origin_timestamp int(10)
+  origin_timestamp bigint(20) DEFAULT 0
 );
+
+ALTER TABLE articles
+ADD origin_sha256 varchar(80),
+  originstamp_status int(2),
+  origin_timestamp bigint(20) DEFAULT 0;
 
 

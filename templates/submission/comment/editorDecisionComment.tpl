@@ -45,11 +45,11 @@ window.opener.location.reload();
 			<div width="25%" style="float: right">
 				<td align="right" width="15%" valign="center">
 			{if $comment->getOriginstampStatus() eq 3} <td style="color:green;font-weight: bold;" align=left><div class="tooltip"><a style="color:green" href="{url op="downloadOriginZip" path=$articleId|to_array:$comment->getId()}">&#10003;</a><span class="tooltiptext">
-					Originstamp Status: 3. Your submission is successfully timpestamped. By clicking, you will get a zip-file with the original timestamped sting ahead with a manual verificator.</span></div>
+					Originstamp Status: 3. Your submission is successfully timpestamped. By clicking, you will get a zip-file with the original timestamped sting ahead with a manual verifier.</span></div>
 			<div><a target="_blank" href="https://app.originstamp.org/s/{$comment->getSHA256()|escape}">LINK</a></div></td>
 
 		{else} <td style="color:orange;font-weight: bold;" align=left><div class="tooltip">&#10003;<span class="tooltiptext">
-					Originstamp status: < 3. Your submission will be successfully timestamped in less than 24 hours. If this is done you can download a zip-file with the original timestamped sting ahead with a manual verificator. </span></div>
+					Originstamp status: < 3. Your submission will be successfully timestamped in less than 24 hours. If this is done you can download a zip-file with the original timestamped sting ahead with a manual verifier. </span></div>
 			<div><a target="_blank" style='color:orange' href="https://app.originstamp.org/s/{$comment->getSHA256()|escape}">LINK</a></div></td>{/if}
 		</td>
 		</div>

@@ -50,6 +50,11 @@ class cryptSubmitLibrary
         mysqli_close($db);
     }
 
+    /**Returns a standard mysqli result set
+     * @param $db
+     * @param $sql
+     * @return bool|mysqli_result|null
+     */
     function sqlQueryRetrieve($db, $sql){
         $result = null;
         if(!($result = mysqli_query($db, $sql))){
@@ -61,6 +66,11 @@ class cryptSubmitLibrary
         }
     }
 
+    /**2d array-representation from mysqli result set
+     * @param $db
+     * @param $sql
+     * @return array
+     */
     function getNumericArrayFromSQL($db, $sql){
         $result = $this->sqlQueryRetrieve($db, $sql);
         $result_arr = array();
@@ -70,7 +80,7 @@ class cryptSubmitLibrary
         return $result_arr;
     }
 
-    /**
+    /**Function for updating and inserting in sql
      * @param $sql
      * @param $db
      */
@@ -79,7 +89,6 @@ class cryptSubmitLibrary
             var_dump($result." query: ".$sql);
             var_dump($db->error);
             print "<script>alert('DB query failed. Please contact the admin.')</script>";
-           var_dump($db->error);
         }
     }
 
@@ -88,7 +97,7 @@ class cryptSubmitLibrary
      */
     function fetchLogInLog(){
         $this->updateLogInLog();
-        $sql = "SELECT * FROM login_log";
+        $sql = "SELECT * FROM login_log ORDER BY timestamp DESC";
         $result = $this->sqlQueryRetrieve($this->getDatabase(),$sql);
         $this->closeDatabase();
         $result_arr = array();
@@ -102,7 +111,7 @@ class cryptSubmitLibrary
 
     function fetchDownloadLog(){
         $this->updateDownloadLog();
-        $sql = "SELECT * FROM download_log";
+        $sql = "SELECT * FROM download_log ORDER BY download_timestamp DESC";
         $result = $this->sqlQueryRetrieve($this->getDatabase(), $sql);
         $this->closeDatabase();
         $result_arr = array();
@@ -139,7 +148,7 @@ class cryptSubmitLibrary
     }
 
 
-    /**Function for downloading the originstamp verificator
+    /**Function for downloading the originstamp verifier
      * fetches seedfile path, a timestamp .txt file can be provided for offline verification
      * @param $filePath: file which is timestamped
      * @param null $timestampPath: path where the timestamp lies
@@ -208,7 +217,6 @@ class cryptSubmitLibrary
     function getArticleTimeStampPath($id, $filePath){
         $db = $this->getDatabase();
 
-        //fetch all article_ids with submissionstatus < 3
         $query = "SELECT origin_timestamp FROM articles WHERE article_id =".$id;
         $timestamp =mysqli_query($db, $query);
 
@@ -238,16 +246,10 @@ class cryptSubmitLibrary
 
     function getSeedFile($filePath, $destination = false){
         $fileHash=hash_file("sha256",$filePath, FALSE);
-//        var_dump($fileHash);
         $url = "https://api.originstamp.org/api/download/seed/".$fileHash;
         $apiKey = "988e7238-995e-4db0-8277-ce8f75d4b037";
-        // $apiKey="c5adf195-e5c0-44fe-97d9-6317367229ae";
 
         $ch = curl_init( $url );
-//        curl_setopt( $ch, CURLOPT_POST, 1);
-//        curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1);
-//        curl_setopt( $ch, CURLOPT_HEADER, 0);
-//        curl_setopt($ch, CURLOPT_POSTFIELDS,$vars);  //Post Fields
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-type: application/json',
             'charset: utf-8',
@@ -268,7 +270,8 @@ class cryptSubmitLibrary
         return $destination;
     }
 
-    /**
+    /**function for packing the originstamp.org zip file
+     * offline-verifier is already included
      * @param array $files
      * @param string $destination
      * @return bool|string
@@ -305,8 +308,8 @@ class cryptSubmitLibrary
             }
 
 
-            //add manual verificator
-            $rootPath = $_SERVER['DOCUMENT_ROOT']."/originstampVerifier/";
+            //add manual verifier
+            $rootPath = $_SERVER['DOCUMENT_ROOT']."/ojs/originstampVerifier/";
             $files = new RecursiveIteratorIterator(
                 new RecursiveDirectoryIterator($rootPath),
                 RecursiveIteratorIterator::LEAVES_ONLY
@@ -337,14 +340,12 @@ class cryptSubmitLibrary
     }
 
     function timestampLogIn($session){
-        //provide databaseconnection
         $db = $this->getDatabase();
 
         $user = $session->getUser();
         $ipAddress = $session->getIpAddress();
         $timestamp = time();
 
-        //fetch additional user info to create logInInfoHash for originstamp.org
         $userQuery = "SELECT username, first_name, middle_name, last_name, phone, billing_address, country
 						FROM users WHERE user_id = '{$user->getUserId()}';";
         $userQueryResult = $this->sqlQueryRetrieve($db, $userQuery);
@@ -380,7 +381,6 @@ class cryptSubmitLibrary
     function timestampDownload($cryptArgs, $articleId,$fileId,$revision){
         //file details
         $article_hash = hash('sha256',$cryptArgs[articleContent]);
-//        var_dump($cryptArgs);
         $timestamp = time();
 
         //timestamp the string with originstamp.org
@@ -390,49 +390,19 @@ class cryptSubmitLibrary
             "{$article_hash},{$timestamp}";
 
         $tmpHash = hash('sha256', $tmp);
-//        var_dump($tmpHash);
 
-
-        //TODO: billingAddress?
         $query = "INSERT INTO download_log (user_id, ip, username, first_name, middle_name, last_name, phone, 
                   billing_address, country, article_id, file_id, revision, article_hash, download_timestamp, 
                   originstamp_status, origin_timestamp,origin_sha256)
                   VALUES ({$cryptArgs[userData][id]}, '{$cryptArgs[userIp]}', '{$cryptArgs[userData][username]}', '{$cryptArgs[userData][firstName]}',
                   '{$cryptArgs[userData][middleName]}', '{$cryptArgs[userData][lastName]}', '{$cryptArgs[userData][phone]}',
                   '', '{$cryptArgs[userData][country]}', {$articleId}, {$fileId}, {$revision}, '{$article_hash}', {$timestamp}, 0, 0, '{$tmpHash}'  );";
-//        var_dump($query);
-
-
-
-
-//        var_dump($tmp);
 
         $db = $this->getDatabase();
         $this->sqlQuery($db,$query);
         $this->closeDatabase($db);
         $this->submitRetrieveOriginstamp($tmpHash);
 
-//        CREATE TABLE download_log (
-//            ID int NOT NULL AUTO_INCREMENT, --auto_increment must be primary key
-//  PRIMARY KEY (ID),
-//  user_id bigint(20),
-//  FOREIGN KEY (user_id) REFERENCES users(user_id), --first create column, then add constraint
-//  ip varchar(50),
-//  username varchar(20),
-//  first_name varchar(20),
-//  middle_name varchar(20),
-//  last_name varchar(20),
-//  phone varchar(30),
-//  billing_address varchar(100),
-//  country varchar(20),
-//  article_id bigint(20),
-//
-//  FOREIGN KEY (article_id) REFERENCES articles(article_id),
-//  article_hash varchar(100),
-//  download_timestamp int(10),
-//  originstamp_status int(2),
-//  origin_timestamp int(10)
-//);
     }
 
     function timestampComment($comment){
@@ -484,32 +454,6 @@ class cryptSubmitLibrary
         $this->sqlQuery($db,$query);
         $this->closeDatabase($db);
          $this->submitRetrieveOriginstamp($tmpHash);
-//
-//        CREATE TABLE article_comments_timestamping_cryptSubmit (
-//            ID int NOT NULL AUTO_INCREMENT, --auto_increment must be primary key
-//  PRIMARY KEY (ID),
-//  user_id bigint(20),
-//  FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE, --first create column, then add constraint
-//  ip varchar(50),
-//  username varchar(20),
-//  first_name varchar(20),
-//  middle_name varchar(20),
-//  last_name varchar(20),
-//  phone varchar(30),
-//  billing_address varchar(100),
-//  country varchar(20),
-//  article_id bigint(20),
-//
-//  FOREIGN KEY (article_id) REFERENCES articles(article_id) ON UPDATE CASCADE,
-//  original_comments text,
-//  comment_title varchar(255),
-//  comment_id bigint(20),
-//  FOREIGN KEY (comment_id) REFERENCES article_comments(comment_id) ON UPDATE CASCADE,
-//  comment_timestamp int(10),
-//  originstamp_status int(2),
-//  origin_timestamp int(10),
-//  origin_sha256 varchar(100)
-//);
     }
 
     /**
@@ -522,8 +466,7 @@ class cryptSubmitLibrary
 
     function addArticleCommentData($articleComments){
         $db = $this->getDatabase();
-        //ad sha256, originstamp_status, originstamp time?
-        $this->updateArticleCommentLog(); //TODO: activize again
+        $this->updateArticleCommentLog();
         foreach ($articleComments as &$comment){
             $sql = "SELECT * FROM article_comments_timestamping_cryptSubmit  WHERE comment_id = {$comment->getCommentId()}";
             $res = null;
@@ -531,9 +474,6 @@ class cryptSubmitLibrary
                 $comment->setSHA256($res[0][origin_sha256]);
                 $comment->setOriginstampStatus($res[0][originstamp_status]);
                 $comment->setOriginTimestamp($res[0][origin_timestamp]);
-//                var_dump($comment);
-//                var_dump($res[0][originstamp_status].$res[0][origin_timestamp].$res[0][origin_sha256]);
-//                var_dump($comment->getOriginstampStatus().$comment->getOriginTimestamp().$comment->getSHA256());
         }
         //TODO: after updater is written: adjust template
 
@@ -543,19 +483,11 @@ class cryptSubmitLibrary
 
     }
 
-    /**
-     * TODO: übersicht in seceditor.
-     * TODO: originstampUpdater for articles, downloadTimestamp, login_log
-     * TODO: schauen wo man überall downloads timestampen soll
-     * TODO: comments timestampen. wer kann kommentieren wo?.
-     * TODO: fetcher, cronjob (unabhängiges php script mit log)
-     */
 
     /**
      * originstamp updaters
      */
 
-    //articles, login_log, downloadLog, commentLog
     function updateLogInLog(){
         $db = $this->getDatabase();
 
@@ -566,12 +498,9 @@ class cryptSubmitLibrary
 
         $row = null;
         while($row = $userQueryResult->fetch_assoc()){
-//            var_dump('row: '.$row['origin_sha256']);
             if($row['origin_sha256'] == null){continue;}
             $origRes = json_decode($this->submitRetrieveOriginstamp($row['origin_sha256']));
-//            var_dump($origRes);
-//            var_dump($origRes->multi_seed->submit_status);
-            $query = "UPDATE login_log SET originstamp_status = '{$origRes->multi_seed->submit_status}', origin_timestamp = '{$origRes->multi_seed->timestamp}' WHERE origin_sha256 = '{$row['origin_sha256']}';";
+            $query = "UPDATE `login_log` SET `originstamp_status` = '{$origRes->multi_seed->submit_status}' , `origin_timestamp` = '{$origRes->multi_seed->timestamp}' WHERE origin_sha256 = '{$row['origin_sha256']}';";
             $this->sqlQuery($db,$query);
         }
         $this->closeDatabase($db);
@@ -596,17 +525,13 @@ class cryptSubmitLibrary
 
     function updateArticleCommentLog(){
         $db = $this->getDatabase();
-        //TODO: query doesnt work
-        //tomorrow: comment log and then below todos and then testing and then bericht
 
-        $userQuery = "SELECT * FROM article_comments_timestamping_cryptSubmit  WHERE (originstamp_status IS NULL) OR (originstamp_status != 3)";
+        $userQuery = "SELECT * FROM article_comments_timestamping_cryptSubmit  WHERE (originstamp_status IS NULL) OR (originstamp_status != 3);";
         $userQueryResult = $this->sqlQueryRetrieve($db, $userQuery);
         $row = null;
         while($row = $userQueryResult->fetch_assoc()){
-//            var_dump('row: '.$row['origin_sha256']);
             if($row['origin_sha256'] == null){continue;}
             $origRes = json_decode($this->submitRetrieveOriginstamp($row['origin_sha256']));
-//            var_dump($origRes);
             $submit_status = $origRes->multi_seed->submit_status;
             if($submit_status == null) $submit_status = 1;
             $timestamp = $origRes->multi_seed->timestamp;
@@ -616,7 +541,6 @@ class cryptSubmitLibrary
         $this->closeDatabase($db);
     }
 
-    //TODO test this function: this is called at authorhandler.inc.php at index function.
     function updateArticles(){
         //get database connection
         $db = $this->getDatabase();
@@ -645,7 +569,6 @@ class cryptSubmitLibrary
             }
             //update db
             $query = "UPDATE articles SET originstamp_status = ".$submit_status.", origin_sha256 ='".$hash."', origin_timestamp = '".$timestamp."' WHERE article_id =".$id[0];
-//            var_dump($query);
             $this->sqlQuery($db, $query);
         }
         //close database connection
@@ -672,30 +595,31 @@ class cryptSubmitLibrary
     function downloadArticleCommentZip($articleId, $commentId){
         $sqlQuery="SELECT * FROM article_comments_timestamping_cryptSubmit WHERE comment_id = {$commentId}";
         $db = $this->getDatabase();
-//        (user_id, ip, username, first_name, middle_name, last_name, phone,
-//                  billing_address, country, article_id, original_comments, comment_title, comment_id, comment_timestamp, origin_sha256)
         $res = $this->getNumericArrayFromSQL($db,$sqlQuery);
         $tmp = "{$res[0][user_id]},{$res[0][ip]},{$res[0][username]},{$res[0][first_name]},{$res[0][middle_name]},{$res[0][last_name]},{$res[0][phone]},".
             "{$res[0][billing_address]},{$res[0][country]},{$res[0][article_id]},{$res[0][original_comments]},{$res[0][comment_title]},{$res[0][comment_id]},".
             "{$res[0][comment_timestamp]}";
         //write to txt file
         $basePath=$_SERVER['DOCUMENT_ROOT']."/files/DownloadableTxtFiles/";
+        $this->checkUserDownloadDirectory();
+
+
         $wComment = fopen($basePath."articleComment_{$commentId}.txt", "w") or die("Unable to open file!");
         fwrite($wComment, $tmp);
         fclose($wComment);
         //write Timestamp
-        $wComment = fopen($basePath."articleComment_{$commentId}_timestamp.txt", "w") or die("Unable to open file!");
-        fwrite($wComment, $res[0][comment_timestamp]);
+        $wComment = fopen($basePath."timestamp.js", "w") or die("Unable to open file!");
+        fwrite($wComment, "var timestamp = ".$res[0][origin_timestamp]);
         fclose($wComment);
         $seedFilePath=$this->getSeedFile($basePath."articleComment_{$commentId}.txt");
-        //TODO check if zip download starts when hash is timestamped
 
         $zipPaths=array(
             $basePath."articleComment_{$commentId}.txt",
-            $basePath."articleComment_{$commentId}_timestamp.txt",
+            $basePath."timestamp.js",
             $seedFilePath
         );
-        $this->userDownload($this->add_to_zip($zipPaths));
+        $zipDestination=$basePath."articleCommentTimestamp_{$commentId}.zip";
+        $this->userDownload($this->add_to_zip($zipPaths,$zipDestination));
 
     }
 
@@ -709,15 +633,15 @@ class cryptSubmitLibrary
 		{$res[0][billing_address]},{$res[0][country]}";
         $basePath = $_SERVER['DOCUMENT_ROOT']."/files/DownloadableTxtFiles/";
         $filePath = $basePath."loginTimestamp_{$loginId}.txt";
-        $timestampPath = $basePath."loginTimestamp_{$loginId}_timestamp.txt";
+        $timestampPath = $basePath."timestamp.js";
+        $this->checkUserDownloadDirectory();
 
         $wComment = fopen($filePath, "w") or die("Unable to open file!");
         fwrite($wComment, $timestampString);
         fclose($wComment);
         //write Timestamp
         $wComment = fopen($timestampPath, "w") or die("Unable to open file!");
-        //TODO: add origin_timestamp in table and updater and change below
-        fwrite($wComment, $res[0][timestamp]);
+        fwrite($wComment, "var timestamp = ".$res[0][origin_timestamp]);
         fclose($wComment);
         $seedFileDestination = $basePath."loginTimestamp_{$loginId}_seedfile.txt";
         $seedFilePath=$this->getSeedFile($filePath, $seedFileDestination);
@@ -733,12 +657,9 @@ class cryptSubmitLibrary
 
         echo "<script>window.close();</script>";
 
-//        (user_id, ip, timestamp, username, first_name, middle_name, last_name, phone,
-// 					billing_address, country, originstamp_status,origin_sha256)
 
     }
 
-    //TODO: check if this works with the new entry... old entry had to short hash
     function downloadDownloadLogZip($downloadId){
         $sqlQuery = "SELECT * FROM download_log WHERE `ID` = {$downloadId}";
         $db =$this->getDatabase();
@@ -749,20 +670,17 @@ class cryptSubmitLibrary
             "{$res[0][phone]},,{$res[0][country]},{$res[0][article_id]},{$res[0][file_id]},{$res[0][revision]},".
             "{$res[0][article_hash]},{$res[0][download_timestamp]}";
 
-//        var_dump(hash('sha256', $timestampString));
-
-//        var_dump($res[0][origin_sha256]);
-
+        $this->checkUserDownloadDirectory();
         $basePath = $_SERVER['DOCUMENT_ROOT']."/files/DownloadableTxtFiles/";
         $filePath = $basePath."downloadTimestamp_{$downloadId}.txt";
-        $timestampPath = $basePath."downloadTimestamp_{$downloadId}_timestamp.txt";
+        $timestampPath = $basePath."timestamp.js";
 
         $wComment = fopen($filePath, "w") or die("Unable to open file!");
         fwrite($wComment, $timestampString);
         fclose($wComment);
         //write Timestamp
         $wComment = fopen($timestampPath, "w") or die("Unable to open file!");
-        fwrite($wComment, $res[0][origin_timestamp]);
+        fwrite($wComment, "var timestamp = ".$res[0][origin_timestamp]);
         fclose($wComment);
         $seedFileDestination = $basePath."downloadTimestamp_{$downloadId}_seedfile.txt";
         $seedFilePath=$this->getSeedFile($filePath, $seedFileDestination);
@@ -777,10 +695,12 @@ class cryptSubmitLibrary
         $this->userDownload($this->add_to_zip($zipPaths,$zipDestination));
 
         echo "<script>window.close();</script>";
+    }
 
-//        download_log (user_id, ip, username, first_name, middle_name, last_name, phone,
-//            billing_address, country, article_id, file_id, revision, article_hash, download_timestamp,
-//            originstamp_status, origin_timestamp,origin_sha256)
-
+    function checkUserDownloadDirectory(){
+        $basePath=$_SERVER['DOCUMENT_ROOT']."/files/DownloadableTxtFiles/";
+        if (!file_exists($basePath)) {
+            mkdir($basePath, 0777, true);
+        }
     }
 }

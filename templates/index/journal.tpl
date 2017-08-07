@@ -52,7 +52,7 @@ Please login on the right side with:<br><br>
 	<ul>
 		<li>Timestamping submissions client-side with <a href="https://app.originstamp.org/">orginstamp.org</a> before uploaded.</li>
 		<li>Show the actual <a href="https://app.originstamp.org/home">orginstamp.org</a> timestamping-status in the summary.</li>
-		<li>Within a submissions summary a zip is downloadable with the original file and an offline verificator, which provides a link to
+		<li>Within a submissions summary a zip is downloadable with the original file and an offline verifier, which provides a link to
 		<a href="https://blockchain.info/">blockchain.info</a>. Also the underlying javascript acts as a blueprint to retrace the steps for manual address generation.</li>
 	</ul>
 </div>
