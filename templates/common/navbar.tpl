@@ -10,30 +10,33 @@
  *}
 <div id="navbar">
 	<ul class="menu">
-		<li id="home"><a href="{url page="index"}">{translate key="navigation.home"}</a></li>
-		<li id="about"><a href="{url page="about"}">{translate key="navigation.about"}</a></li>
+		{*@cryptSubmit navbar anpassung*}
+		{*<li id="home"><a href="{url page="index"}">{translate key="navigation.home"}</a></li>*}
+		{*<li id="about"><a href="{url page="about"}">{translate key="navigation.about"}</a></li>*}
 
 		{if $isUserLoggedIn}
-			<li id="userHome"><a href="{if $hasOtherJournals}{url journal="index" page="user"}{else}{url page="user"}{/if}">{translate key="navigation.userHome"}</a></li>
+			{**}{**}
+			<li id="userHome"><a href="{if $hasOtherJournals}{url journal="index" page="user" }{else}{url page="user"}{/if}">{translate key="navigation.userHome"}</a></li>
 		{else}
 			<li id="login"><a href="{url page="login"}">{translate key="navigation.login"}</a></li>
-			{if !$hideRegisterLink}
-				<li id="register"><a href="{url page="user" op="register"}">{translate key="navigation.register"}</a></li>
-			{/if}
+            {*@cryptSubmit navbar anpassung*}
+			{*{if !$hideRegisterLink}*}
+				{*<li id="register"><a href="{url page="user" op="register"}">{translate key="navigation.register"}</a></li>*}
+			{*{/if}*}
 		{/if}{* $isUserLoggedIn *}
 
 		{if $siteCategoriesEnabled}
 			<li id="categories"><a href="{url journal="index" page="search" op="categories"}">{translate key="navigation.categories"}</a></li>
 		{/if}{* $categoriesEnabled *}
+{*@cryptSubmit*}
+		{*{if !$currentJournal || $currentJournal->getSetting('publishingMode') != $smarty.const.PUBLISHING_MODE_NONE}*}
+			{*<li id="search"><a href="{url page="search"}">{translate key="navigation.search"}</a></li>*}
+		{*{/if}*}
 
-		{if !$currentJournal || $currentJournal->getSetting('publishingMode') != $smarty.const.PUBLISHING_MODE_NONE}
-			<li id="search"><a href="{url page="search"}">{translate key="navigation.search"}</a></li>
-		{/if}
-
-		{if $currentJournal && $currentJournal->getSetting('publishingMode') != $smarty.const.PUBLISHING_MODE_NONE}
-			<li id="current"><a href="{url page="issue" op="current"}">{translate key="navigation.current"}</a></li>
-			<li id="archives"><a href="{url page="issue" op="archive"}">{translate key="navigation.archives"}</a></li>
-		{/if}
+		{*{if $currentJournal && $currentJournal->getSetting('publishingMode') != $smarty.const.PUBLISHING_MODE_NONE}*}
+			{*<li id="current"><a href="{url page="issue" op="current"}">{translate key="navigation.current"}</a></li>*}
+			{*<li id="archives"><a href="{url page="issue" op="archive"}">{translate key="navigation.archives"}</a></li>*}
+		{*{/if}*}
 
 		{if $enableAnnouncements}
 			<li id="announcements"><a href="{url page="announcement"}">{translate key="announcement.announcements"}</a></li>

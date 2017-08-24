@@ -12,7 +12,8 @@
 <div style="border-bottom: 2px dotted #000; margin-top:6px;"></div>
 <div style="margin-top:10px"></div>
 <div style = 	"background-color:lightblue;
-				 border:2px black solid;">
+				 /*border:2px black solid;*/
+                 padding:15px;">
     On this page you see the login log. All logins are logged with user-data such as ip, username, name etc.
     <p>Note on the <a href="https://app.originstamp.org/">originstamp.org</a> status:
     <ul>

@@ -1,18 +1,12 @@
-<?php /* Smarty version 2.6.26, created on 2017-08-01 22:24:40
+<?php /* Smarty version 2.6.26, created on 2017-08-24 10:21:44
          compiled from common/navbar.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('function', 'url', 'common/navbar.tpl', 13, false),array('function', 'translate', 'common/navbar.tpl', 13, false),array('function', 'call_hook', 'common/navbar.tpl', 42, false),array('modifier', 'escape', 'common/navbar.tpl', 46, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('function', 'url', 'common/navbar.tpl', 19, false),array('function', 'translate', 'common/navbar.tpl', 19, false),array('function', 'call_hook', 'common/navbar.tpl', 45, false),array('modifier', 'escape', 'common/navbar.tpl', 49, false),)), $this); ?>
 <div id="navbar">
 	<ul class="menu">
-		<li id="home"><a href="<?php echo $this->_plugins['function']['url'][0][0]->smartyUrl(array('page' => 'index'), $this);?>
-"><?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "navigation.home"), $this);?>
-</a></li>
-		<li id="about"><a href="<?php echo $this->_plugins['function']['url'][0][0]->smartyUrl(array('page' => 'about'), $this);?>
-"><?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "navigation.about"), $this);?>
-</a></li>
-
+						
 		<?php if ($this->_tpl_vars['isUserLoggedIn']): ?>
-			<li id="userHome"><a href="<?php if ($this->_tpl_vars['hasOtherJournals']): ?><?php echo $this->_plugins['function']['url'][0][0]->smartyUrl(array('journal' => 'index','page' => 'user'), $this);?>
+						<li id="userHome"><a href="<?php if ($this->_tpl_vars['hasOtherJournals']): ?><?php echo $this->_plugins['function']['url'][0][0]->smartyUrl(array('journal' => 'index','page' => 'user'), $this);?>
 <?php else: ?><?php echo $this->_plugins['function']['url'][0][0]->smartyUrl(array('page' => 'user'), $this);?>
 <?php endif; ?>"><?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "navigation.userHome"), $this);?>
 </a></li>
@@ -20,32 +14,13 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'url', 'comm
 			<li id="login"><a href="<?php echo $this->_plugins['function']['url'][0][0]->smartyUrl(array('page' => 'login'), $this);?>
 "><?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "navigation.login"), $this);?>
 </a></li>
-			<?php if (! $this->_tpl_vars['hideRegisterLink']): ?>
-				<li id="register"><a href="<?php echo $this->_plugins['function']['url'][0][0]->smartyUrl(array('page' => 'user','op' => 'register'), $this);?>
-"><?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "navigation.register"), $this);?>
-</a></li>
-			<?php endif; ?>
-		<?php endif; ?>
+            												<?php endif; ?>
 		<?php if ($this->_tpl_vars['siteCategoriesEnabled']): ?>
 			<li id="categories"><a href="<?php echo $this->_plugins['function']['url'][0][0]->smartyUrl(array('journal' => 'index','page' => 'search','op' => 'categories'), $this);?>
 "><?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "navigation.categories"), $this);?>
 </a></li>
-		<?php endif; ?>
-		<?php if (! $this->_tpl_vars['currentJournal'] || $this->_tpl_vars['currentJournal']->getSetting('publishingMode') != @PUBLISHING_MODE_NONE): ?>
-			<li id="search"><a href="<?php echo $this->_plugins['function']['url'][0][0]->smartyUrl(array('page' => 'search'), $this);?>
-"><?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "navigation.search"), $this);?>
-</a></li>
-		<?php endif; ?>
-
-		<?php if ($this->_tpl_vars['currentJournal'] && $this->_tpl_vars['currentJournal']->getSetting('publishingMode') != @PUBLISHING_MODE_NONE): ?>
-			<li id="current"><a href="<?php echo $this->_plugins['function']['url'][0][0]->smartyUrl(array('page' => 'issue','op' => 'current'), $this);?>
-"><?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "navigation.current"), $this);?>
-</a></li>
-			<li id="archives"><a href="<?php echo $this->_plugins['function']['url'][0][0]->smartyUrl(array('page' => 'issue','op' => 'archive'), $this);?>
-"><?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "navigation.archives"), $this);?>
-</a></li>
-		<?php endif; ?>
-
+		<?php endif; ?>							
+										
 		<?php if ($this->_tpl_vars['enableAnnouncements']): ?>
 			<li id="announcements"><a href="<?php echo $this->_plugins['function']['url'][0][0]->smartyUrl(array('page' => 'announcement'), $this);?>
 "><?php echo $this->_plugins['function']['translate'][0][0]->smartyTranslate(array('key' => "announcement.announcements"), $this);?>

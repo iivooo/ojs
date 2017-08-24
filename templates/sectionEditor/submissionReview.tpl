@@ -22,7 +22,8 @@
 <div style="border-bottom: 2px dotted #000; margin-top:6px;"></div>
 <div style="margin-top:10px"></div>
 <div style = 	"background-color:lightblue;
-				 border:2px black solid;">
+				 /*border:2px black solid;*/
+				 padding:15px;">
 	At the bottom of this page, at the section Editor Decision you can find the comments <font color="red">(red)</font>.
 	The comments are timestamped along with user-data such as ip-address, name etc.
 	<p>Note on the <a href="https://app.originstamp.org/">originstamp.org</a> status:

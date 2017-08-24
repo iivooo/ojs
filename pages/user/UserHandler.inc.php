@@ -48,7 +48,6 @@ class UserHandler extends Handler {
 		$setupIncomplete = array();
 		$submissionsCount = array();
 		$isValid = array();
-
 		if ($journal == null) { // Curently at site level
 			unset($journal);
 

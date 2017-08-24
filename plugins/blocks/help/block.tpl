@@ -8,6 +8,7 @@
  * Common site sidebar menu -- help pop-up link.
  *
  *}
-<div class="block" id="sidebarHelp">
-	<a class="blockTitle" href="javascript:openHelp('{if $helpTopicId}{get_help_id|escape key="$helpTopicId" url="true"}{else}{url page="help"}{/if}')">{translate key="navigation.journalHelp"}</a>
-</div>
+{*@cryptSubmit help out*}
+{*<div class="block" id="sidebarHelp">*}
+	{*<a class="blockTitle" href="javascript:openHelp('{if $helpTopicId}{get_help_id|escape key="$helpTopicId" url="true"}{else}{url page="help"}{/if}')">{translate key="navigation.journalHelp"}</a>*}
+{*</div>*}

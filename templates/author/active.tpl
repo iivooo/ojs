@@ -9,7 +9,8 @@
  *
  *}
  <div style = 	"background-color:lightblue;
-				 border:2px black solid;">
+				 /*border:2px black solid;*/
+				 padding: 15px;">
 	On this page you can..
 	<ul>
 		<li>.. see your uploaded submissions with the corresponding <a href="https://app.originstamp.org/">originstamp.org</a> status on the right. </li>

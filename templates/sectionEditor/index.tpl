@@ -16,8 +16,8 @@
 {/strip}
 <ul class="menu">
 	<li{if ($pageToDisplay == "submissionsInReview")} class="current"{/if}><a href="{url path="submissionsInReview"}">{translate key="common.queue.short.submissionsInReview"}</a></li>
-	<li{if ($pageToDisplay == "submissionsInEditing")} class="current"{/if}><a href="{url path="submissionsInEditing"}">{translate key="common.queue.short.submissionsInEditing"}</a></li>
-	<li{if ($pageToDisplay == "submissionsArchives")} class="current"{/if}><a href="{url path="submissionsArchives"}">{translate key="common.queue.short.submissionsArchives"}</a></li>
+	{*<li{if ($pageToDisplay == "submissionsInEditing")} class="current"{/if}><a href="{url path="submissionsInEditing"}">{translate key="common.queue.short.submissionsInEditing"}</a></li>*}
+	{*<li{if ($pageToDisplay == "submissionsArchives")} class="current"{/if}><a href="{url path="submissionsArchives"}">{translate key="common.queue.short.submissionsArchives"}</a></li>*}
 	<li {if ($pageToDisplay == "logInLog")} class="current"{/if}><a style="color:red" href="{url path="logInLog"}">{translate key="common.queue.short.logInLog"}</a></li>
 	<li {if ($pageToDisplay == "downloadLog")} class="current"{/if}><a style="color:red" href="{url path="downloadLog"}">{translate key="common.queue.short.downloadLog"}</a></li>
 </ul>
@@ -27,12 +27,13 @@
 	<div style="margin-top:10px"></div>
 
 	<div style = 	"background-color:lightblue;
-				 border:2px black solid;">
+				 /*border:2px black solid;*/
+				padding:15px;">
 		On this page you can..
 		<ul>
-			<li>.. see a login log for all users. The login's are timestamped with <a href="originstamp.org">originstamp.org</a> </li>
-			<li>.. see a download log to see who downloaded which file with corresponding user data. These are also timestamped.</li>
-			<li>.. click on a submission to see the timestamped submissions.</li>
+			<li>.. see the <font style="color:red;">LOGIN LOG</font> for all users. The login's are timestamped with <a href="originstamp.org">originstamp.org</a> </li>
+			<li>.. see the <font style="color:red;">DOWNLOAD LOG</font> to see who downloaded which file with corresponding user data. These are also timestamped.</li>
+			<li>.. click on a <font style="color:red;">submission</font> to see the timestamped comments for the submission.</li>
 		</ul>
 	</div>
 <form action="#">

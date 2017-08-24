@@ -1,9 +1,10 @@
-<?php /* Smarty version 2.6.26, created on 2017-08-06 13:55:56
+<?php /* Smarty version 2.6.26, created on 2017-08-23 19:53:00
          compiled from author/active.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_heading', 'author/active.tpl', 34, false),array('function', 'translate', 'author/active.tpl', 35, false),array('function', 'url', 'author/active.tpl', 57, false),array('function', 'page_info', 'author/active.tpl', 133, false),array('function', 'page_links', 'author/active.tpl', 134, false),array('block', 'iterate', 'author/active.tpl', 44, false),array('modifier', 'escape', 'author/active.tpl', 50, false),array('modifier', 'date_format', 'author/active.tpl', 51, false),array('modifier', 'truncate', 'author/active.tpl', 54, false),array('modifier', 'strip_tags', 'author/active.tpl', 57, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_heading', 'author/active.tpl', 35, false),array('function', 'translate', 'author/active.tpl', 36, false),array('function', 'url', 'author/active.tpl', 58, false),array('function', 'page_info', 'author/active.tpl', 134, false),array('function', 'page_links', 'author/active.tpl', 135, false),array('block', 'iterate', 'author/active.tpl', 45, false),array('modifier', 'escape', 'author/active.tpl', 51, false),array('modifier', 'date_format', 'author/active.tpl', 52, false),array('modifier', 'truncate', 'author/active.tpl', 55, false),array('modifier', 'strip_tags', 'author/active.tpl', 58, false),)), $this); ?>
   <div style = 	"background-color:lightblue;
-				 border:2px black solid;">
+				 /*border:2px black solid;*/
+				 padding: 15px;">
 	On this page you can..
 	<ul>
 		<li>.. see your uploaded submissions with the corresponding <a href="https://app.originstamp.org/">originstamp.org</a> status on the right. </li>

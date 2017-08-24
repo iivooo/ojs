@@ -69,7 +69,7 @@
 		{if $isValid.SectionEditor.$journalId}
 			{assign var="sectionEditorSubmissionsCount" value=$submissionsCount.SectionEditor.$journalId}
 			<tr>
-				<td><a href="{url journal=$journalPath page="sectionEditor"}">{translate key="user.role.sectionEditor"}</a></td>
+				<td><a style="color:red" href="{url journal=$journalPath page="sectionEditor"}">{translate key="user.role.sectionEditor"} (click here)</a></td>
 				<td></td>
 				<td>{if $sectionEditorSubmissionsCount[0]}
 						<a href="{url journal=$journalPath page="sectionEditor" op="index" path="submissionsInReview"}">{$sectionEditorSubmissionsCount[0]} {translate key="common.queue.short.submissionsInReview"}</a>
