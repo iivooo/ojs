@@ -22,17 +22,18 @@ window.opener.location.reload();
 {/literal}
 </script>
  <link rel="stylesheet" type="text/css" href="/ojs/styles/originstamper.css">
+ <link rel="stylesheet" type="text/css" href="/ojs/styles/balloon.css">
 
-<div id="existingComments">
+<div id="existingComments" style="min-width: 640px">
 <table class="data" width="100%">
 {foreach from=$articleComments item=comment}
 <div id="comment">
 <tr valign="top">
-	<td width="25%">
+	<td width="20%">
 		<div class="commentRole">{translate key=$comment->getRoleName()}</div>
 		<div class="commentDate">{$comment->getDatePosted()|date_format:$datetimeFormatShort}</div>
 	</td>
-	<td width="75%">
+	<td width="49%">
 		{if $comment->getAuthorId() eq $userId and not $isLocked}
 			<div style="float: right"><a href="{url op="deleteComment" path=$articleId|to_array:$comment->getId()}" onclick="return confirm('{translate|escape:"jsparam" key="submission.comments.confirmDelete"}')" class="action">{translate key="common.delete"}</a></div>
 		{/if}
@@ -41,17 +42,46 @@ window.opener.location.reload();
 			<div class="commentTitle">{translate key="submission.comments.subject"}: {$comment->getCommentTitle()|escape}</div>
 		{/if}
 		</div>
-		<div width="75%" style="float: left" class="comments">{$comment->getComments()|strip_unsafe_html|nl2br}</div>
-			<div width="25%" style="float: right">
-				<td align="right" width="15%" valign="center">
-			{if $comment->getOriginstampStatus() eq 3} <td style="color:green;font-weight: bold;" align=left><div class="tooltip"><a style="color:green" href="{url op="downloadOriginZip" path=$articleId|to_array:$comment->getId()}">&#10003;</a><span class="tooltiptext">
-					Originstamp Status: 3. Your submission is successfully timpestamped. By clicking, you will get a zip-file with the original timestamped sting ahead with a manual verifier.</span></div>
-			<div><a target="_blank" href="https://app.originstamp.org/s/{$comment->getSHA256()|escape}">LINK</a></div></td>
+		<div width="62%" style="float: left" class="comments">{$comment->getComments()|strip_unsafe_html|nl2br}</div>
+			{*<div width="15%" style="float: right">*}
+				{*<td align="right" width="35%" valign="right">*}
+			{*{if $comment->getOriginstampStatus() eq 3} <td style="color:green;font-weight: bold;" align=left><div class="tooltip"><a style="color:green" href="{url op="downloadOriginZip" path=$articleId|to_array:$comment->getId()}">&#10003;</a><span class="tooltiptext">*}
+					{*Originstamp Status: 3. Your submission is successfully timpestamped. By clicking, you will get a zip-file with the original timestamped sting ahead with a manual verifier.</span></div>*}
+			    {*<div><a target="_blank" href="https://app.originstamp.org/s/{$comment->getSHA256()|escape}">LINK</a></div></td>*}
 
-		{else} <td style="color:orange;font-weight: bold;" align=left><div class="tooltip">&#10003;<span class="tooltiptext">
-					Originstamp status: < 3. Your submission will be successfully timestamped in less than 24 hours. If this is done you can download a zip-file with the original timestamped sting ahead with a manual verifier. </span></div>
-			<div><a target="_blank" style='color:orange' href="https://app.originstamp.org/s/{$comment->getSHA256()|escape}">LINK</a></div></td>{/if}
-		</td>
+		    {*{else} <td style="color:orange;font-weight: bold;" align=left><div class="tooltip">&#10003;<span class="tooltiptext">*}
+					{*Originstamp status: < 3. Your submission will be successfully timestamped in less than 24 hours. If this is done you can download a zip-file with the original timestamped sting ahead with a manual verifier. </span></div>*}
+                {*<div><a target="_blank" style='color:orange' href="https://app.originstamp.org/s/{$comment->getSHA256()|escape}">LINK</a></div></td>*}
+            {*{/if}*}
+            {if $comment->getOriginstampStatus() eq 3}
+                        <td align=left>
+                            <div class="timestampbox success" data-balloon="Originstamp Status: 3. The comment is successfully timpestamped." data-balloon-pos="left">
+                            The download entry is sucessfully timestamped.
+                            </div>
+                            <div width="100%" class="timestampbox">
+                                <a target="_blank" href="https://app.originstamp.org/s/{$comment->getSHA256()|escape}"><img height="10em" src="/ojs/templates/images/cryptImages/logo.png"> link to originstamp.org</a>
+                            </div>
+                            <div class="timestampbox" data-balloon="Download the zip-file with the original timestamped string and an offline verifier tool."
+                            data-balloon-pos="left" data-balloon-length="large">
+                                <a href="{url op="downloadOriginZip" path=$articleId|to_array:$comment->getId()}"><img height="10em" src="/ojs/templates/images/cryptImages/zipLogo.svg"> download verifier zip</a>
+                            </div>
+                        </td>
+                    {else}
+                        <td align=left>
+                            <div class="timestampbox pending" data-balloon="
+                                        Originstamp status: < 3. The download entry will be successfully timestamped in less than 24 hours.
+                                       After it's timestamped you can download a zip-file with the original timestamped string and all
+                                       information you need for manual verification." data-balloon-length="large" data-balloon-pos="left">
+                            The login entry will be timestamped in less than 24h.
+                            </div>
+                            <div class="timestampbox">
+                                <a target="_blank" href="https://app.originstamp.org/s/{$comment->getSHA256()|escape}">
+                                    <img height="10em" src="/ojs/templates/images/cryptImages/logo.png"> link to originstamp.org
+                                </a>
+                            </div>
+                        </td>
+                    {/if}
+		{*</td>*}
 		</div>
 
 	</td>
@@ -63,8 +93,8 @@ window.opener.location.reload();
 	<td class="nodata">{translate key="submission.comments.noComments"}</td>
 </tr>
 {/foreach}
-</table>
 </div>
+</table>
 <br />
 <br />
 

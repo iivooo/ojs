@@ -4,32 +4,33 @@
                  padding: 15px">
     This prototype shows a possible implementation of <a href="https://www.gipp.com/wp-content/papercite-data/pdf/gipp2017b.pdf">
         <img style="height: 15px;" src="/ojs/templates/images/cryptImages/Adobe_PDF_Icon.png">CryptSubmit</a> in an existing system.<br><br>
-    CryptSubmit is a fully automated timestamping framework, that makes use of <a href="https://app.originstamp.org/">OriginStamp</a>.
+    The paper describes a fully automated trusted timestamping framework, that makes use of <a href="https://app.originstamp.org/">OriginStamp</a>.
     OriginStamp is a free trusted timestamping solution based on the blockchain of Bitcoin.
-    In our case we extended the Open Journal System (OJS), which is a popular open-source publishing system, with full automatized trusted timestamping.
-    {*CryptSubmit is a framework that describes the automatized integration of <a href="https://app.originstamp.org/">originstamp.org</a>,*}
-    {*which is a free trusted timestamping service based on the bitcoin-blockchain, into systems like the Open Journal Systems.*}
-    {*It’s supposed to support the tracking of the legal origin of digital contents such as articles (PDF, Word, ..) and others.*}
-    CryptSubmit tracks the origin of digital content such as articles (PDF, Word, ..) and others.
-    In our case, we timestamp articles and system events, such as: logins, download times and user-interaction (comments).
-    The timestamps in the system are shown to the user and can be downloaded as a zip-file with the original content for the own archives.
-    The zip-file also includes an offline verifier, which describes how to retrace the bitcoin address generation for the content.
-    The whole additional process takes almost no overhead, since the most work is done by the <a href="https://app.originstamp.org/dev">OriginStamp-API</a>.
-    {*For more information please visit the about section of the page.*}
+    The Open Journal Systems (OJS) is a popular open-source publishing system, which we extended with fully automatized trusted timestamping.
+    CryptSubmit tracks and verifies the time of submission of digital content such as articles (PDF, Word, ..) and others.
+    In our case, we timestamp academic manuscripts submitted for peer-review and system events, such as: logins, download times and user-interaction (comments).
+    The trusted timestamps can help you afterwards to prove, that you are the originator of your published content, e.g. in case of copyright-violation of other users.
+    The trusted timestamps in the system are shown to the user and can be downloaded as a zip-file with the original content for the own archives.
+    The zip-file also includes an offline verifier, which describes how to retrace the bitcoin address generation for the timestamped content.
+    Thanks to the <a href="https://app.originstamp.org/dev">OriginStamp-API</a>, all these features take almost no additional overhead.
     <br><br>
-    <div style="border: 1px;">
-        <b>Quick note on trusted timestamping: </b>
-        Trusted timestamping of digital content means that the content has existed at a certain time in a specific form.
+    For further information about the usage of this system or technical backgrounds please visit the about page.
+    Or just try out the prototype:
+    <br><br>
 
-        For example, if you have written an article and you export it to pdf. As soon as you timestamp it, you have a
-        proof that this document existed at this time and with its content. If someone publishes your content, it
-        helps you to proof afterwards that you are the originator of your content at an earlier time. This works with an unique fingerprint (hash) of your document
-        that is submitted to the blockchain.
-        So you must not alter your document for a specific timestamp. For technical details please visit <a href="https://app.originstamp.org/">originstamp.org</a>
-        or read <a href="https://www.gipp.com/wp-content/papercite-data/pdf/gipp2017b.pdf"><img style="height: 15px;" src="/ojs/templates/images/cryptImages/Adobe_PDF_Icon.png">CryptSubmit</a> paper.
-    </div>
-    <br>
-    Let’s have a look at the functionality of this prototype:<br> <br>
+    {*<div style="border: 1px;">*}
+        {*<b>Quick note on trusted timestamping: </b>*}
+        {*Trusted timestamping of digital content means that the content has existed at a certain time in a specific form.*}
+
+        {*For example, if you have written an article and you export it to pdf. As soon as you timestamp it, you have a*}
+        {*proof that this document existed at this time and with its content. If someone publishes your content, it*}
+        {*helps you to proof afterwards that you are the originator of your content at an earlier time. This works with an unique fingerprint (hash) of your document*}
+        {*that is submitted to the blockchain.*}
+        {*So you must not alter your document for a specific timestamp. For technical details please visit <a href="https://app.originstamp.org/">originstamp.org</a>*}
+        {*or read <a href="https://www.gipp.com/wp-content/papercite-data/pdf/gipp2017b.pdf"><img style="height: 15px;" src="/ojs/templates/images/cryptImages/Adobe_PDF_Icon.png">CryptSubmit</a> paper.*}
+    {*</div>*}
+    {*<br>*}
+    {*Let’s have a look at the functionality of this prototype:<br> <br>*}
     <b>For authors:</b><br>
     <br><br>
     <div style="width:100%;overflow-x: auto; overflow-y: hidden">

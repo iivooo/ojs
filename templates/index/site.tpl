@@ -25,6 +25,7 @@
 	<p>{foreach from=$alphaList item=letter}<a href="{url searchInitial=$letter sort="title"}">{if $letter == $searchInitial}<strong>{$letter|escape}</strong>{else}{$letter|escape}{/if}</a> {/foreach}<a href="{url}">{if $searchInitial==''}<strong>{translate key="common.all"}</strong>{else}{translate key="common.all"}{/if}</a></p>
 {/if}
 {include file="cryptSubmit/mainDescription.tpl"}
+{include file="cryptSubmit/mainDescription2.tpl"}
 <!--@cryptSubmit-->
 {*<div style = 	"background-color:lightblue;*}
 				 {*border:2px black solid;">*}

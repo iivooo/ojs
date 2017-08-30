@@ -476,8 +476,13 @@ class TrackSubmissionHandler extends AuthorHandler {
         $articleId = (int) array_shift($args);
 		$fileId = (int) array_shift($args);
 		$revision = (int) array_shift($args);
-        if (!$revision) $revision = null;
         $artFileMan = new ArticleFileManager($articleId);
+        if (!$revision) {
+            $authorSubmissionDao =& DAORegistry::getDAO('AuthorSubmissionDAO');
+            $authorSubmission =& $authorSubmissionDao->getAuthorSubmission($articleId);
+            $revision = $authorSubmission->getSubmissionFile()->getRevision();
+		}
+
 		$tempFile = $artFileMan->getFile($fileId, $revision);
 		$filePath = $tempFile->getFilePath();
 

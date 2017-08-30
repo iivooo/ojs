@@ -1,10 +1,8 @@
-<?php /* Smarty version 2.6.26, created on 2017-08-23 19:53:00
+<?php /* Smarty version 2.6.26, created on 2017-08-29 20:19:00
          compiled from author/active.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_heading', 'author/active.tpl', 35, false),array('function', 'translate', 'author/active.tpl', 36, false),array('function', 'url', 'author/active.tpl', 58, false),array('function', 'page_info', 'author/active.tpl', 134, false),array('function', 'page_links', 'author/active.tpl', 135, false),array('block', 'iterate', 'author/active.tpl', 45, false),array('modifier', 'escape', 'author/active.tpl', 51, false),array('modifier', 'date_format', 'author/active.tpl', 52, false),array('modifier', 'truncate', 'author/active.tpl', 55, false),array('modifier', 'strip_tags', 'author/active.tpl', 58, false),)), $this); ?>
-  <div style = 	"background-color:lightblue;
-				 /*border:2px black solid;*/
-				 padding: 15px;">
+smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_heading', 'author/active.tpl', 34, false),array('function', 'translate', 'author/active.tpl', 35, false),array('function', 'url', 'author/active.tpl', 57, false),array('function', 'page_info', 'author/active.tpl', 136, false),array('function', 'page_links', 'author/active.tpl', 137, false),array('block', 'iterate', 'author/active.tpl', 44, false),array('modifier', 'escape', 'author/active.tpl', 50, false),array('modifier', 'date_format', 'author/active.tpl', 51, false),array('modifier', 'truncate', 'author/active.tpl', 54, false),array('modifier', 'strip_tags', 'author/active.tpl', 57, false),)), $this); ?>
+  <div class="descriptions">
 	On this page you can..
 	<ul>
 		<li>.. see your uploaded submissions with the corresponding <a href="https://app.originstamp.org/">originstamp.org</a> status on the right. </li>
@@ -12,16 +10,10 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_headin
 		<li>.. click the submission to get to the submissions summary, where you find a zip at the bottom of the page with the original file and an offline verifier, which provides a link to
 		<a href="https://blockchain.info/">blockchain.info</a>. Also the underlying javascript acts as a blueprint to retrace the steps for manual address generation.</li>
 	</ul>
-	<p>Note on the <a href="https://app.originstamp.org/">originstamp.org</a> status:
-	<ul>
-		<li><div style="color:green;font-weight: bold;" align=left>&#10003;</div> The submission is sucessfully timestamped. The hash is in the Blockchain and at least one block is above.</li>
-		<li><div style="color:orange;font-weight: bold;" align=left>&#10003;</div> The submission's timestamping is in progress. Will be successfully done within max. 24 hours.</li>
-		<li><div style="color:red;font-weight: bold;" align=left>&#10003;</div> There is no main submission uploaded to the server.</li>
-	</ul>
-	 </p>
-</div>
+										 </div>
 
- <link rel="stylesheet" type="text/css" href="/styles/originstamper.css">
+ <link rel="stylesheet" type="text/css" href="/ojs/styles/originstamper.css">
+ <link rel="stylesheet" type="text/css" href="/ojs/styles/balloon.css">
 <div id="submissions">
 <table class="listing" width="100%">
 	<tr><td colspan="7" class="headseparator">&nbsp;</td></tr>
@@ -33,13 +25,13 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_headin
 </td>
 		<td width="5%"><?php echo $this->_plugins['function']['sort_heading'][0][0]->smartySortHeading(array('key' => "submissions.sec",'sort' => 'section'), $this);?>
 </td>
-		<td width="25%"><?php echo $this->_plugins['function']['sort_heading'][0][0]->smartySortHeading(array('key' => "article.authors",'sort' => 'authors'), $this);?>
+		<td width="15%"><?php echo $this->_plugins['function']['sort_heading'][0][0]->smartySortHeading(array('key' => "article.authors",'sort' => 'authors'), $this);?>
 </td>
 		<td width="35%"><?php echo $this->_plugins['function']['sort_heading'][0][0]->smartySortHeading(array('key' => "article.title",'sort' => 'title'), $this);?>
 </td>
 		<td width="15%" align="left"><?php echo $this->_plugins['function']['sort_heading'][0][0]->smartySortHeading(array('key' => "common.status",'sort' => 'status'), $this);?>
 </td>
-		<td width="10%" align="left"><?php echo $this->_plugins['function']['sort_heading'][0][0]->smartySortHeading(array('key' => "common.originstampStatus"), $this);?>
+		<td  align="left"><img src="/ojs/templates/images/cryptImages/logo.png" style="height: 1em"> <?php echo $this->_plugins['function']['sort_heading'][0][0]->smartySortHeading(array('key' => "common.originstampStatus"), $this);?>
 </td>                               <!-- ORIGINSTAMP Status -->
 	</tr>
 	<tr><td colspan="7" class="headseparator">&nbsp;</td></tr>
@@ -94,19 +86,14 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'sort_headin
 						<?php endif; ?>
 					</a>
 				<?php endif; ?>
-				<?php if ($this->_tpl_vars['submission']->getOriginstampStatus() == 3): ?> <td style="color:green;font-weight: bold;" align=left><div class="tooltip"'>&#10003;<span class="tooltiptext">
-				Originstamp Status: 3. Your submission is successfully timpestamped. In the articles summary, you will find a zip-file with all information you need for manual verification. </span></div>
-				<div><a target="_blank" href="https://app.originstamp.org/s/<?php echo ((is_array($_tmp=$this->_tpl_vars['sha256'])) ? $this->_run_mod_handler('escape', true, $_tmp) : $this->_plugins['modifier']['escape'][0][0]->smartyEscape($_tmp)); ?>
-">LINK</a></div></td>
-				<?php elseif ($this->_tpl_vars['submission']->getOriginstampStatus() == 0): ?>
-				 <td style="color:red;font-weight: bold;" align=left><div class="tooltip" '>&#10003;<span class="tooltiptext">
-				No primary file uploaded. </span></div><div>NO LINK</div></td>
 
-				<?php else: ?> <td style="color:orange;font-weight: bold;" align=left><div class="tooltip" '>&#10003;<span class="tooltiptext">
-				Originstamp status: < 3. Your submission will be successfully timestamped in less than 24 hours. In the articles summary, you will find a zip-file with all information you need for manual verification. </span></div>
-				<div><a target="_blank" style='color:orange' href="https://app.originstamp.org/s/<?php echo ((is_array($_tmp=$this->_tpl_vars['sha256'])) ? $this->_run_mod_handler('escape', true, $_tmp) : $this->_plugins['modifier']['escape'][0][0]->smartyEscape($_tmp)); ?>
-">LINK</a></div></td><?php endif; ?>
-
+				<?php $_smarty_tpl_vars = $this->_tpl_vars;
+$this->_smarty_include(array('smarty_include_tpl_file' => "cryptSubmit/originStatusAuthor.tpl", 'smarty_include_vars' => array()));
+$this->_tpl_vars = $_smarty_tpl_vars;
+unset($_smarty_tpl_vars);
+ ?>
+																								 				
+												
 								<?php if ($this->_tpl_vars['status'] == STATUS_QUEUED_UNASSIGNED || $this->_tpl_vars['status'] == STATUS_QUEUED_REVIEW): ?>
 					<?php if ($this->_tpl_vars['submissionEnabled'] && ! $this->_tpl_vars['completedPaymentDAO']->hasPaidSubmission($this->_tpl_vars['submission']->getJournalId(),$this->_tpl_vars['submission']->getId())): ?>
 						<br />

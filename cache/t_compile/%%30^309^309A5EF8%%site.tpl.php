@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.26, created on 2017-08-23 17:43:01
+<?php /* Smarty version 2.6.26, created on 2017-08-30 03:27:06
          compiled from index/site.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'nl2br', 'index/site.tpl', 20, false),array('modifier', 'escape', 'index/site.tpl', 25, false),array('function', 'url', 'index/site.tpl', 25, false),array('function', 'translate', 'index/site.tpl', 25, false),)), $this); ?>
@@ -29,6 +29,11 @@ unset($_smarty_tpl_vars);
 <?php endif; ?>
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "cryptSubmit/mainDescription.tpl", 'smarty_include_vars' => array()));
+$this->_tpl_vars = $_smarty_tpl_vars;
+unset($_smarty_tpl_vars);
+ ?>
+<?php $_smarty_tpl_vars = $this->_tpl_vars;
+$this->_smarty_include(array('smarty_include_tpl_file' => "cryptSubmit/mainDescription2.tpl", 'smarty_include_vars' => array()));
 $this->_tpl_vars = $_smarty_tpl_vars;
 unset($_smarty_tpl_vars);
  ?>

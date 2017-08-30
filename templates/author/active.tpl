@@ -8,9 +8,7 @@
  * Show the details of active submissions.
  *
  *}
- <div style = 	"background-color:lightblue;
-				 /*border:2px black solid;*/
-				 padding: 15px;">
+ <div class="descriptions">
 	On this page you can..
 	<ul>
 		<li>.. see your uploaded submissions with the corresponding <a href="https://app.originstamp.org/">originstamp.org</a> status on the right. </li>
@@ -18,16 +16,17 @@
 		<li>.. click the submission to get to the submissions summary, where you find a zip at the bottom of the page with the original file and an offline verifier, which provides a link to
 		<a href="https://blockchain.info/">blockchain.info</a>. Also the underlying javascript acts as a blueprint to retrace the steps for manual address generation.</li>
 	</ul>
-	<p>Note on the <a href="https://app.originstamp.org/">originstamp.org</a> status:
-	<ul>
-		<li><div style="color:green;font-weight: bold;" align=left>&#10003;</div> The submission is sucessfully timestamped. The hash is in the Blockchain and at least one block is above.</li>
-		<li><div style="color:orange;font-weight: bold;" align=left>&#10003;</div> The submission's timestamping is in progress. Will be successfully done within max. 24 hours.</li>
-		<li><div style="color:red;font-weight: bold;" align=left>&#10003;</div> There is no main submission uploaded to the server.</li>
-	</ul>
-	 </p>
+	{*<p>Note on the <a href="https://app.originstamp.org/">originstamp.org</a> status:*}
+	{*<ul>*}
+		{*<li><div style="color:green;font-weight: bold;" align=left>&#10003;</div> The submission is sucessfully timestamped. The hash is in the Blockchain and at least one block is above.</li>*}
+		{*<li><div style="color:orange;font-weight: bold;" align=left>&#10003;</div> The submission's timestamping is in progress. Will be successfully done within max. 24 hours.</li>*}
+		{*<li><div style="color:red;font-weight: bold;" align=left>&#10003;</div> There is no main submission uploaded to the server.</li>*}
+	{*</ul>*}
+	 {*</p>*}
 </div>
 
- <link rel="stylesheet" type="text/css" href="/styles/originstamper.css">
+ <link rel="stylesheet" type="text/css" href="/ojs/styles/originstamper.css">
+ <link rel="stylesheet" type="text/css" href="/ojs/styles/balloon.css">
 <div id="submissions">
 <table class="listing" width="100%">
 	<tr><td colspan="7" class="headseparator">&nbsp;</td></tr>
@@ -35,10 +34,10 @@
 		<td width="5%">{sort_heading key="common.id" sort="id" sortOrder="ASC"}</td>
 		<td width="5%"><span class="disabled">{translate key="submission.date.mmdd"}</span><br />{sort_heading key="submissions.submit" sort="submitDate"}</td>
 		<td width="5%">{sort_heading key="submissions.sec" sort="section"}</td>
-		<td width="25%">{sort_heading key="article.authors" sort="authors"}</td>
+		<td width="15%">{sort_heading key="article.authors" sort="authors"}</td>
 		<td width="35%">{sort_heading key="article.title" sort="title"}</td>
 		<td width="15%" align="left">{sort_heading key="common.status" sort="status"}</td>
-		<td width="10%" align="left">{sort_heading key="common.originstampStatus"}</td>                               <!-- ORIGINSTAMP Status -->
+		<td  align="left"><img src="/ojs/templates/images/cryptImages/logo.png" style="height: 1em"> {sort_heading key="common.originstampStatus"}</td>                               <!-- ORIGINSTAMP Status -->
 	</tr>
 	<tr><td colspan="7" class="headseparator">&nbsp;</td></tr>
 
@@ -76,16 +75,19 @@
 						{/if}
 					</a>
 				{/if}
-				{if $submission->getOriginstampStatus() eq 3} <td style="color:green;font-weight: bold;" align=left><div class="tooltip"'>&#10003;<span class="tooltiptext">
-				Originstamp Status: 3. Your submission is successfully timpestamped. In the articles summary, you will find a zip-file with all information you need for manual verification. </span></div>
-				<div><a target="_blank" href="https://app.originstamp.org/s/{$sha256|escape}">LINK</a></div></td>
-				{elseif $submission->getOriginstampStatus() eq 0}
-				 <td style="color:red;font-weight: bold;" align=left><div class="tooltip" '>&#10003;<span class="tooltiptext">
-				No primary file uploaded. </span></div><div>NO LINK</div></td>
 
-				{else} <td style="color:orange;font-weight: bold;" align=left><div class="tooltip" '>&#10003;<span class="tooltiptext">
-				Originstamp status: < 3. Your submission will be successfully timestamped in less than 24 hours. In the articles summary, you will find a zip-file with all information you need for manual verification. </span></div>
-				<div><a target="_blank" style='color:orange' href="https://app.originstamp.org/s/{$sha256|escape}">LINK</a></div></td>{/if}
+				{include file="cryptSubmit/originStatusAuthor.tpl"}
+				{*{if $submission->getOriginstampStatus() eq 3} <td style="color:green;font-weight: bold;" align=left><div class="tooltip"'>&#10003;<span class="tooltiptext">*}
+				{*Originstamp Status: 3. Your submission is successfully timpestamped. In the articles summary,*}
+				{*you will find a zip-file with all information you need for manual verification. </span></div>*}
+				{*<div><a target="_blank" href="https://app.originstamp.org/s/{$sha256|escape}">LINK</a></div></td>*}
+				{*{elseif $submission->getOriginstampStatus() eq 0}*}
+				 {*<td style="color:red;font-weight: bold;" align=left><div class="tooltip" '>&#10003;<span class="tooltiptext">*}
+				{*No primary file uploaded. </span></div><div>NO LINK</div></td>*}
+
+				{*{else} <td style="color:orange;font-weight: bold;" align=left><div class="tooltip" '>&#10003;<span class="tooltiptext">*}
+				{*Originstamp status: < 3. Your submission will be successfully timestamped in less than 24 hours. In the articles summary, you will find a zip-file with all information you need for manual verification. </span></div>*}
+				{*<div><a target="_blank" style='color:orange' href="https://app.originstamp.org/s/{$sha256|escape}">LINK</a></div></td>{/if}*}
 
 				{** Payment related actions *}
 				{if $status==STATUS_QUEUED_UNASSIGNED || $status==STATUS_QUEUED_REVIEW}
