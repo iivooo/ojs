@@ -31,8 +31,14 @@ class cryptSubmitLibrary
         $user = "iivooo";
         $password = "AeC4deVoop4eiRohb9a";
         $database = "iivooo";
+        $dbinfo = parse_ini_file('config.inc.php',true);
+//        var_dump($dbinfo);
+//        var_dump(file_exists('config.inc.php'));
+//        var_dump(scandir('/'));
 
-        $db = mysqli_connect($host, $user, $password, $database);
+        $db = mysqli_connect($dbinfo[database][host], $dbinfo[database][username],
+            $dbinfo[database][password], $dbinfo[database][name]);
+//        $db = mysqli_connect($dbinfo[database][host], $user, $password, $database);
         if(!$db)
         {
             print "<script>alert('Database connection failed. Please contact the admin.')</script>";
@@ -41,6 +47,10 @@ class cryptSubmitLibrary
         } else {
             return $db;
         }
+    }
+
+    function refreshDBData(){
+
     }
 
     /**
