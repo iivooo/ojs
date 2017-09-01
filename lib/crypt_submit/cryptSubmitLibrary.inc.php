@@ -17,6 +17,33 @@ import('classes.file.ArticleFileManager');
 
 class cryptSubmitLibrary
 {
+     var $originStampUrl="https://api.originstamp.org/api/download/seed/";
+     var $apiKey = "988e7238-995e-4db0-8277-ce8f75d4b037";
+
+
+    /**
+     * cryptSubmitLibrary constructor.
+     * reads db-data and directories once.
+     */
+    public function __construct() {
+        if(!(isset($GLOBALS[_cs][host]) && isset($GLOBALS[_cs][username]) && isset($GLOBALS[_cs][password]) &&
+                isset($GLOBALS[_cs][name]) && isset($GLOBALS[_cs][files]) && isset($GLOBALS[_cs][dwFiles]))){
+
+            $config = parse_ini_file('config.inc.php',true);
+
+            $GLOBALS[_cs] = array(
+                host => $config[database][host],
+                username => $config[database][username],
+                password => $config[database][password],
+                name => $config[database][name],
+                files => $config[files][files_dir],
+                dwFiles => $config[files][files_dir].'/downloadFiles/');
+        }
+
+        if(!file_exists($GLOBALS[_cs][dwFiles])){
+            mkdir($GLOBALS[_cs][dwFiles], 0777, true);
+        }
+    }
 
     /**
      * functions to interact with OJS database.
@@ -27,17 +54,16 @@ class cryptSubmitLibrary
      * @return mysqli
      */
     function getDatabase(){
-        $host = "localhost";
-        $user = "iivooo";
-        $password = "AeC4deVoop4eiRohb9a";
-        $database = "iivooo";
-        $dbinfo = parse_ini_file('config.inc.php',true);
-//        var_dump($dbinfo);
-//        var_dump(file_exists('config.inc.php'));
-//        var_dump(scandir('/'));
-
-        $db = mysqli_connect($dbinfo[database][host], $dbinfo[database][username],
-            $dbinfo[database][password], $dbinfo[database][name]);
+//        $host = "localhost";
+//        $user = "iivooo";
+//        $password = "AeC4deVoop4eiRohb9a";
+//        $database = "iivooo";
+//        $dbinfo = parse_ini_file('config.inc.php',true);
+////        var_dump($dbinfo);
+////        var_dump(file_exists('config.inc.php'));
+////        var_dump(scandir('/'));
+        $db = mysqli_connect($GLOBALS[_cs][host], $GLOBALS[_cs][username],
+            $GLOBALS[_cs][password], $GLOBALS[_cs][name]);
 //        $db = mysqli_connect($dbinfo[database][host], $user, $password, $database);
         if(!$db)
         {
@@ -68,7 +94,6 @@ class cryptSubmitLibrary
     function sqlQueryRetrieve($db, $sql){
         $result = null;
         if(!($result = mysqli_query($db, $sql))){
-            print "<script>alert('DB query failed. Please contact the admin.')</script>";
             var_dump($db->error);
             return $db->error;
         } else {
@@ -98,7 +123,6 @@ class cryptSubmitLibrary
         if(!($result = mysqli_query($db, $sql))) {
             var_dump($result." query: ".$sql);
             var_dump($db->error);
-            print "<script>alert('DB query failed. Please contact the admin.')</script>";
         }
     }
 
@@ -142,14 +166,16 @@ class cryptSubmitLibrary
      * @return originstamp result json
      */
     function submitRetrieveOriginstamp($hash){
-        $url = "https://api.originstamp.org/api/".$hash;
-        $apiKey = "988e7238-995e-4db0-8277-ce8f75d4b037";
+        $url = $this->originStampUrl.$hash;
+//        $url = "https://api.originstamp.org/api/".$hash;
+//        $apiKey = "988e7238-995e-4db0-8277-ce8f75d4b037";
 
+//        global $originStampUrl, $apiKey;
         $ch = curl_init( $url );
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-type: application/json',
             'charset: utf-8',
-            'Authorization: '.$apiKey
+            'Authorization: '.$this->apiKey
         ));
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1); //option to not print and get response.
         $response = curl_exec( $ch );
@@ -256,14 +282,16 @@ class cryptSubmitLibrary
 
     function getSeedFile($filePath, $destination = false){
         $fileHash=hash_file("sha256",$filePath, FALSE);
-        $url = "https://api.originstamp.org/api/download/seed/".$fileHash;
-        $apiKey = "988e7238-995e-4db0-8277-ce8f75d4b037";
+//        global $originStampUrl, $apiKey;
+        $url = $this->originStampUrl.$fileHash;
+//        $url = "https://api.originstamp.org/api/download/seed/".$fileHash;
+//        $apiKey = "988e7238-995e-4db0-8277-ce8f75d4b037";
 
         $ch = curl_init( $url );
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-type: application/json',
             'charset: utf-8',
-            'Authorization: '.$apiKey
+            'Authorization: '.$this->apiKey
         ));
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1);
 
@@ -301,7 +329,7 @@ class cryptSubmitLibrary
                 if(file_exists($file)) {
                     $valid_files[] = $file;
                 } else {
-                    var_dump("file not existing: "+$file);
+//                    var_dump("file not existing: "+$file);
                 }
             }
         }
@@ -319,7 +347,10 @@ class cryptSubmitLibrary
 
 
             //add manual verifier
-            $rootPath = $_SERVER['DOCUMENT_ROOT']."/ojs/originstampVerifier/";
+//            $_SERVER['DOCUMENT_ROOT']."/ojs
+            $rootPath = realpath(__DIR__."/../../originstampVerifier/")."/";
+//            var_dump($rootPath);
+//            var_dump(substr($rootPath,strlen($rootPath)));
             $files = new RecursiveIteratorIterator(
                 new RecursiveDirectoryIterator($rootPath),
                 RecursiveIteratorIterator::LEAVES_ONLY
@@ -591,8 +622,21 @@ class cryptSubmitLibrary
      * @return int|mixed|null|string
      */
     function searchFilePath($id){
+
+//        $authorSubmissionDao =& DAORegistry::getDAO('AuthorSubmissionDAO');
+//        $authorSubmission =& $authorSubmissionDao->getAuthorSubmission($id);
+//        var_dump($authorSubmission);
+//        $revision = $authorSubmission->getSubmissionFile();//->getRevision();
+//        var_dump($revision);
+//
+//        $artFileMan = new ArticleFileManager($id);
+//        $tempFile = $artFileMan->getFile($id, $revision);
+//        $filePath = $tempFile->getFilePath();
+//
+//        return $filePath;
         $result=array();
-        $path = '/var/www/virtual/iivooo/html/files/journals/';
+//        $path = '/var/www/virtual/iivooo/html/files/journals/';
+        $path = $GLOBALS[_cs][files].'/journals/';
         $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
         foreach($objects as $name => $object){
             if(is_file($name) && preg_match("/^".$id."-.*SM\./",basename($name)) ){
@@ -610,8 +654,8 @@ class cryptSubmitLibrary
             "{$res[0][billing_address]},{$res[0][country]},{$res[0][article_id]},{$res[0][original_comments]},{$res[0][comment_title]},{$res[0][comment_id]},".
             "{$res[0][comment_timestamp]}";
         //write to txt file
-        $basePath=$_SERVER['DOCUMENT_ROOT']."/files/DownloadableTxtFiles/";
-        $this->checkUserDownloadDirectory();
+//        $basePath=$_SERVER['DOCUMENT_ROOT']."/files/DownloadableTxtFiles/";
+        $basePath=$GLOBALS[_cs][dwFiles];
 
 
         $wComment = fopen($basePath."articleComment_{$commentId}.txt", "w") or die("Unable to open file!");
@@ -641,10 +685,10 @@ class cryptSubmitLibrary
         $timestampString = "{$res[0][user_id]},{$res[0][ip]},{$res[0][timestamp]},{$res[0][username]},{$res[0][first_name]},
 		{$res[0][middle_name]},{$res[0][last_name]},{$res[0][phone]},
 		{$res[0][billing_address]},{$res[0][country]}";
-        $basePath = $_SERVER['DOCUMENT_ROOT']."/files/DownloadableTxtFiles/";
+        $basePath = $GLOBALS[_cs][dwFiles];
+//        $basePath = $_SERVER['DOCUMENT_ROOT']."/files/DownloadableTxtFiles/";
         $filePath = $basePath."loginTimestamp_{$loginId}.txt";
         $timestampPath = $basePath."timestamp.js";
-        $this->checkUserDownloadDirectory();
 
         $wComment = fopen($filePath, "w") or die("Unable to open file!");
         fwrite($wComment, $timestampString);
@@ -680,8 +724,8 @@ class cryptSubmitLibrary
             "{$res[0][phone]},,{$res[0][country]},{$res[0][article_id]},{$res[0][file_id]},{$res[0][revision]},".
             "{$res[0][article_hash]},{$res[0][download_timestamp]}";
 
-        $this->checkUserDownloadDirectory();
-        $basePath = $_SERVER['DOCUMENT_ROOT']."/files/DownloadableTxtFiles/";
+        $basePath = $GLOBALS[_cs][dwFiles];
+//        $basePath = $_SERVER['DOCUMENT_ROOT']."/files/DownloadableTxtFiles/";
         $filePath = $basePath."downloadTimestamp_{$downloadId}.txt";
         $timestampPath = $basePath."timestamp.js";
 
@@ -705,12 +749,5 @@ class cryptSubmitLibrary
         $this->userDownload($this->add_to_zip($zipPaths,$zipDestination));
 
         echo "<script>window.close();</script>";
-    }
-
-    function checkUserDownloadDirectory(){
-        $basePath=$_SERVER['DOCUMENT_ROOT']."/files/DownloadableTxtFiles/";
-        if (!file_exists($basePath)) {
-            mkdir($basePath, 0777, true);
-        }
     }
 }

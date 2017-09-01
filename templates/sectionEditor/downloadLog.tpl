@@ -80,7 +80,7 @@
                             </div>
                             <div class="timestampbox" data-balloon="Download the zip-file with the original timestamped string and an offline verifier tool."
                             data-balloon-pos="left">
-                                <a href="{url op="downloadOriginZipLogin" path=$log.index}">
+                                <a href="{url op="downloadDownloadLogZip" path=$log.ID}">
                                 <img height="10em" src="/ojs/templates/images/cryptImages/zipLogo.svg"> download verifier zip</a>
                             </div>
                         </td>
