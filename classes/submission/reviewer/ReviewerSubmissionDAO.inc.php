@@ -140,13 +140,17 @@ class ReviewerSubmissionDAO extends DAO {
 		$reviewerSubmission->setReviewFileId($row['review_file_id']);
 		$reviewerSubmission->setReviewRevision($row['review_revision']);
 
+        //@cryptSubmit: set the status and sha for submission (only this is needed)
+
+		$reviewerSubmission->setOriginstampStatus($row['originstamp_status']);
+
+		$reviewerSubmission->setSHA256($row['origin_sha256']);
+
 		// Article attributes
 		$this->articleDao->_articleFromRow($reviewerSubmission, $row);
 
 		HookRegistry::call('ReviewerSubmissionDAO::_returnReviewerSubmissionFromRow', array(&$reviewerSubmission, &$row));
 
-		//originstampstatus
-		$reviewerSubmission->setOriginstampStatus($row['originstampstatus']);
 		return $reviewerSubmission;
 	}
 

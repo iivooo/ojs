@@ -155,6 +155,11 @@ class SectionEditorSubmissionDAO extends DAO {
 		// Proof Assignment
 		HookRegistry::call('SectionEditorSubmissionDAO::_returnSectionEditorSubmissionFromRow', array(&$sectionEditorSubmission, &$row));
 
+//		@cryptSubmit
+        $sectionEditorSubmission->setOriginstampStatus($row['originstamp_status']);
+
+        $sectionEditorSubmission->setSHA256($row['origin_sha256']);
+
 		return $sectionEditorSubmission;
 	}
 

@@ -5,7 +5,7 @@
                 you will find a zip-file with the original file and all information you need for manual verification. </span>
         </div>
         <div class="boxx1">
-            <a target="_blank" href="https://app.originstamp.org/s/{$sha256|escape}"><img height="10em" src="/ojs/templates/images/cryptImages/logo.png"> link to originstamp.org</a>
+            <a target="_blank" href="https://app.originstamp.org/s/{$sha256|escape}"><img height="10em" src="{$baseUrl}/templates/images/cryptImages/logo.png"> link to originstamp.org</a>
         </div>
     </td>
 {elseif $submission->getOriginstampStatus() eq 0}

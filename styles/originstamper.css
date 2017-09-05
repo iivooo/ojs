@@ -11,6 +11,7 @@
     font-weight: bold;
     /*border-bottom:none;*/
     /*border-bottom: 1px dotted black;*/
+    /*word-break: break-all;*/
 
 }
 
@@ -95,4 +96,75 @@
     word-break: break-all;
 }
 
+/*frontpage information style*/
 
+.img-centered{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/*frontpage togglebox*/
+#accordion section, #accordion .pointer, #accordion h1, #accordion p {
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+#accordion {
+    margin-bottom:30px;
+}
+
+#accordion div{
+    border-radius: 20px;
+}
+
+#accordion h1 {
+    line-height:1.2;
+    font-size:15px;
+    background-color:#E8E8E1;
+    margin:0;
+    padding: 10px 10px 10px 30px;
+}
+
+#accordion h1 a {
+    color:black;
+    text-decoration: none;
+}
+#accordion section {
+    overflow:hidden;
+    /*height:220px;*/
+    border:1px #E8E8E1 solid;
+    border-radius: 5px;
+    padding-bottom:2px;
+}
+#accordion p {
+    padding:0 10px;
+    color:black;
+}
+#accordion section.ac_hidden p:not(.pointer) {
+    color:#fff;
+}
+
+#accordion section.ac_hidden {
+    height:44px;
+}
+#accordion .pointer {
+    padding:0;
+    margin:10px 0 0 6px;
+    line-height:20px;
+    width:13px;
+    position:absolute;
+}
+#accordion section:not(.ac_hidden) h1 {
+    background-color:lightgrey;
+}
+
+#accordion section:not(.ac_hidden) .pointer {
+    display:block;
+    -webkit-transform:rotate(90deg);
+    -moz-transform:rotate(90deg);
+    -o-transform:rotate(90deg);
+    transform:rotate(90deg);
+    padding:0;
+}

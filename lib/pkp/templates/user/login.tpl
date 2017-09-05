@@ -45,8 +45,10 @@
 	<br />
 {/if}
 		<!--@cryptSubmit-->
-        {include file="cryptSubmit/mainDescription.tpl"}
-		{*<div style = 	"background-color:lightblue;*}
+        {*{include file="cryptSubmit/mainDescription.tpl"}*}
+        {include file="cryptSubmit/mainDescription3.tpl"}
+
+        {*<div style = 	"background-color:lightblue;*}
 				 {*border:2px black solid; margin-bottom: 20px;">*}
 			{*This prototype shows a possible implementation of <a href="https://www.gipp.com/wp-content/papercite-data/pdf/gipp2017b.pdf">CryptSubmit</a> in an existing system.<br><br>*}
 			{*The following is the abstract of the before mentioned paper which describes brief the use of such a system:<br><br>*}

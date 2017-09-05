@@ -25,11 +25,11 @@ window.opener.location.reload();
 <table class="data" width="100%">
 {foreach from=$articleComments item=comment}
 <tr valign="top">
-	<td width="25%">
+	<td width="20%">
 		<div class="commentRole">{translate key=$comment->getRoleName()}</div>
 		<div class="commentDate">{$comment->getDatePosted()|date_format:$datetimeFormatShort}</div>
 	</td>
-	<td width="75%">
+	<td width="50%">
 		{if $comment->getAuthorId() eq $userId and not $isLocked}
 			<div style="float: right"><a href="{url op="editComment" path=$articleId|to_array:$comment->getId()}" class="action">{translate key="common.edit"}</a> <a href="{url op="deleteComment" path=$articleId|to_array:$comment->getId()}" onclick="return confirm('{translate|escape:"jsparam" key="submission.comments.confirmDelete"}')" class="action">{translate key="common.delete"}</a></div>
 		{/if}
@@ -38,7 +38,10 @@ window.opener.location.reload();
 			<div class="commentTitle">{translate key="submission.comments.subject"}: {$comment->getCommentTitle()|escape}</div>
 		{/if}
 		</div>
-		<div class="comments">{$comment->getComments()|strip_unsafe_html|nl2br}</div>
+		<div class="comments">{$comment->getComments()|strip_unsafe_html|nl2br}
+			{*@cryptSubmit*}
+            {include file="cryptSubmit/commentStatus.tpl"}
+		</div>
 	</td>
 </tr>
 {foreachelse}

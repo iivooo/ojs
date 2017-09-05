@@ -11,13 +11,13 @@
 
 <div id="submissions">
 <table width="100%" class="listing">
-	<tr><td colspan="7" class="headseparator">&nbsp;</td></tr>
+	<tr><td colspan="8" class="headseparator">&nbsp;</td></tr>
 	<tr class="heading" valign="bottom">
 		<td width="5%">{sort_search key="common.id" sort="id"}</td>
 		<td width="5%"><span class="disabled">{translate key="submission.date.mmdd"}</span><br />{sort_search key="submissions.submit" sort="submitDate"}</td>
 		<td width="5%">{sort_search key="submissions.sec" sort="section"}</td>
-		<td width="20%">{sort_search key="article.authors" sort="authors"}</td>
-		<td width="30%">{sort_search key="article.title" sort="title"}</td>
+		<td width="15%">{sort_search key="article.authors" sort="authors"}</td>
+		<td width="20%">{sort_search key="article.title" sort="title"}</td>
 		<td width="30%">
 			{translate key="submission.peerReview"}
 			<table width="100%">
@@ -29,8 +29,9 @@
 			</table>
 		</td>
 		<td width="5%">{translate key="submissions.ruling"}</td>
+		<td  align="left">ORIGINSTAMP.ORG</td>
 	</tr>
-	<tr><td colspan="7" class="headseparator">&nbsp;</td></tr>
+	<tr><td colspan="8" class="headseparator">&nbsp;</td></tr>
 
 {iterate from=submissions item=submission}
 
@@ -62,6 +63,7 @@
 				{/foreach}
 			{/foreach}			
 		</table>
+
 		</td>
 		<td>
 			{foreach from=$submission->getDecisions() item=decisions}
@@ -74,17 +76,19 @@
 				{/foreach}
 			{/foreach}			
 		</td>
+        {include file="cryptSubmit/originStatusEditor.tpl"}
 	</tr>
+
 	<tr>
-		<td colspan="7" class="{if $submissions->eof()}end{/if}separator">&nbsp;</td>
+		<td colspan="8" class="{if $submissions->eof()}end{/if}separator">&nbsp;</td>
 	</tr>
 {/iterate}
 {if $submissions->wasEmpty()}
 	<tr>
-		<td colspan="7" class="nodata">{translate key="submissions.noSubmissions"}</td>
+		<td colspan="8" class="nodata">{translate key="submissions.noSubmissions"}</td>
 	</tr>
 	<tr>
-		<td colspan="7" class="endseparator">&nbsp;</td>
+		<td colspan="8" class="endseparator">&nbsp;</td>
 	</tr>
 {else}
 	<tr>

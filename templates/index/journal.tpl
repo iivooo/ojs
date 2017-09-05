@@ -12,7 +12,9 @@
 {assign var="pageTitleTranslated" value=$siteTitle}
 {include file="common/header.tpl"}
 {/strip}
-{include file="cryptSubmit/mainDescription.tpl"}
+{*{include file="cryptSubmit/mainDescription.tpl"}*}
+{include file="cryptSubmit/mainDescription3.tpl"}
+
 {*<div style = 	"background-color:lightblue;*}
 				 {*border:2px black solid;">*}
 	{*This prototype shows a possible implementation of <a href="https://www.gipp.com/wp-content/papercite-data/pdf/gipp2017b.pdf">CryptSubmit</a> in an existing system.<br><br>*}

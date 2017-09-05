@@ -13,7 +13,7 @@
 	<ul>
 		<li>.. see your uploaded submissions with the corresponding <a href="https://app.originstamp.org/">originstamp.org</a> status on the right. </li>
 		<li>.. upload a submission with the "five-step submission process"</li>
-		<li>.. click the submission to get to the submissions summary, where you find a zip at the bottom of the page with the original file and an offline verifier, which provides a link to
+		<li>.. download a zip-file with the original file and an offline verifier, which provides a link to
 		<a href="https://blockchain.info/">blockchain.info</a>. Also the underlying javascript acts as a blueprint to retrace the steps for manual address generation.</li>
 	</ul>
 	{*<p>Note on the <a href="https://app.originstamp.org/">originstamp.org</a> status:*}
@@ -25,8 +25,8 @@
 	 {*</p>*}
 </div>
 
- <link rel="stylesheet" type="text/css" href="/ojs/styles/originstamper.css">
- <link rel="stylesheet" type="text/css" href="/ojs/styles/balloon.css">
+ <link rel="stylesheet" type="text/css" href="{$baseUrl}/styles/originstamper.css">
+ <link rel="stylesheet" type="text/css" href="{$baseUrl}/styles/balloon.css">
 <div id="submissions">
 <table class="listing" width="100%">
 	<tr><td colspan="7" class="headseparator">&nbsp;</td></tr>
@@ -37,7 +37,7 @@
 		<td width="15%">{sort_heading key="article.authors" sort="authors"}</td>
 		<td width="35%">{sort_heading key="article.title" sort="title"}</td>
 		<td width="15%" align="left">{sort_heading key="common.status" sort="status"}</td>
-		<td  align="left"><img src="/ojs/templates/images/cryptImages/logo.png" style="height: 1em"> {sort_heading key="common.originstampStatus"}</td>                               <!-- ORIGINSTAMP Status -->
+		<td  align="left"><img src="{$baseUrl}/templates/images/cryptImages/logo.png" style="height: 1em"> {sort_heading key="common.originstampStatus"}</td>                               <!-- ORIGINSTAMP Status -->
 	</tr>
 	<tr><td colspan="7" class="headseparator">&nbsp;</td></tr>
 

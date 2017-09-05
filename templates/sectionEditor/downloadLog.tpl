@@ -9,8 +9,8 @@
  * as part of the CryptSubmit framework
  *
  *}
- <link rel="stylesheet" type="text/css" href="/ojs/styles/originstamper.css">
- <link rel="stylesheet" type="text/css" href="/ojs/styles/balloon.css">
+ <link rel="stylesheet" type="text/css" href="{$baseUrl}/styles/originstamper.css">
+ <link rel="stylesheet" type="text/css" href="{$baseUrl}/styles/balloon.css">
 <div style="border-bottom: 2px dotted #000; margin-top:6px;"></div>
 <div style="margin-top:10px"></div>
 <div style = 	"background-color:lightblue;
@@ -76,12 +76,12 @@
                             </div>
                             <div width="100%" class="timestampbox">
                                 <a target="_blank" href="https://app.originstamp.org/s/{$log.origin_sha256|escape}">
-                                <img height="10em" src="/ojs/templates/images/cryptImages/logo.png"> link to originstamp.org</a>
+                                <img height="10em" src="{$baseUrl}/templates/images/cryptImages/logo.png"> link to originstamp.org</a>
                             </div>
                             <div class="timestampbox" data-balloon="Download the zip-file with the original timestamped string and an offline verifier tool."
                             data-balloon-pos="left">
                                 <a href="{url op="downloadDownloadLogZip" path=$log.ID}">
-                                <img height="10em" src="/ojs/templates/images/cryptImages/zipLogo.svg"> download verifier zip</a>
+                                <img height="10em" src="{$baseUrl}/templates/images/cryptImages/zipLogo.svg"> download verifier zip</a>
                             </div>
                         </td>
                     {else}
@@ -93,7 +93,7 @@
                                 The login entry will be timestamped in less than 24 h.
                             </div>
                             <div class="timestampbox">
-                                <a target="_blank" href="https://app.originstamp.org/s/{$log.origin_sha256|escape}"><img height="10em" src="/ojs/templates/images/cryptImages/logo.png"> link to originstamp.org</a>
+                                <a target="_blank" href="https://app.originstamp.org/s/{$log.origin_sha256|escape}"><img height="10em" src="{$baseUrl}/templates/images/cryptImages/logo.png"> link to originstamp.org</a>
                             </div>
                         </td>
                     {/if}

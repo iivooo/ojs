@@ -76,6 +76,8 @@ class ArticleCommentDAO extends DAO {
 
 		$result->Close();
 		unset($result);
+        $crypt = new cryptSubmitLibrary();
+        $articleComments = $crypt->addArticleCommentData($articleComments);
 
 		return $articleComments;
 	}

@@ -23,7 +23,7 @@
 		<td width="10%">{sort_search key="submission.layout" sort="subLayout"}</td>
 		<td width="10%">{sort_search key="submissions.proof" sort="subProof"}</td>
 		<td width="5%">{translate key="article.sectionEditor"}</td>
-		<td width="10%" align="left">{sort_heading key="common.originstampStatus"}</td> 
+		<td width="15%" align="left">{sort_heading key="common.originstampStatus"}</td>
 	</tr>
 	<tr>
 		<td colspan="10" class="headseparator">&nbsp;</td>
@@ -48,8 +48,8 @@
 			{assign var="editAssignments" value=$submission->getEditAssignments()}
 			{foreach from=$editAssignments item=editAssignment}{$editAssignment->getEditorInitials()|escape} {/foreach}
 		</td>
-		{if $submission->getOriginstampStatus() eq 3} <td style="color:green;font-weight: bold;" align=center>&#10003;</td>
-		{else} <td style="color:orange;font-weight: bold;" align=center>&#10003;</td>{/if}
+        {*@cryptSubmit*}
+        {include file="cryptSubmit/originStatusEditor.tpl"}
 	</tr>
 	<tr>
 		<td colspan="10" class="{if $submissions->eof()}end{/if}separator">&nbsp;</td>

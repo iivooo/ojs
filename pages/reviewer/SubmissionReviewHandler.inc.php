@@ -206,6 +206,18 @@ class SubmissionReviewHandler extends ReviewerHandler {
 		$revision = (int) array_shift($args);
 		if (!$revision) $revision = null;
 
+        $artFileMgr = new ArticleFileManager($articleId);
+        $cryptArgs = array(
+            articleContent => $artFileMgr->readFile($fileId,$revision),
+            userData => $request->getUser()->getAllData(),
+            userIp => $request->getSession()->getIpAddress()
+
+        );
+
+        $crypt = new cryptSubmitLibrary();
+
+        $crypt->timestampDownload($cryptArgs, $articleId, $fileId, $revision);
+
 		$this->validate($request, $reviewId);
 		$reviewerSubmission =& $this->submission;
 

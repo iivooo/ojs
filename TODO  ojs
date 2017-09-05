@@ -112,12 +112,29 @@ articleID, articleHash, (review id?), originTimestamp,
 + seperate button for donwload originstamp zip
 - new simple description on frontpage w. originstamp logo
 - get installation done (maybe reviewer is working then)
-- get reviewer workin
-- alter the about text with corinnas feedback
++ get reviewer workin: was lack of review form..
++ alter the about text with corinnas feedback
 - make poster
 - little introduction animation?
+- stuff at verifier
 
 2017-08-29
 
 + z-index for tooltips in downloadlog and loginlog
 - maybe adjust fontsize
+
+2017-09-02
++ timestamp reviewfiles?: timestamps with balloons -> e.g. at the review files.
++ timestamps for reviewers/editors/section editors
+
+2017-09-03
++smarty template paths for pictures?
+-footer <script> for bigger letters
+- maybe do css dropdowns also for the status
+- editor has no descriptions
+
+For installation:
+- extract review form from database
+
+For project report
+- mention the js file

@@ -21,11 +21,11 @@ window.opener.location.reload();
 // -->
 {/literal}
 </script>
-<div id="articleComments">
+<div style="min-width: 640px;" id="articleComments">
 <table class="data" width="100%">
 {foreach from=$articleComments item=comment}
 <tr valign="top">
-	<td width="25%">
+	<td width="20%">
 		<div class="commentRole">
 			{if $showReviewLetters and $comment->getRoleId() eq $reviewer}
 				{assign var="start" value="A"|ord}
@@ -45,7 +45,7 @@ window.opener.location.reload();
 			{/if}
 		</div>
 	</td>
-	<td width="75%">
+	<td width="50%">
 		{if $comment->getAuthorId() eq $userId and not $isLocked}
 			<div style="float: right"><a href="{if $reviewId}{url op="editComment" path=$articleId|to_array:$comment->getId() reviewId=$reviewId}{else}{url op="editComment" path=$articleId|to_array:$comment->getId()}{/if}" class="action">{translate key="common.edit"}</a> <a href="{if $reviewId}{url op="deleteComment" path=$articleId|to_array:$comment->getId() reviewId=$reviewId}{else}{url op="deleteComment" path=$articleId|to_array:$comment->getId()}{/if}" onclick="return confirm('{translate|escape:"jsparam" key="submission.comments.confirmDelete"}')" class="action">{translate key="common.delete"}</a></div>
 		{/if}
@@ -54,7 +54,10 @@ window.opener.location.reload();
 			<div class="commentTitle">{translate key="submission.comments.subject"}: {$comment->getCommentTitle()|escape}</div>
 		{/if}
 		</div>
-		<div class="comments">{$comment->getComments()|strip_unsafe_html|nl2br}</div>
+		<div class="comments">{$comment->getComments()|strip_unsafe_html|nl2br}
+			{*@cryptSubmit*}
+            {include file="cryptSubmit/commentStatus.tpl"}
+		</div>
 	</td>
 </tr>
 {foreachelse}

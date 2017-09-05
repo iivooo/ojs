@@ -129,6 +129,8 @@ class AuthorSubmissionDAO extends DAO {
 			$authorSubmission->setEditorFileRevisions($this->articleFileDao->getArticleFileRevisions($row['editor_file_id'], $i), $i);
 		}
 		$authorSubmission->setGalleys($this->galleyDao->getGalleysByArticle($row['article_id']));
+
+//		@cryptSubmit: set the status and sha for submission (only this is needed)
 		
 		$authorSubmission->setOriginstampStatus($row['originstamp_status']);
 

@@ -15,10 +15,10 @@
 		<td width="5%">{sort_heading key="common.id" sort='id'}</td>
 		<td width="5%"><span class="disabled">{translate key="submission.date.mmdd"}</span><br />{sort_heading key="common.assigned" sort='assignDate'}</td>
 		<td width="5%">{sort_heading key="submissions.sec" sort='section'}</td>
-		<td width="60%">{sort_heading key="article.title" sort='title'}</td>
+		<td width="50%">{sort_heading key="article.title" sort='title'}</td>
 		<td width="5%">{sort_heading key="submission.due" sort='dueDate'}</td>
 		<td width="10%">{sort_heading key="submissions.reviewRound" sort='round'}</td>
-		<td width="10%" align="left">{sort_heading key="common.originstampStatus"}</td>
+		<td width="20%" align="left">{sort_heading key="common.originstampStatus"}</td>
 	</tr>
 	<tr><td colspan="7" class="headseparator">&nbsp;</td></tr>
 
@@ -33,6 +33,7 @@
 		<td><a href="{url op="submission" path=$reviewId}" class="action">{$submission->getLocalizedTitle()|strip_tags|truncate:60:"..."}</a></td>
 		<td class="nowrap">{$submission->getDateDue()|date_format:$dateFormatTrunc}</td>
 		<td>{$submission->getRound()}</td>
+        {include file="cryptSubmit/originStatusReviewer.tpl"}
 
 	</tr>
 	<tr>

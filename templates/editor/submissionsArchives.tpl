@@ -15,12 +15,12 @@
 	</tr>
 	<tr class="heading" valign="bottom">
 		<td width="5%">{sort_search key="common.id" sort="id"}</td>
-		<td width="15%"><span class="disabled"></span><br />{sort_search key="submissions.submitted" sort="submitDate"}</td>
+		<td width="10%"><span class="disabled"></span><br />{sort_search key="submissions.submitted" sort="submitDate"}</td>
 		<td width="5%">{sort_search key="submissions.sec" sort="section"}</td>
-		<td width="25%">{sort_search key="article.authors" sort="authors"}</td>
-		<td width="25%">{sort_search key="article.title" sort="title"}</td>
+		<td width="20%">{sort_search key="article.authors" sort="authors"}</td>
+		<td width="20%">{sort_search key="article.title" sort="title"}</td>
 		<td width="15%" align="left">{sort_search key="common.status" sort="status"}</td>
-		<td width="10%" align="left">{sort_heading key="common.originstampStatus"}</td>
+		<td width="15%" align="left">{sort_heading key="common.originstampStatus"}</td>
 	</tr>
 	<tr>
 		<td colspan="7" class="headseparator">&nbsp;</td>
@@ -35,7 +35,7 @@
 		<td>{$submission->getSectionAbbrev()|escape}</td>
 		<td>{$submission->getAuthorString(true)|truncate:40:"..."|escape}</td>
 		<td><a href="{url op="submissionEditing" path=$articleId}" class="action">{$submission->getLocalizedTitle()|strip_tags|truncate:60:"..."}</a></td>
-		<td align="right">
+		<td align="left">
 			{assign var="status" value=$submission->getStatus()}
 			{if $status == STATUS_ARCHIVED}
 				{translate key="submissions.archived"}&nbsp;&nbsp;<a href="{url op="deleteSubmission" path=$articleId}" onclick="return confirm('{translate|escape:"jsparam" key="editor.submissionArchive.confirmDelete"}')" class="action">{translate key="common.delete"}</a>
@@ -45,6 +45,8 @@
 				{translate key="submissions.declined"}&nbsp;&nbsp;<a href="{url op="deleteSubmission" path=$articleId}" onclick="return confirm('{translate|escape:"jsparam" key="editor.submissionArchive.confirmDelete"}')" class="action">{translate key="common.delete"}</a>
 			{/if}
 		</td>
+        {*@cryptSubmit*}
+        {include file="cryptSubmit/originStatusEditor.tpl"}
 	</tr>
 	<tr>
 		<td colspan="7" class="{if $submissions->eof()}end{/if}separator">&nbsp;</td>
