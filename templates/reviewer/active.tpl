@@ -8,6 +8,13 @@
  * Show reviewer's active submissions.
  *
  *}
+<div class="descriptions">
+	On this page you can..
+	<ul>
+		<li>.. see submissions to review with the corresponding <a href="https://app.originstamp.org/">originstamp.org</a> status on the right. </li>
+		<li>.. click on a submission to do a review. Reviews are also timestamped. You can see the originstamp.org functions there.</li>
+	</ul>
+</div>
 <div id="submissions">
 <table class="listing" width="100%">
 	<tr><td colspan="7" class="headseparator">&nbsp;</td></tr>

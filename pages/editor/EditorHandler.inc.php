@@ -539,6 +539,9 @@ class EditorHandler extends SectionEditorHandler {
 		}
 		$templateMgr->assign('pageHierarchy', $pageHierarchy);
 	}
+
+
+
 }
 
 ?>

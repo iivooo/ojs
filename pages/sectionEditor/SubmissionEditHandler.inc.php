@@ -2251,6 +2251,9 @@ class SubmissionEditHandler extends SectionEditorHandler {
 		}
 	}
 
+
+
+
 	/**
 	 * View a file (inlines file).
 	 * @param $args array ($articleId, $fileId, [$revision])

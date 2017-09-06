@@ -17,8 +17,8 @@
 		<td width="5%"><span class="disabled">{translate key="submission.date.mmdd"}</span><br />{sort_search key="submissions.submit" sort="submitDate"}</td>
 		<td width="5%">{sort_search key="submissions.sec" sort="section"}</td>
 		<td width="15%">{sort_search key="article.authors" sort="authors"}</td>
-		<td width="20%">{sort_search key="article.title" sort="title"}</td>
-		<td width="30%">
+		<td width="22%">{sort_search key="article.title" sort="title"}</td>
+		<td width="25%">
 			{translate key="submission.peerReview"}
 			<table width="100%">
 				<tr valign="top">

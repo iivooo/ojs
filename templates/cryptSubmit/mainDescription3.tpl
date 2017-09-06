@@ -40,7 +40,6 @@
     <section id="item3" class="ac_hidden">
         <p class="pointer">&#9654;</p><h1><a href="#">Basic workflow overview</a></h1>
         <p>
-
             <img style="margin-right: 10px; margin-bottom:10px; padding:5px; border: 1px solid lightgray; float:left; max-height:320px;" src="{$baseUrl}/templates/images/cryptImages/crypt_basicWorkflow.svg">
             <p>
                 Our prototype is limited to the peer-reviewing process, which includes authors, (section-)editors and reviewers. Let's have a look at the basic workflow:<br>
@@ -49,8 +48,6 @@
                 The reviewers then review the manuscript and (depending on the reviewing round) gives recommondations to accept/ decline the manuscript.
                 After one or many rounds of reviewing and adjusting the manuscript the section editor/editor decides the publication of the manuscript.
             </p>
-
-
         </p>
     </section>
     <section id="item3" class="ac_hidden">

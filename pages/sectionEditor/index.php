@@ -109,7 +109,7 @@ switch ($op) {
 	// Misc.
 	//
 	case 'downloadFile':
-	case 'cryptDownloadFile':
+	case 'downloadOriginstampZipFile':
 	case 'viewFile':
 	// Submission Review Form
 	case 'clearReviewForm':

@@ -17,8 +17,6 @@ import('classes.file.ArticleFileManager');
 
 class cryptSubmitLibrary
 {
-     var $originStampUrl="https://api.originstamp.org/api/download/seed/";
-     var $apiKey = "988e7238-995e-4db0-8277-ce8f75d4b037";
 
 
     /**
@@ -166,16 +164,15 @@ class cryptSubmitLibrary
      * @return originstamp result json
      */
     function submitRetrieveOriginstamp($hash){
-        $url = $this->originStampUrl.$hash;
-//        $url = "https://api.originstamp.org/api/".$hash;
-//        $apiKey = "988e7238-995e-4db0-8277-ce8f75d4b037";
+        $url = "https://api.originstamp.org/api/".$hash;
+        $apiKey = "988e7238-995e-4db0-8277-ce8f75d4b037";
 
 //        global $originStampUrl, $apiKey;
         $ch = curl_init( $url );
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-type: application/json',
             'charset: utf-8',
-            'Authorization: '.$this->apiKey
+            'Authorization: '.$apiKey
         ));
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1); //option to not print and get response.
         $response = curl_exec( $ch );
@@ -283,15 +280,15 @@ class cryptSubmitLibrary
     function getSeedFile($filePath, $destination = false){
         $fileHash=hash_file("sha256",$filePath, FALSE);
 //        global $originStampUrl, $apiKey;
-        $url = $this->originStampUrl.$fileHash;
-//        $url = "https://api.originstamp.org/api/download/seed/".$fileHash;
-//        $apiKey = "988e7238-995e-4db0-8277-ce8f75d4b037";
+//        $url = $this->originStampUrl.$fileHash;
+        $url = "https://api.originstamp.org/api/download/seed/".$fileHash;
+        $apiKey = "988e7238-995e-4db0-8277-ce8f75d4b037";
 
         $ch = curl_init( $url );
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-type: application/json',
             'charset: utf-8',
-            'Authorization: '.$this->apiKey
+            'Authorization: '.$apiKey
         ));
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1);
 
@@ -534,14 +531,13 @@ class cryptSubmitLibrary
 
         //fetch additional user info to create logInInfoHash for originstamp.org
         $userQuery = "SELECT *
-						FROM login_log WHERE NOT originstamp_status = 3";
+						FROM login_log WHERE NOT `originstamp_status` = 3";
         $userQueryResult = $this->sqlQueryRetrieve($db, $userQuery);
-
         $row = null;
         while($row = $userQueryResult->fetch_assoc()){
             if($row['origin_sha256'] == null){continue;}
             $origRes = json_decode($this->submitRetrieveOriginstamp($row['origin_sha256']));
-            $query = "UPDATE `login_log` SET `originstamp_status` = '{$origRes->multi_seed->submit_status}' , `origin_timestamp` = '{$origRes->multi_seed->timestamp}' WHERE origin_sha256 = '{$row['origin_sha256']}';";
+            $query = "UPDATE `login_log` SET `originstamp_status` = '{$origRes->multi_seed->submit_status}' , `origin_timestamp` = '{$origRes->multi_seed->timestamp}' WHERE `origin_sha256` = '{$row['origin_sha256']}';";
             $this->sqlQuery($db,$query);
         }
         $this->closeDatabase($db);

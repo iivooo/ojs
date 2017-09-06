@@ -211,6 +211,8 @@ class CommentDAO extends DAO {
 		$comment->setId($this->getInsertCommentId());
 
 		if ($comment->getParentCommentId()) $this->incrementChildCount($comment->getParentCommentId());
+		var_dump('this');
+
 
 		return $comment->getId();
 	}

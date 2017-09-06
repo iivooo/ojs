@@ -57,20 +57,6 @@
                 <td>{$log.first_name}</td>
                 <td>{$log.last_name}</td>
                 {if $log.origin_sha256 != ''}
-                    {*{if $log.originstamp_status eq 3}*}
-                        {*<td align=center><div style="display:inline" class="tooltip">*}
-                            {*<a style="color:green" target="_blank" href="{url op="downloadOriginZipLogin" path=$log.index}">&#10003;</a><span class="tooltiptext">*}
-				            {*Originstamp Status: 3. The log entry is successfully timpestamped. By clicking you can download a zip-file with all*}
-                            {*necessary information for manual verification.</span>*}
-                            {*</div>*}
-                            {*<div style="display:inline"><a target="_blank" href="https://app.originstamp.org/s/{$log.origin_sha256|escape}">LINK</a>*}
-                            {*</div>*}
-                        {*</td>*}
-                {*{else} <td style="color:orange;font-weight: bold;" align=center><div style="display:inline" class="tooltip">&#10003;<span class="tooltiptext">*}
-				{*Originstamp status: < 3. The log entry will be successfully origin_timestamped in less than 24 hours. Later you can download by clicking a zip file with all*}
-                            {*necessary information for manual verification.</span></div>*}
-                    {*<div style="display:inline"><a target="_blank" style='color:orange' href="https://app.originstamp.org/s/{$log.origin_sha256|escape}">LINK</a></div></td>{/if}*}
-
 
                 {if $log.originstamp_status eq 3}
                     <td align=left>

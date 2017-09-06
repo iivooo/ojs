@@ -342,6 +342,31 @@ class SectionEditorHandler extends Handler {
     	$crypt = new cryptSubmitLibrary();
     	$crypt->downloadDownloadLogZip($downloadId);
 	}
+
+    /**
+     * Download the originstampZip
+     * @param $args array ($articleId, $fileId, [$revision])
+     * @param $request PKPRequest
+     * TODO: download unneccessary code
+     */
+    function downloadOriginstampZipFile($args, $request){
+        $articleId = (int) array_shift($args);
+        $fileId = (int) array_shift($args);
+        $revision = (int) array_shift($args);
+        $artFileMan = new ArticleFileManager($articleId);
+        if (!$revision) {
+            $authorSubmissionDao =& DAORegistry::getDAO('AuthorSubmissionDAO');
+            $authorSubmission =& $authorSubmissionDao->getAuthorSubmission($articleId);
+            $revision = $authorSubmission->getSubmissionFile()->getRevision();
+        }
+
+        $tempFile = $artFileMan->getFile($fileId, $revision);
+        $filePath = $tempFile->getFilePath();
+
+        $crypt = new cryptSubmitLibrary();
+        $crypt->downloadArticleOriginstampZipFile($articleId, $filePath);
+
+    }
 }
 
 ?>

@@ -109,6 +109,8 @@ switch ($op) {
 	//
 	// Misc.
 	//
+		//@cryptSubmit
+	case 'downloadOriginstampZipFile':
 	case 'downloadFile':
 	case 'viewFile':
 	// Submission Review Form

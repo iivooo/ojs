@@ -16,13 +16,6 @@
 		<li>.. download a zip-file with the original file and an offline verifier, which provides a link to
 		<a href="https://blockchain.info/">blockchain.info</a>. Also the underlying javascript acts as a blueprint to retrace the steps for manual address generation.</li>
 	</ul>
-	{*<p>Note on the <a href="https://app.originstamp.org/">originstamp.org</a> status:*}
-	{*<ul>*}
-		{*<li><div style="color:green;font-weight: bold;" align=left>&#10003;</div> The submission is sucessfully timestamped. The hash is in the Blockchain and at least one block is above.</li>*}
-		{*<li><div style="color:orange;font-weight: bold;" align=left>&#10003;</div> The submission's timestamping is in progress. Will be successfully done within max. 24 hours.</li>*}
-		{*<li><div style="color:red;font-weight: bold;" align=left>&#10003;</div> There is no main submission uploaded to the server.</li>*}
-	{*</ul>*}
-	 {*</p>*}
 </div>
 
  <link rel="stylesheet" type="text/css" href="{$baseUrl}/styles/originstamper.css">

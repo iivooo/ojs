@@ -7,7 +7,7 @@
             The submission is successfully timestamped.
         </div>
         <div class="timestampbox">
-            <a target="_blank" href="https://app.originstamp.org/s/{$sha256|escape}">
+            <a target="_blank" href="https://app.originstamp.org/s/{$submission->getSHA256()|escape}">
                 <img height="10em" src="{$baseUrl}/templates/images/cryptImages/logo.png"> link to originstamp.org</a>
         </div>
         <div class="timestampbox" data-balloon="Download your original file with an offline verifier for your archives."
@@ -31,7 +31,7 @@
             The file will be timestamped in less than 24 h.
         </div>
         <div>
-            <a target="_blank" class="timestampbox" href="https://app.originstamp.org/s/{$sha256|escape}"><img height="10em" src="{$baseUrl}/templates/images/cryptImages/logo.png"> link to originstamp.org</a>
+            <a target="_blank" class="timestampbox" href="https://app.originstamp.org/s/{$submission->getSHA256()|escape}"><img height="10em" src="{$baseUrl}/templates/images/cryptImages/logo.png"> link to originstamp.org</a>
         </div>
     </td>
 {/if}
