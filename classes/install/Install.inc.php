@@ -24,7 +24,6 @@ define('INSTALLER_DEFAULT_SITE_TITLE', 'common.openJournalSystems');
 define('INSTALLER_DEFAULT_MIN_PASSWORD_LENGTH', 6);
 
 import('lib.pkp.classes.install.PKPInstall');
-import('lib.crypt_submit.cryptSubmitLibrary');
 
 class Install extends PKPInstall {
 
