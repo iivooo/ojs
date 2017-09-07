@@ -52,17 +52,8 @@ class cryptSubmitLibrary
      * @return mysqli
      */
     function getDatabase(){
-//        $host = "localhost";
-//        $user = "iivooo";
-//        $password = "AeC4deVoop4eiRohb9a";
-//        $database = "iivooo";
-//        $dbinfo = parse_ini_file('config.inc.php',true);
-////        var_dump($dbinfo);
-////        var_dump(file_exists('config.inc.php'));
-////        var_dump(scandir('/'));
         $db = mysqli_connect($GLOBALS[_cs][host], $GLOBALS[_cs][username],
             $GLOBALS[_cs][password], $GLOBALS[_cs][name]);
-//        $db = mysqli_connect($dbinfo[database][host], $user, $password, $database);
         if(!$db)
         {
             print "<script>alert('Database connection failed. Please contact the admin.')</script>";
@@ -121,7 +112,9 @@ class cryptSubmitLibrary
         if(!($result = mysqli_query($db, $sql))) {
             var_dump($result." query: ".$sql);
             var_dump($db->error);
+            return false;
         }
+        return true;
     }
 
     /**Function to get the Log in log... user, ip, timestamp etc.
@@ -377,6 +370,11 @@ class cryptSubmitLibrary
         }
     }
 
+    /**
+     * function to timestamp the logins
+     * @param $session
+     */
+
     function timestampLogIn($session){
         $db = $this->getDatabase();
 
@@ -442,6 +440,11 @@ class cryptSubmitLibrary
         $this->submitRetrieveOriginstamp($tmpHash);
 
     }
+
+    /**
+     * function to timestamp the comments
+     * @param $comment
+     */
 
     function timestampComment($comment){
 
@@ -544,6 +547,10 @@ class cryptSubmitLibrary
 
     }
 
+    /**
+     * originstamp download log updater
+     */
+
     function updateDownloadLog(){
         $db = $this->getDatabase();
         $userQuery ="SELECT * FROM download_log WHERE NOT originstamp_status = 3";
@@ -559,6 +566,10 @@ class cryptSubmitLibrary
         $this->closeDatabase($db);
 
     }
+
+    /**
+     * originstamp comment log updater(status,timestamp)
+     */
 
     function updateArticleCommentLog(){
         $db = $this->getDatabase();
@@ -577,6 +588,10 @@ class cryptSubmitLibrary
         }
         $this->closeDatabase($db);
     }
+
+    /**
+     * originstamp article updater (status,timestamp)
+     */
 
     function updateArticles(){
         //get database connection
@@ -613,25 +628,13 @@ class cryptSubmitLibrary
     }
 
     /**
-     * Function to search for the file path of a given article. //TODO: deprecated: change to articleFileManager?
+     * Function to search for the file path of a given article.
      * @param $id
      * @return int|mixed|null|string
      */
     function searchFilePath($id){
 
-//        $authorSubmissionDao =& DAORegistry::getDAO('AuthorSubmissionDAO');
-//        $authorSubmission =& $authorSubmissionDao->getAuthorSubmission($id);
-//        var_dump($authorSubmission);
-//        $revision = $authorSubmission->getSubmissionFile();//->getRevision();
-//        var_dump($revision);
-//
-//        $artFileMan = new ArticleFileManager($id);
-//        $tempFile = $artFileMan->getFile($id, $revision);
-//        $filePath = $tempFile->getFilePath();
-//
-//        return $filePath;
         $result=array();
-//        $path = '/var/www/virtual/iivooo/html/files/journals/';
         $path = $GLOBALS[_cs][files].'/journals/';
         $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
         foreach($objects as $name => $object){
@@ -642,6 +645,11 @@ class cryptSubmitLibrary
         return null;
     }
 
+    /**Function to download the article comment zip
+     * @param $articleId
+     * @param $commentId
+     */
+
     function downloadArticleCommentZip($articleId, $commentId){
         $sqlQuery="SELECT * FROM article_comments_timestamping_cryptSubmit WHERE comment_id = {$commentId}";
         $db = $this->getDatabase();
@@ -649,8 +657,6 @@ class cryptSubmitLibrary
         $tmp = "{$res[0][user_id]},{$res[0][ip]},{$res[0][username]},{$res[0][first_name]},{$res[0][middle_name]},{$res[0][last_name]},{$res[0][phone]},".
             "{$res[0][billing_address]},{$res[0][country]},{$res[0][article_id]},{$res[0][original_comments]},{$res[0][comment_title]},{$res[0][comment_id]},".
             "{$res[0][comment_timestamp]}";
-        //write to txt file
-//        $basePath=$_SERVER['DOCUMENT_ROOT']."/files/DownloadableTxtFiles/";
         $basePath=$GLOBALS[_cs][dwFiles];
 
 
@@ -672,6 +678,11 @@ class cryptSubmitLibrary
         $this->userDownload($this->add_to_zip($zipPaths,$zipDestination));
 
     }
+
+    /**
+     * function to download the login log zip
+     * @param $loginId
+     */
 
     function downloadLoginZip($loginId){
         $sqlQuery = "SELECT * FROM login_log WHERE `index` = {$loginId}";
@@ -710,6 +721,10 @@ class cryptSubmitLibrary
 
     }
 
+    /**
+     * function to download the download log zip
+     * @param $downloadId
+     */
     function downloadDownloadLogZip($downloadId){
         $sqlQuery = "SELECT * FROM download_log WHERE `ID` = {$downloadId}";
         $db =$this->getDatabase();
@@ -721,7 +736,6 @@ class cryptSubmitLibrary
             "{$res[0][article_hash]},{$res[0][download_timestamp]}";
 
         $basePath = $GLOBALS[_cs][dwFiles];
-//        $basePath = $_SERVER['DOCUMENT_ROOT']."/files/DownloadableTxtFiles/";
         $filePath = $basePath."downloadTimestamp_{$downloadId}.txt";
         $timestampPath = $basePath."timestamp.js";
 
@@ -745,5 +759,18 @@ class cryptSubmitLibrary
         $this->userDownload($this->add_to_zip($zipPaths,$zipDestination));
 
         echo "<script>window.close();</script>";
+    }
+
+
+    /**
+     * Function to install the additional tables in dbscript/ojsInstallationAfter.sql
+     */
+    function installAdditionalTables(){
+        $db = $this->getDatabase();
+        $sqlQuery = file_get_contents(dirname(dirname(__DIR__)).'/dbscripts/ojsInstallationAfter.sql');
+        if(!$this->sqlQuery($db,$sqlQuery)){
+            print "<script>alert('please install the sql statements in dbscripts/ojsInstallationAfter.sql manually')</script>";
+        }
+        return true;
     }
 }

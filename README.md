@@ -12,7 +12,8 @@ Then do the following steps:
     1. Clone this repo into the apaches document directory
     Change config.TEMPLATE.inc.php to config.inc.php
     2. Open the site in the browser and follow the installation steps.
-    3. Add the sql-statements in: ... into the database (e.g. with phpmyadmin)
+        -> keep english as language, database: must be user with name and password e.g. in xampp(bug)
+    3. Add the sql-statements in: dbscripts/ojsInstallationAfter.sql into the database (e.g. with phpmyadmin)
     (Adjust the use statement to the database name you choosed)
     4. Now you are ready to go.
     

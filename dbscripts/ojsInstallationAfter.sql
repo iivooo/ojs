@@ -1,5 +1,3 @@
-USE ojsInstall;
-
 ALTER TABLE `articles` ADD(
   `originstamp_status` tinyint(4) DEFAULT '1',
   `origin_sha256` char(128) COLLATE utf8_unicode_ci DEFAULT NULL,
