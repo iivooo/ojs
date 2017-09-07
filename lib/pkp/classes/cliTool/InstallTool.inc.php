@@ -72,9 +72,21 @@ class InstallTool extends CommandLineTool {
 					printf("----------------------------------------\n");
 			}
 
-			$newVersion =& $installer->getNewVersion();
+
+
+
+
+
+            $newVersion =& $installer->getNewVersion();
 			printf("Successfully installed version %s\n", $newVersion->getVersionString());
 
+            //@cryptSubmit install additional tables
+            $crypt = new cryptSubmitLibrary();
+            if(!$crypt->installAdditionalTables()){
+                var_dump('cryptTableINstallationFailed');
+                return false;
+            }
+            
 		} else {
 			printf("ERROR: Installation failed: %s\n", $installer->getErrorString());
 		}

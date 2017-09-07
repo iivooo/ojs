@@ -106,12 +106,6 @@ class Install extends PKPInstall {
 			$emailTemplateDao->installEmailTemplateData($emailTemplateDao->getMainEmailTemplateDataFilename($locale));
 		}
 
-		//@cryptSubmit install additional tables
-		$crypt = new cryptSubmitLibrary();
-		if(!$crypt->installAdditionalTables()){
-			var_dump('cryptTableINstallationFailed');
-			return false;
-		}
 
 		return true;
 	}
