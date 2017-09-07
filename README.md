@@ -19,6 +19,7 @@ Then do the following steps:
     
 Please note that the users, roles and site settings are provided from the sql 
 you insert according to the CryptSubmit project.
+The admin account will be overwritten to username: admin password: 123456
 
 Please contact ivo.schueepp@uni-konstanz.de if you need support.
     
