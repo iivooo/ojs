@@ -12,11 +12,13 @@ Then do the following steps:
     1. Clone this repo into the apaches document directory
     Change config.TEMPLATE.inc.php to config.inc.php
     2. Open the site in the browser and follow the installation steps.
-        -> keep english as language, database: must be user with name and password e.g. in xampp(bug)
+        -> keep english as language
+        -> database: must be user with name and password e.g. in xampp(bug)
     3. Add the sql-statements in: dbscripts/ojsInstallationAfter.sql into the database (e.g. with phpmyadmin)
-    (Adjust the USE statement to the database name you choosed)
     4. Now you are ready to go.
     
 Please note that the users, roles and site settings are provided from the sql 
 you insert according to the CryptSubmit project.
+
+Please contact ivo.schueepp@uni-konstanz.de if you need support.
     

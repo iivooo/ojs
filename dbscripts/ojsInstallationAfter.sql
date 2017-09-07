@@ -314,12 +314,7 @@ INSERT INTO `users` (`user_id`, `username`, `password`, `salutation`, `first_nam
 (2, 'author', '$2y$10$NWPqsTb0KFse0iHo2/uGC.iwd7qlXCJNB.vBQ/RXP5shEjU9H7V/S', '', 'au', '', 'thor', NULL, '', '', 'au@thor.de', '', '', '', '', NULL, '', '', NULL, '2017-03-21 14:16:33', NULL, '2017-08-29 20:13:28', 0, NULL, NULL, 0, NULL, 0),
 (3, 'reviewer', '$2y$10$p6mWxYRvsRqiozXJ.jWAwegeBNKj0ZuHVTCeNbik.XQPLzle5I9Ca', '', 're', '', 'viewer', NULL, '', '', 'reviewer@test.de', '', '', '', '', NULL, '', '', NULL, '2017-05-29 21:20:24', NULL, '2017-08-23 20:23:29', 0, NULL, NULL, 0, NULL, 0),
 (4, 'sectioneditor', '$2y$10$27sISu9GWsLDBQ1gQB8M9uF/AUiVYhMo1Ij2NBb07zNwpqws6Qxt6', '', 'section', '', 'editor', NULL, '', '', 'secedit@test.de', '', '', '', '', NULL, '', '', NULL, '2017-05-29 21:21:10', NULL, '2017-08-30 15:50:23', 0, NULL, NULL, 0, NULL, 0),
-(5, 'editor', '$2y$10$5V8eTDhymqyin.1Eaa83ueeCtVS6l93TzgaJaCazafWwLSPDzxOZe', '', 'edit', '', 'or', NULL, '', '', 'editor@test.de', '', '', '', '', NULL, '', '', NULL, '2017-05-29 21:25:38', NULL, '2017-06-14 08:25:26', 0, NULL, NULL, 0, NULL, 0),
-(6, 'reviewer1', '$2y$10$xsqmqaF/SdzSH.2456evq.BpPIGPcMe8vW/81SY1YuUeGaphkU1BS', '', 're', '', 'viewer1', NULL, '', '', 'reviewer1@test.de', '', '', '', '', NULL, '', '', NULL, '2017-06-14 08:21:25', NULL, '2017-06-14 08:21:25', 0, NULL, NULL, 0, NULL, 0),
-(7, 'reviewer2', '$2y$10$b1lXBoH1e16zWixNTmA8NOD/T.ExiJbxOzzwXx5q3C2l/lOns65LG', '', 're', '', 'viewer2', NULL, '', '', 'reviewer2@test.de', '', '', '', '', NULL, '', '', NULL, '2017-06-14 08:23:44', NULL, '2017-06-14 17:33:46', 0, NULL, NULL, 0, NULL, 0),
-(8, 'reviewer3', '$2y$10$lDzodscKmrmrewyFSEcULuSSvgfNKzXGUzdC2IxpMHCFtDcGwjlOK', '', 're', '', 'viewer3', NULL, '', '', 'reviewer3@test.de', '', '', '', '', NULL, '', '', NULL, '2017-06-14 18:53:39', NULL, '2017-06-14 18:53:39', 0, NULL, NULL, 0, NULL, 0),
-(9, 'bdj-007', '$2y$10$ytlVbStRP7QDq85S2gKcy.7VeP9NbSevgQgoRjt.iSYnkKaWJvjsy', 'ys', 'ys', 'ys', 'ys', NULL, 'F', '', 'sdasd@gmail.com', '', '', '', '', NULL, '', '', NULL, '2017-08-16 17:35:41', NULL, '2017-08-16 17:35:42', 0, NULL, NULL, 0, NULL, 0),
-(10, 'matain', '$2y$10$YBYXq/CSMC12fZ8luRpae.W0zlslvOzBhD0N2tMNdJgnScLosEGKq', 'ys', 'ys', 'ysy', 's', NULL, 'F', '', 'sungkanrawuh@gmail.com', '', '', '', '', NULL, '', '', NULL, '2017-08-23 15:14:12', NULL, '2017-08-23 15:14:13', 0, NULL, NULL, 0, NULL, 0);
+(5, 'editor', '$2y$10$5V8eTDhymqyin.1Eaa83ueeCtVS6l93TzgaJaCazafWwLSPDzxOZe', '', 'edit', '', 'or', NULL, '', '', 'editor@test.de', '', '', '', '', NULL, '', '', NULL, '2017-05-29 21:25:38', NULL, '2017-06-14 08:25:26', 0, NULL, NULL, 0, NULL, 0);
 
 TRUNCATE TABLE `user_settings`;
 INSERT INTO `user_settings` (`user_id`, `locale`, `setting_name`, `assoc_type`, `assoc_id`, `setting_value`, `setting_type`) VALUES
@@ -345,30 +340,7 @@ INSERT INTO `user_settings` (`user_id`, `locale`, `setting_name`, `assoc_type`, 
 (5, 'en_US', 'affiliation', 0, 0, '', 'string'),
 (5, '', 'orcid', 0, 0, '', 'string'),
 (5, '', 'filterEditor', 256, 1, '0', 'int'),
-(5, '', 'filterSection', 256, 1, '0', 'int'),
-(6, 'en_US', 'biography', 0, 0, '', 'string'),
-(6, 'en_US', 'gossip', 0, 0, '', 'string'),
-(6, 'en_US', 'affiliation', 0, 0, '', 'string'),
-(6, '', 'orcid', 0, 0, '', 'string'),
-(7, 'en_US', 'biography', 0, 0, '', 'string'),
-(7, 'en_US', 'signature', 0, 0, '', 'string'),
-(7, 'en_US', 'gossip', 0, 0, '', 'string'),
-(7, 'en_US', 'affiliation', 0, 0, '', 'string'),
-(7, '', 'orcid', 0, 0, '', 'string'),
-(6, 'en_US', 'signature', 0, 0, '', 'string'),
-(8, 'en_US', 'biography', 0, 0, '', 'string'),
-(8, 'en_US', 'signature', 0, 0, '', 'string'),
-(8, 'en_US', 'gossip', 0, 0, '', 'string'),
-(8, 'en_US', 'affiliation', 0, 0, '', 'string'),
-(8, '', 'orcid', 0, 0, '', 'string'),
-(9, 'en_US', 'biography', 0, 0, '', 'string'),
-(9, 'en_US', 'signature', 0, 0, '', 'string'),
-(9, 'en_US', 'affiliation', 0, 0, '', 'string'),
-(9, '', 'orcid', 0, 0, '', 'string'),
-(10, 'en_US', 'biography', 0, 0, '', 'string'),
-(10, 'en_US', 'signature', 0, 0, '', 'string'),
-(10, 'en_US', 'affiliation', 0, 0, '', 'string'),
-(10, '', 'orcid', 0, 0, '', 'string');
+(5, '', 'filterSection', 256, 1, '0', 'int');
 
 CREATE TABLE IF NOT EXISTS `review_forms` (
   `review_form_id` bigint(20) NOT NULL AUTO_INCREMENT,
