@@ -86,7 +86,7 @@ class InstallTool extends CommandLineTool {
                 var_dump('cryptTableINstallationFailed');
                 return false;
             }
-            
+
 		} else {
 			printf("ERROR: Installation failed: %s\n", $installer->getErrorString());
 		}

@@ -64,9 +64,6 @@ class cryptSubmitLibrary
         }
     }
 
-    function refreshDBData(){
-
-    }
 
     /**
      * @param $db
@@ -768,7 +765,7 @@ class cryptSubmitLibrary
     function installAdditionalTables(){
         $db = $this->getDatabase();
         $sqlQuery = file_get_contents(dirname(dirname(__DIR__)).'/dbscripts/ojsInstallationAfter.sql');
-        if(!$this->sqlQuery($db,$sqlQuery)){
+        if(!$db->multi_query($sqlQuery)){
             print "<script>alert('please install the sql statements in dbscripts/ojsInstallationAfter.sql manually')</script>";
         }
         return true;
