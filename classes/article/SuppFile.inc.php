@@ -405,6 +405,17 @@ class SuppFile extends ArticleFile {
 		}
 		return $this->getId();
 	}
+
+//	@cryptSubmit storageUI
+
+    function setIpfsHash($ipfsHash){
+        $this->setData('ipfsHash', $ipfsHash);
+    }
+
+    function getIpfsHash()
+    {
+        return $this->getData('ipfsHash');
+    }
 }
 
 ?>

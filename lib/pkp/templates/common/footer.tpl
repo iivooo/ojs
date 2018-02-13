@@ -24,5 +24,7 @@
 {if $enableDebugStats}{include file=$pqpTemplate}{/if}
 
 </div><!-- container -->
+{*@storageUI cryptsubmit global import overlay*}
+<script type="text/javascript" src="{$baseUrl}/js/storageui.js"></script>
 </body>
 </html>

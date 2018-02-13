@@ -52,6 +52,8 @@ switch ($op) {
 	//
 	case 'downloadFile':
 	case 'downloadOriginstampZipFile':
+	case 'uploadToStorageUi':
+	case 'uploadAdditionalDataToStorageUi':
 	case 'viewFile':
 	case 'download':
 	//

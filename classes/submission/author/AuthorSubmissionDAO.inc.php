@@ -136,6 +136,10 @@ class AuthorSubmissionDAO extends DAO {
 
 		$authorSubmission->setSHA256($row['origin_sha256']);
 
+//		@cryptSubmit storageUI set ipfsHash
+
+        $authorSubmission->setIpfsHash($row['ipfs_hash']);
+
 		HookRegistry::call('AuthorSubmissionDAO::_returnAuthorSubmissionFromRow', array(&$authorSubmission, &$row));
 
 		return $authorSubmission;

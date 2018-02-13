@@ -252,6 +252,9 @@ class SuppFileDAO extends DAO {
 		$suppFile->setDateModified($this->datetimeFromDB($row['date_modified']));
 		$suppFile->setDateUploaded($this->datetimeFromDB($row['date_uploaded']));
 
+//		@cryptSubmit storageUI
+        $suppFile->setIpfsHash($row['ipfs_hash']);
+
 		$this->getDataObjectSettings('article_supp_file_settings', 'supp_id', $row['supp_id'], $suppFile);
 
 		HookRegistry::call('SuppFileDAO::_returnSuppFileFromRow', array(&$suppFile, &$row));

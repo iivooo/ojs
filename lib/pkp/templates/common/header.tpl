@@ -19,6 +19,8 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{$currentLocale|replace:"_":"-"}" xml:lang="{$currentLocale|replace:"_":"-"}">
 <head>
+	{*@cryptSubmit: added for overlay modal storageUI*}
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<meta http-equiv="Content-Type" content="text/html; charset={$defaultCharset|escape}" />
 	<title>{$pageTitleTranslated}</title>
@@ -32,6 +34,8 @@
 	<link rel="stylesheet" href="{$baseUrl}/styles/common.css" type="text/css" />
 	<link rel="stylesheet" href="{$baseUrl}/styles/compiled.css" type="text/css" />
 	<link rel="stylesheet" href="{$baseUrl}/styles/originstamper.css" type="text/css" />
+	<link rel="stylesheet" href="{$baseUrl}/styles/modal.css" type="text/css"/>
+
 
 	<!-- Base Jquery -->
 	{if $allowCDN}<script type="text/javascript" src="//www.google.com/jsapi"></script>

@@ -15,6 +15,7 @@
 		<li>.. upload a submission with the "five-step submission process"</li>
 		<li>.. download a zip-file with the original file and an offline verifier, which provides a link to
 		<a href="https://blockchain.info/">blockchain.info</a>. Also the underlying javascript acts as a blueprint to retrace the steps for manual address generation.</li>
+		<li>.. upload your submission and supplementary files to <a href="http://192.52.3.143:3000/">Storage UI</a> which is a decentralized (and immutable) p2p-cluster-storage system, based on <a href="https://www.ipfs.io">IPFS</a></li>
 	</ul>
 </div>
 
@@ -69,7 +70,7 @@
 					</a>
 				{/if}
 
-				{include file="cryptSubmit/originStatusAuthor.tpl"}
+					{include file="cryptSubmit/originStatusAuthor.tpl"}
 				{*{if $submission->getOriginstampStatus() eq 3} <td style="color:green;font-weight: bold;" align=left><div class="tooltip"'>&#10003;<span class="tooltiptext">*}
 				{*Originstamp Status: 3. Your submission is successfully timpestamped. In the articles summary,*}
 				{*you will find a zip-file with all information you need for manual verification. </span></div>*}

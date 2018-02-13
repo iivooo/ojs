@@ -959,8 +959,8 @@ class Submission extends DataObject {
 	}
 
 	function getSHA256(){
-		if($this->sha256 != null){
-            return $this->sha256;
+		if($this->getData('sha256') != null){
+            return $this->getData('sha256');
 		}
         import('classes.file.ArticleFileManager');
         $articleFileManager = new ArticleFileManager($this->getId());
@@ -969,8 +969,17 @@ class Submission extends DataObject {
 	}
 
 	function setSHA256($sha256){
-		return $this->sha256=$sha256;
+		return $this->setData('sha256', $sha256);
 	}
+
+	function setIpfsHash($ipfsHash){
+		$this->setData('ipfsHash', $ipfsHash);
+	}
+
+    function getIpfsHash()
+    {
+        return $this->getData('ipfsHash');
+    }
 }
 
 ?>
