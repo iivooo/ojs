@@ -144,6 +144,7 @@
         <p class="pointer">&#9654;</p><h1><a href="#">Storage UI - IPFS based storage system</a></h1>
         <p>
             Authors can upload their articles and supplementary data to Storage UI, a storage system prototype based on IPFS (Interplanetary File System), which is a decentralized peer-to-peer storage solution. Storage UI was build to support permanent and immutable data storage to provide long-term availability. A storage system having those two qualities is beneficial for usage in the scientific community, whether by individuals or by research institutions and research facilities. Scientific data which is fundamentally important for scientific work could be stored to be verified at later times without being exposed the danger of loss, deletion or manipulation, thus making the data provable and verifiable at any later point.
+            <img style="width:100%" src="{$baseUrl}/templates/images/cryptImages/StorageUiOverview.png">
         </p>
     </section>
 </div>
