@@ -34,6 +34,84 @@ var baseURL = "https://iivooo.suhail.uberspace.de/ojs/proxy.php";
 //stuff for login
 $(document).ready(function () {
 
+    $('.login-form-update').submit(function (event) {
+
+        // get the form data
+        // there are many ways to get this data using jQuery (you can use the class or id also)
+        var formData = {
+            "usr": $(this).find('input[name=usr]').val(),//$('input[usr=usr]').val(),
+            "pwd": $(this).find('input[name=pwd]').val()//$('input[pwd=pwd]').val(),
+        };
+        console.log($(this).find('input[name=storagePath]').val())
+        console.log($(this).find('input[name=usr]').val())
+        console.log($(this).find('input[name=pwd]').val())
+        baseURL = $(this).find('input[name=storagePath]').val() + "/"+$(this).find('input[name=usr]').val()+"/"+
+            $(this).find('input[name=pwd]').val();
+        console.log(baseURL)
+
+        var id = $(this).find('input[name=thisid]').val()
+
+        $('#responseAlertUpdate'+id).css("visibility", "visible")
+        $('#responseAlertUpdate'+id).css("background-color", "orange")
+        // $('#responseAlertUpdate'+id).html("<img src=''<h5>Loading</h5>")
+
+        // process the form
+        $.ajax({
+            type: 'GET', // define the type of HTTP verb we want to use (POST for our form)
+            url: baseURL, // the url where we want to POST
+            // data: formData, // our data object
+            dataType: 'json', // what type of data do we expect back from the server
+            encode: true,
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+            },
+
+            beforeSend: function (request) {
+                request.setRequestHeader("Access-Control-Allow-Origin", "*");
+                request.setRequestHeader("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS");
+                request.setRequestHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With");
+            },
+
+            success: function (result) {
+                console.log('result:')
+                console.log(result);
+                if (result.errors){
+                    var alertBox = "<h5>Errors: </h5><ul>";
+                    result.errors.forEach(function (item){
+                        alertBox += "<li>"+item.msg+"</li>"
+                    })
+                    alertBox += "</ul>"
+                    console.log(alertBox)
+                    $('#responseAlertUpdate'+id).css("visibility", "visible")
+                    $('#responseAlertUpdate'+id).css("background-color", "red")
+                    $('#responseAlertUpdate'+id).html(alertBox)
+                } else {
+                    $('#responseAlertUpdate'+id).css("visibility", "visible")
+                    $('#responseAlertUpdate'+id).css("background-color", "green")
+                    $('#responseAlertUpdate'+id).html("<h5>Sucessfully updated StorageUI!</h5>")
+                    window.setTimeout(location.reload() , 3000)
+
+                }
+
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+                $('#responseAlertUpdate'+id).html('Currently not able to access StorageUI')
+                $('#responseAlertUpdate'+id).css("visibility", "visible")
+            }
+        })
+
+
+        // stop the form from submitting the normal way and refreshing the page
+        event.preventDefault();
+
+
+        // TODO: 3 parameters   path=$submission->getId()|to_array:$submissionFile->getFileId():$submissionFile->getRevision()}"
+        //    Path=<a href="https://iivooo.suhail.uberspace.de/ojs/index.php/testJournal/author/downloadFile/19/24/1" class="file">19-24-1-SM.pdf</a> ... get from dummy a href?
+    });
+
 
     // process for the additional data
     $('.login-form-additional').submit(function (event) {

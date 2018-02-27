@@ -133,6 +133,18 @@ class ArticleFile extends SubmissionFile {
 	function setStoredPubId($pubIdType, $pubId) {
 		return $this->setData('pub-id::'.$pubIdType, $pubId);
 	}
+
+	//@cryptSubmit @storageUI
+
+    function setIpfsHash($ipfsHash)
+    {
+        $this->setData('ipfs_hash', $ipfsHash);
+    }
+
+    function getIpfsHash()
+    {
+        return $this->getData('ipfs_hash');
+    }
 }
 
 ?>

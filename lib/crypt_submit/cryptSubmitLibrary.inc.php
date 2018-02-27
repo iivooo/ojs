@@ -469,8 +469,9 @@ class cryptSubmitLibrary
 //        //article details
         $articleId = $comment->getArticleId();
 //
+        $db = $this->getDatabase();
 //        //comment
-        $original_comments = $comment->getComments();
+        $original_comments = mysqli_escape_string($db, $comment->getComments());
         $comment_title = $comment->getCommentTitle();
         $comment_id = $comment->getCommentId();
         $comment_timestamp = time();
@@ -488,10 +489,12 @@ class cryptSubmitLibrary
                   '{$phone}','{$billing_address}', '{$country}', {$articleId}, '{$original_comments}', '{$comment_title}',
              '{$comment_id}', {$comment_timestamp}, '{$tmpHash}');";
 
-        $db = $this->getDatabase();
+
         $this->sqlQuery($db,$query);
         $this->closeDatabase($db);
          $this->submitRetrieveOriginstamp($tmpHash);
+
+
     }
 
     /**

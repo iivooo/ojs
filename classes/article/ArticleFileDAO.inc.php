@@ -243,6 +243,7 @@ class ArticleFileDAO extends PKPFileDAO {
 		$articleFile->setDateModified($this->datetimeFromDB($row['date_modified']));
 		$articleFile->setRound($row['round']);
 		$articleFile->setViewable($row['viewable']);
+        $articleFile->setIpfsHash($row['ipfs_hash']);
 		HookRegistry::call('ArticleFileDAO::_returnArticleFileFromRow', array(&$articleFile, &$row));
 		return $articleFile;
 	}

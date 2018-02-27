@@ -231,6 +231,10 @@ class ArticleDAO extends DAO {
 		$article->setHideAuthor($row['hide_author']);
 		$article->setCommentsStatus($row['comments_status']);
 
+//		@cryptSubmit @storageUI
+        $article->setSHA256($row['origin_sha256']);
+        $article->setIpfsHash($row['ipfs_hash']);
+
 		$this->getDataObjectSettings('article_settings', 'article_id', $row['article_id'], $article);
 
 		HookRegistry::call('ArticleDAO::_returnArticleFromRow', array(&$article, &$row));
